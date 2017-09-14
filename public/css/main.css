@@ -1,0 +1,42 @@
+/* nav color: #292e39 */
+
+body{
+  background-color : #f1f4f8;
+  font-family: Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* main nav bar on top */
+.navbar-inverse {
+  background-color: #293038;
+  height: 50px;
+}
+.navbar-inverse .navbar-text {
+  color: #fff;
+  letter-spacing: 1px;
+  margin-left: 40px;
+  float: left;
+   
+}
+
+a .fa {
+  color: #fff;
+}
+
+/* steps bar */
+.navbar-light {
+  background-color: #fff;
+  height: 40px;
+}
+
+.stepsbar {
+  color: #222;
+}
+
+.stepsbar a {
+  color: #222;
+}
+
+.stepsbar .active {
+  border-bottom: 1px solid #2f87c0;
+}
