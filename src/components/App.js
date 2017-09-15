@@ -1,18 +1,14 @@
 import React from 'react'
-import Footer from './Footer'
 import NavBar from './NavBar'
-import AddTodo from '../containers/AddTodo'
-import VisibleTodoList from '../containers/VisibleTodoList'
 import SelectTab from '../containers/SelectTab'
+import PanelController from '../containers/PanelController'
 
 const App = () => (
   <div>
     <NavBar />
     <SelectTab />
     <div className="container">
-      <AddTodo />
-      <VisibleTodoList />
-      <Footer />
+      <PanelController />
     </div>
   </div>
 )

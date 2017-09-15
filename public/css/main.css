@@ -40,3 +40,8 @@ a .fa {
 .stepsbar .active {
   border-bottom: 1px solid #2f87c0;
 }
+
+.main-panel {
+  margin-top: 40px;
+
+}
