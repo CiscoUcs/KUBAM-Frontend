@@ -1,6 +1,9 @@
 # KUBAM GUI
 
-React+Redux application. 
+React+Redux front end to the [KUBAM](https://github.com/CiscoUcs/KUBAM) API server. 
+
+![](./images/dash.png)
+
 
 
 ## Run the app
