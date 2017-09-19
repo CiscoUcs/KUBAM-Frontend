@@ -1,7 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const LoginForm = ({ handleSubmit }) => {
+const LoginForm = ({ handleSubmit, credData}) => {
+  console.log(credData)
+  if (credData.isLogginPending === true) {
+    return (
+      <div className="card-body">
+        <div className="row">
+          <div className="col"></div>
+          <div className="col align-self-center text-center">
+            <h1 className="display-1">
+              <i className="fa fa-circle-o-notch fa-spin" aria-hidden="false"></i>
+            </h1>
+            <small>Attempting Login</small>
+          </div>
+          <div className="col"></div>
+        </div>
+      </div>
+    )
+  }
   return (
   <div className="card-body">
     <div className="row">
@@ -9,13 +26,13 @@ const LoginForm = ({ handleSubmit }) => {
       <div className="col align-self-center text-center">
         <h3 className="lead">UCS LOGIN</h3>
         <small className="text-muted">Please enter credentials to connect KUBAM to your UCS</small>
-        <form>
+        <form id="creds">
           <div className="form-row align-items-center">
             <div className="input-group">
               <div className="input-group-addon">
                 <i className="fa fa-user" aria-hidden="true"></i>
               </div>
-              <input type="user" className="form-control" id="user" aria-describedby="userHelp" placeholder="USERNAME"/>
+              <input type="user" className="form-control" id="user" aria-describedby="userHelp" placeholder="USERNAME" />
             </div>
           </div>
           <p></p>

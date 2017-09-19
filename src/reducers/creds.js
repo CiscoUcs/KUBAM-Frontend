@@ -1,17 +1,20 @@
 import {
   SUBMIT_CREDS,
   CONFIRM_LOGIN
+  SET_LOGIN
 } from '../actions'
 
 const submitCreds = (state = {
-  server: null,
-  user: null,
+  server: "",
+  user: "",
   isLoginPending: false,
-  password: null}, action) => {
+  password: ""}, action) => {
   switch (action.type) {
     case SUBMIT_CREDS:
       return Object.assign({}, state, {
         isLoginPending: true, 
+        loginError: false,
+        isloginSuccess: false,
         user: action.user,
         password: action.password,
         server: action.server
@@ -19,7 +22,8 @@ const submitCreds = (state = {
     case CONFIRM_LOGIN:
       return Object.assign({}, state, {
         isLoginPending: false,
-        isLoginSuccess: true
+        isLoginSuccess: true,
+        isLoginError: false
       })
 
     default:

@@ -1,38 +1,22 @@
-import { put, all, call, takeEvery, take } from 'redux-saga/effects'
+import { put, all, call, takeEvery } from 'redux-saga/effects'
+import sessionApi from '../services/session'
 import * as actions from '../actions'
 
-
-const url = "http://localhost/api/v1"
-
-export function* login(user, password, server) {
-  console.log(user)
-  console.log(password)
-  console.log(server)
-  try {
-    var data = {"credentials" : {
-                  "user" : user,
-                  "server" : server,
-                  "password" : password
-                  } 
-               }
-    yield call(fetch, url + '/session', 
-            { method: 'POST', 
-              headers: {
-                "Content-Type": "application/json" 
-              },
-              body: JSON.stringify(data)})
+export function* login(action) {
+  yield put(actions.setLoginPending(true))
+  let response = yield call(sessionApi.login, {
+                      user : action.user,
+                      password : action.password,
+                      server : action.server
+                    })
+  if (response.error) {
+    return yield put (actions.setLoginError(response)) 
   }
-  catch (err) {
-    yield put (actions.setLoginError(err)) 
-  }
+  yield put(actions.receivedLoginResponse(response))
 }
 
 export function* watchLoginRequest() {
-  while (true) {
-    const { user, password, server } = yield take(actions.SUBMIT_CREDS)
-    yield call(login, user, password, server)
-  } 
-  //yield takeEvery(actions.SUBMIT_CREDS, login);
+  yield takeEvery(actions.SUBMIT_CREDS, login);
 }
 
 export default function* rootSaga() {

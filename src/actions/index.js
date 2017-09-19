@@ -1,4 +1,3 @@
-import fetch from 'isomorphic-fetch';
 export const SUBMIT_CREDS = 'SUBMIT_CREDENTIALS'
 export const CONFIRM_LOGIN = 'CONFIRM_LOGIN'
 export const SET_LOGIN_PENDING = 'SET_LOGIN_PENDING';
@@ -44,30 +43,14 @@ export const setLoginError = (loginError) => ({
 })
 
 
-export const requestLogin = (user, password, server) => ({
+export const requestLogin = (u, p, s) => ({
   type: SUBMIT_CREDS,
-  user,
-  password,
-  server
+  user:  u,
+  password: p,
+  server: s
 })
 
 export const receivedLoginResponse = (json) => ({
   type: CONFIRM_LOGIN,
-  response: json.data
+  response: json
 })
-
-// thunk action creator
-export function attemptLogin(user, password, server) {
-  return function(dispatch) {
-    // show the api call is starting. 
-    dispatch(requestLogin(user, password, server))
-    return fetch('http://localhost/api/v1/session')
-      .then(
-        response => response.json(),
-        error => console.log('An error occured.', error)
-      )
-      .then(json => 
-        dispatch(receivedLoginResponse(json))
-      )
-  } 
-}
