@@ -1,5 +1,6 @@
 import React from 'react'
-import Login from './panels/credentials/'
+//import Login from './panels/credentials/'
+import LoginFormContainer from '../containers/LoginFormContainer'
 import Network from './panels/network/'
 import Server from './panels/server/'
 import OS from './panels/os/'
@@ -9,7 +10,7 @@ var Panel = ({selected}) => {
   let p = null;
   switch (selected) {
     case "Credentials": 
-      p = <Login />
+      p = <LoginFormContainer />
       break;
     case "Network":
       p = <Network />

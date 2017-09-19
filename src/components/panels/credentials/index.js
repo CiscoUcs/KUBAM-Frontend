@@ -1,7 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-var Login = () => (
-
+const LoginForm = ({ handleSubmit }) => {
+  return (
   <div className="card-body">
     <div className="row">
       <div className="col"></div>
@@ -14,7 +15,7 @@ var Login = () => (
               <div className="input-group-addon">
                 <i className="fa fa-user" aria-hidden="true"></i>
               </div>
-              <input type="user" className="form-control" id="inlineFormInputGroup" aria-describedby="userHelp" placeholder="USERNAME"/>
+              <input type="user" className="form-control" id="user" aria-describedby="userHelp" placeholder="USERNAME"/>
             </div>
           </div>
           <p></p>
@@ -36,13 +37,16 @@ var Login = () => (
             </div>
           </div>
           <p></p>
-          <button type="submit" className="btn btn-primary">Login</button>
+          <button type="submit" className="btn btn-primary" onClick={ handleSubmit }>Login</button>
         </form> 
       </div>
       <div className="col"></div>
     </div>
   </div>
-);
+)}
 
-export default Login
+LoginForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+}
 
+export default LoginForm
