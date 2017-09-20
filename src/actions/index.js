@@ -3,6 +3,9 @@ export const CONFIRM_LOGIN = 'CONFIRM_LOGIN'
 export const SET_LOGIN_PENDING = 'SET_LOGIN_PENDING';
 export const SET_LOGIN_SUCCESS = 'SET_LOGIN_SUCCESS';
 export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
+export const UCS_LIST_VLANS = 'UCS_LIST_VLANS';
+export const UCS_ERROR = 'UCS_ERROR';
+export const UCS_RECEIVED_VLANS = 'UCS_RECEIVED_VLANS';
 
 let nextTodoId = 0
 export const addTodo = (text) => ({
@@ -27,16 +30,6 @@ export const selectTab = (selected) => ({
 })
 
 
-export const setLoginPending = (isLoginPending) => ({
-  type: SET_LOGIN_PENDING,
-  isLoginPending
-})
-
-export const setLoginSuccess = (isLoginSuccess) => ({
-  type: SET_LOGIN_SUCCESS,
-  isLoginSuccess
-})
-
 export const setLoginError = (loginError) => ({
   type: SET_LOGIN_ERROR,
   loginError
@@ -50,7 +43,22 @@ export const requestLogin = (u, p, s) => ({
   server: s
 })
 
-export const receivedLoginResponse = (json) => ({
+export const receivedLoginResponse = (response) => ({
   type: CONFIRM_LOGIN,
-  response: json
+  response
+})
+
+// network
+export const listVLANs = () => ({
+  type: UCS_LIST_VLANS
+})
+
+export const ucsError = (error) => ({
+  type: UCS_ERROR,
+  error
+})
+
+export const receivedVLANs = (vlans) => ({
+  type: UCS_RECEIVED_VLANS,
+  vlans
 })

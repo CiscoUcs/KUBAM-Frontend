@@ -1,26 +1,20 @@
 const url = "http://localhost/api/v1"
 
-const sessionApi = {
-  login(userData) {
-    return fetch(url + '/session', {
-      method: 'POST',
+const networkApi = {
+  list(userData) {
+    return fetch(url + '/networks', {
+      method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        credentials : {
-          user : userData.user,
-          password: userData.password,
-          server : userData.server
-        }
-      })
     })
     .then(statusHelper)
     .then(response => response.json())
     .catch(error => error)
     .then(data => {
-      return data
+      //console.log(data)
+      return data.vlans
     })
   }
 }
@@ -34,4 +28,4 @@ function statusHelper (response) {
   }
 }
 
-export default sessionApi
+export default networkApi

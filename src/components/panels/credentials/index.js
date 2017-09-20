@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const LoginForm = ({ handleSubmit, credData}) => {
   console.log(credData)
-  if (credData.isLogginPending === true) {
+  if (credData.isLoginPending === true) {
     return (
       <div className="card-body">
         <div className="row">
@@ -13,6 +13,21 @@ const LoginForm = ({ handleSubmit, credData}) => {
               <i className="fa fa-circle-o-notch fa-spin" aria-hidden="false"></i>
             </h1>
             <small>Attempting Login</small>
+          </div>
+          <div className="col"></div>
+        </div>
+      </div>
+    )
+  }
+  if (credData.isLoggedIn === true) {
+    return (
+      <div className="card-body">
+        <div className="row">
+          <div className="col"></div>
+          <div className="col align-self-center text-center">
+            <h3 className="lead">Connected</h3>
+            <h3 className="lead">user: { credData.user }</h3>
+            <h3 className="lead">UCSM: { credData.server }</h3>
           </div>
           <div className="col"></div>
         </div>

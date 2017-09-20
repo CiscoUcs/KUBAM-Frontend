@@ -8,7 +8,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onClick: (tab) => {
-    console.log(tab)
+    //console.log(tab)
     dispatch(selectTab(tab))
   }
 
