@@ -10,7 +10,6 @@ const networkApi = {
       },
     })
     .then(statusHelper)
-    .then(response => response.json())
     .then(data => {
       return data
     })
@@ -24,7 +23,7 @@ const networkApi = {
 function statusHelper (response) {
   let json = response.json(); // there's always a body.
   if (response.status >= 200 && response.status < 300) {
-    return Promise.resolve(response)
+    return json.then(Promise.resolve(response))
   } else {
     console.log("this is the total response:")
     if (! json.error) {

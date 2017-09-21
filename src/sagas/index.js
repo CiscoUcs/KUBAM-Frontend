@@ -36,6 +36,7 @@ export function* listVLANs() {
   if (response.error) {
     return yield put (actions.ucsError(response))
   }
+  console.log(response)
   yield put(actions.receivedVLANs(response.vlans))
 }
 
