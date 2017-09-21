@@ -7,8 +7,14 @@ import LoginForm  from '../components/panels/credentials/'
 class LoginFormContainer extends Component {
   static propTypes = {
     login: PropTypes.func.isRequired,
-    credData: PropTypes.object.isRequired
+    credData: PropTypes.object.isRequired,
+    checkLogin: PropTypes.func.isRequired
   }
+
+  componentDidMount() {
+    this.props.listVLANS()
+  }
+
   onSubmit = (event) => {
     event.preventDefault();
     const  user =  document.getElementById("user").value;
@@ -30,6 +36,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch)  => ({
   login: (user, password, server) => dispatch(requestLogin(user,password, server)),
+  checkLogin: () => dispatch(checkLogin())
 })
 
 export default connect(

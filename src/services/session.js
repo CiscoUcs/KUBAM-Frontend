@@ -22,6 +22,36 @@ const sessionApi = {
     .then(data => {
       return data
     })
+  },
+  get_login() {
+    return fetch(url + '/session', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(statusHelper)
+    .catch(error => error)
+    .then(response => response.json())
+    .then(data => {
+      return data
+    })
+  },
+  delete_login() {
+    return fetch(url + '/session', {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(statusHelper)
+    .then(response => response.json())
+    .catch(error => error)
+    .then(data => {
+      return data
+    })
   }
 }
 
@@ -30,7 +60,9 @@ function statusHelper (response) {
   if (response.status >= 200 && response.status < 300) {
     return Promise.resolve(response)
   } else {
-    return Promise.reject(new Error(response.statusText))
+    var error = new Error(response.statusText || response.status)
+    error.response = response
+    return Promise.reject(error)
   }
 }
 

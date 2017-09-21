@@ -11,20 +11,26 @@ const networkApi = {
     })
     .then(statusHelper)
     .then(response => response.json())
-    .catch(error => error)
     .then(data => {
-      //console.log(data)
-      return data.vlans
+      return data
+    })
+    .catch( (error) => { 
+      return error
     })
   }
 }
 
 // thanks: https://github.com/redux-saga/redux-saga/issues/561
 function statusHelper (response) {
+  let json = response.json(); // there's always a body.
   if (response.status >= 200 && response.status < 300) {
     return Promise.resolve(response)
   } else {
-    return Promise.reject(new Error(response.statusText))
+    console.log("this is the total response:")
+    if (! json.error) {
+      json.error = "Unable to get network settings."
+    }
+    return json.then(Promise.reject.bind(Promise))
   }
 }
 
