@@ -8,12 +8,13 @@ class LoginFormContainer extends Component {
   static propTypes = {
     login: PropTypes.func.isRequired,
     credData: PropTypes.object.isRequired,
-    checkLogin: PropTypes.func.isRequired
+    //checkLogin: PropTypes.func.isRequired
   }
 
+  /*
   componentDidMount() {
     this.props.listVLANS()
-  }
+  }*/
 
   onSubmit = (event) => {
     event.preventDefault();
@@ -36,7 +37,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch)  => ({
   login: (user, password, server) => dispatch(requestLogin(user,password, server)),
-  checkLogin: () => dispatch(checkLogin())
+  //checkLogin: () => dispatch(checkLogin())
 })
 
 export default connect(
