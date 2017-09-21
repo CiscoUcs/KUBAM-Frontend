@@ -10,7 +10,10 @@ var NetworkList = ({vlans}) => (
         <p></p>
         <ul className="list-group"> 
         {vlans.map( (vlan, i) => 
-            <li className="list-group-item" key={i}>{vlan.name} {vlan['vlan-id']}</li>
+              vlan.selected ? 
+              <li className="list-group-item active" key={i}>{vlan.name} {vlan.id}</li>
+              :
+              <li className="list-group-item" key={i}>{vlan.name} {vlan.id}</li>
           )
         }
         </ul>
