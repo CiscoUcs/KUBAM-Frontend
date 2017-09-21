@@ -17,7 +17,6 @@ const sessionApi = {
       })
     })
     .then(statusHelper)
-    .then(response => response.json())
     .catch(error => error)
     .then(data => {
       return data
@@ -33,7 +32,6 @@ const sessionApi = {
     })
     .then(statusHelper)
     .catch(error => error)
-    .then(response => response.json())
     .then(data => {
       return data
     })
@@ -47,7 +45,6 @@ const sessionApi = {
       },
     })
     .then(statusHelper)
-    .then(response => response.json())
     .catch(error => error)
     .then(data => {
       return data
@@ -57,12 +54,14 @@ const sessionApi = {
 
 // thanks: https://github.com/redux-saga/redux-saga/issues/561
 function statusHelper (response) {
+  let json = response.json(); // there's always a body.
   if (response.status >= 200 && response.status < 300) {
-    return Promise.resolve(response)
+    return json.then(Promise.resolve(response))
   } else {
-    var error = new Error(response.statusText || response.status)
-    error.response = response
-    return Promise.reject(error)
+    if (! json.error) {
+      json.error = "Unable to get network settings."
+    }
+    return json.then(Promise.reject.bind(Promise))
   }
 }
 

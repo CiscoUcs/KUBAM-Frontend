@@ -1,5 +1,8 @@
 export const SUBMIT_CREDS = 'SUBMIT_CREDENTIALS'
 export const CONFIRM_LOGIN = 'CONFIRM_LOGIN'
+export const CHECK_LOGIN = 'CHECK_LOGIN'
+export const LOGIN_CHECKED = 'LOGIN_CHECKED'
+export const LOGOUT = 'LOGOUT'
 export const SET_LOGIN_PENDING = 'SET_LOGIN_PENDING';
 export const SET_LOGIN_SUCCESS = 'SET_LOGIN_SUCCESS';
 export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
@@ -42,6 +45,20 @@ export const requestLogin = (u, p, s) => ({
   password: p,
   server: s
 })
+
+export const logout = () => ({
+  type: LOGOUT
+})
+
+export const checkLogin = () => ({
+  type: CHECK_LOGIN
+})
+
+export const loginChecked = (response) => ({
+  type: LOGIN_CHECKED,
+  response
+})
+
 
 export const receivedLoginResponse = (response) => ({
   type: CONFIRM_LOGIN,

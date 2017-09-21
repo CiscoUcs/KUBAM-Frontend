@@ -25,7 +25,6 @@ function statusHelper (response) {
   if (response.status >= 200 && response.status < 300) {
     return json.then(Promise.resolve(response))
   } else {
-    console.log("this is the total response:")
     if (! json.error) {
       json.error = "Unable to get network settings."
     }

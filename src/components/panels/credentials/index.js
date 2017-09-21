@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const LoginForm = ({ handleSubmit, credData}) => {
-  console.log(credData)
+const LoginForm = ({ handleSubmit, credData, error, logoutFunc}) => {
   if (credData.isLoginPending === true) {
     return (
       <div className="card-body">
@@ -25,9 +24,10 @@ const LoginForm = ({ handleSubmit, credData}) => {
         <div className="row">
           <div className="col"></div>
           <div className="col align-self-center text-center">
-            <h3 className="lead">Connected</h3>
+            <h3 className="lead ">UCS Connection</h3>
             <h3 className="lead">user: { credData.user }</h3>
             <h3 className="lead">UCSM: { credData.server }</h3>
+            <button  className="btn btn-primary" onClick={logoutFunc}>Logout</button>
           </div>
           <div className="col"></div>
         </div>
@@ -41,6 +41,9 @@ const LoginForm = ({ handleSubmit, credData}) => {
       <div className="col align-self-center text-center">
         <h3 className="lead">UCS LOGIN</h3>
         <small className="text-muted">Please enter credentials to connect KUBAM to your UCS</small>
+        {(error === "") ? <br/>  :
+          <div className="bg-danger text-white"><small>{error}</small><p></p></div>
+        }
         <form id="creds">
           <div className="form-row align-items-center">
             <div className="input-group">

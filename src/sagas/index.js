@@ -10,8 +10,9 @@ export function* login(action) {
                       server : action.server
                     })
   if (response.error) {
-    return yield put (actions.setLoginError(response)) 
+    return yield put (actions.setLoginError(response.error)) 
   }
+  
   yield put(actions.receivedLoginResponse(response))
 }
 
@@ -20,28 +21,30 @@ export function* get_login() {
   if (response.error) {
     return yield put (actions.setLoginError(response)) 
   }
-  yield put(actions.receivedLoginResponse(response))
+  yield put(actions.loginChecked(response))
 }
 
 export function* delete_login() {
   let response = yield call(sessionApi.delete_login)
   if (response.error) {
-    return yield put (actions.setLoginError(response)) 
+    return yield put (actions.setLoginError(response.error)) 
   }
-  yield put(actions.receivedLoginResponse(response))
+  //yield put(actions.receivedLoginResponse(response))
 }
 
 export function* listVLANs() {
   let response = yield call(networkApi.list)
   if (response.error) {
-    return yield put (actions.ucsError(response))
+    return yield put (actions.ucsError(response.error))
   }
-  console.log(response)
   yield put(actions.receivedVLANs(response.vlans))
 }
 
+
 export function* watchLoginRequest() {
   yield takeEvery(actions.SUBMIT_CREDS, login);
+  yield takeEvery(actions.CHECK_LOGIN, get_login);
+  yield takeEvery(actions.LOGOUT, delete_login);
 }
 
 export function* watchVLANRequest() {
