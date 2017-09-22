@@ -2,7 +2,7 @@ import React from 'react'
 //import Login from './panels/credentials/'
 import LoginFormContainer from '../containers/LoginFormContainer'
 import Network from '../containers/Network'
-import Server from './panels/server/'
+import Server from '../containers/Server'
 import OS from './panels/os/'
 import Deploy from './panels/deploy/'
 

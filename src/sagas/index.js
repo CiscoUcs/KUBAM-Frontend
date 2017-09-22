@@ -1,6 +1,7 @@
 import { put, all, call, takeEvery } from 'redux-saga/effects'
 import sessionApi from '../services/session'
 import networkApi from '../services/network'
+import serverApi from '../services/server'
 import * as actions from '../actions'
 
 export function* login(action) {
@@ -41,19 +42,28 @@ export function* listVLANs() {
 }
 
 
+export function* listServers() {
+  let response = yield call(serverApi.list)
+  if (response.error) {
+    return yield put (actions.ucsError(response.error))
+  }
+  yield put(actions.receivedServers(response.servers))
+}
+
 export function* watchLoginRequest() {
   yield takeEvery(actions.SUBMIT_CREDS, login);
   yield takeEvery(actions.CHECK_LOGIN, get_login);
   yield takeEvery(actions.LOGOUT, delete_login);
 }
 
-export function* watchVLANRequest() {
+export function* watchUCSRequest() {
   yield takeEvery(actions.UCS_LIST_VLANS, listVLANs)
+  yield takeEvery(actions.UCS_LIST_SERVERS, listServers)
 }
 
 export default function* rootSaga() {
   yield all([
     watchLoginRequest(),
-    watchVLANRequest(),
+    watchUCSRequest(),
   ])
 }

@@ -7,8 +7,10 @@ export const SET_LOGIN_PENDING = 'SET_LOGIN_PENDING';
 export const SET_LOGIN_SUCCESS = 'SET_LOGIN_SUCCESS';
 export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
 export const UCS_LIST_VLANS = 'UCS_LIST_VLANS';
-export const UCS_ERROR = 'UCS_ERROR';
 export const UCS_RECEIVED_VLANS = 'UCS_RECEIVED_VLANS';
+export const UCS_LIST_SERVERS = 'UCS_LIST_SERVERS';
+export const UCS_RECEIVED_SERVERS = 'UCS_RECEIVED_SERVERS';
+export const UCS_ERROR = 'UCS_ERROR';
 
 let nextTodoId = 0
 export const addTodo = (text) => ({
@@ -78,4 +80,14 @@ export const ucsError = (error) => ({
 export const receivedVLANs = (vlans) => ({
   type: UCS_RECEIVED_VLANS,
   vlans
+})
+
+// servers
+export const listServers = () => ({
+  type: UCS_LIST_SERVERS
+})
+
+export const receivedServers = (servers) => ({
+  type: UCS_RECEIVED_SERVERS,
+  servers
 })
