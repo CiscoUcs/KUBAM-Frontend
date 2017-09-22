@@ -1,5 +1,6 @@
 import {
   UCS_ERROR,
+  UCS_UPDATE_SERVERS,
   UCS_RECEIVED_SERVERS,
 } from '../actions'
 
@@ -9,6 +10,10 @@ const server = (state = {
   }, action) => {
   switch (action.type) {
     case UCS_RECEIVED_SERVERS:
+      return Object.assign({}, state, {
+        servers: action.servers,
+      })
+     case UCS_UPDATE_SERVERS:
       return Object.assign({}, state, {
         servers: action.servers,
       })

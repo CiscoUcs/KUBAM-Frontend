@@ -58,6 +58,14 @@ export function* listServers() {
   yield put(actions.receivedServers(response.servers))
 }
 
+export function* updateServers(action) {
+  let response = yield call(serverApi.updateServers, { servers : action.servers})
+  if (response.error) {
+    return yield put (actions.ucsError(response.error))
+  }
+  yield put(actions.receivedServers(response.servers))
+}
+
 export function* watchLoginRequest() {
   yield takeEvery(actions.SUBMIT_CREDS, login);
   yield takeEvery(actions.CHECK_LOGIN, get_login);
@@ -68,6 +76,7 @@ export function* watchUCSRequest() {
   yield takeEvery(actions.UCS_LIST_VLANS, listVLANs)
   yield takeEvery(actions.UCS_UPDATE_VLAN, updateVLAN)
   yield takeEvery(actions.UCS_LIST_SERVERS, listServers)
+  yield takeEvery(actions.UCS_UPDATE_SERVERS, updateServers)
 }
 
 export default function* rootSaga() {

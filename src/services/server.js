@@ -16,6 +16,26 @@ const serverApi = {
     .catch( (error) => { 
       return error
     })
+  },
+  updateServers(userData) {
+    console.log(userData)
+    return fetch(url + '/servers', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        servers: userData.servers,
+      }),
+    })
+    .then(statusHelper)
+    .then(data => {
+      return data
+    })
+    .catch( (error) => {
+      return error
+    })
   }
 }
 

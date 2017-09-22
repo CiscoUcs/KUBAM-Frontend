@@ -10,6 +10,7 @@ export const UCS_LIST_VLANS = 'UCS_LIST_VLANS';
 export const UCS_RECEIVED_VLANS = 'UCS_RECEIVED_VLANS';
 export const UCS_UPDATE_VLAN = 'UCS_UPDATE_VLAN';
 export const UCS_LIST_SERVERS = 'UCS_LIST_SERVERS';
+export const UCS_UPDATE_SERVERS = 'UCS_UPDATE_SERVERS';
 export const UCS_RECEIVED_SERVERS = 'UCS_RECEIVED_SERVERS';
 export const UCS_ERROR = 'UCS_ERROR';
 
@@ -95,6 +96,11 @@ export const listServers = () => ({
 
 export const receivedServers = (servers) => ({
   type: UCS_RECEIVED_SERVERS,
+  servers
+})
+
+export const updateServers = (servers) => ({
+  type: UCS_UPDATE_SERVERS,
   servers
 })
 
