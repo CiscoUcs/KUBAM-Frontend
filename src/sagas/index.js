@@ -41,6 +41,14 @@ export function* listVLANs() {
   yield put(actions.receivedVLANs(response.vlans))
 }
 
+// update vlans 
+export function* updateVLAN(action) {
+  let response = yield call(networkApi.updateVLAN, { vlan : action.vlan})
+  if (response.error) {
+    return yield put (actions.ucsError(response.error))
+  }
+  yield put(actions.receivedVLANs(response.vlans))
+}
 
 export function* listServers() {
   let response = yield call(serverApi.list)
@@ -58,6 +66,7 @@ export function* watchLoginRequest() {
 
 export function* watchUCSRequest() {
   yield takeEvery(actions.UCS_LIST_VLANS, listVLANs)
+  yield takeEvery(actions.UCS_UPDATE_VLAN, updateVLAN)
   yield takeEvery(actions.UCS_LIST_SERVERS, listServers)
 }
 

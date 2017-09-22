@@ -16,6 +16,26 @@ const networkApi = {
     .catch( (error) => { 
       return error
     })
+  },
+  updateVLAN(userData) {
+    console.log(userData)
+    return fetch(url + '/networks/vlan', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        vlan: userData.vlan,
+      }),
+    })
+    .then(statusHelper)
+    .then(data => {
+      return data
+    })
+    .catch( (error) => { 
+      return error
+    })
   }
 }
 

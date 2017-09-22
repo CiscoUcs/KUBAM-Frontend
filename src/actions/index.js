@@ -8,6 +8,7 @@ export const SET_LOGIN_SUCCESS = 'SET_LOGIN_SUCCESS';
 export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
 export const UCS_LIST_VLANS = 'UCS_LIST_VLANS';
 export const UCS_RECEIVED_VLANS = 'UCS_RECEIVED_VLANS';
+export const UCS_UPDATE_VLAN = 'UCS_UPDATE_VLAN';
 export const UCS_LIST_SERVERS = 'UCS_LIST_SERVERS';
 export const UCS_RECEIVED_SERVERS = 'UCS_RECEIVED_SERVERS';
 export const UCS_ERROR = 'UCS_ERROR';
@@ -82,6 +83,11 @@ export const receivedVLANs = (vlans) => ({
   vlans
 })
 
+export const updateVLAN = (vlan) => ({
+  type: UCS_UPDATE_VLAN,
+  vlan
+})
+
 // servers
 export const listServers = () => ({
   type: UCS_LIST_SERVERS
@@ -91,3 +97,6 @@ export const receivedServers = (servers) => ({
   type: UCS_RECEIVED_SERVERS,
   servers
 })
+
+// operating system actions.
+

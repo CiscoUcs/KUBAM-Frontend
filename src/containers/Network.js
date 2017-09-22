@@ -1,15 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { listVLANs } from '../actions'
+import { listVLANs, updateVLAN } from '../actions'
 import NetworkList  from '../components/panels/network/'
 
 class Network extends Component {
   componentDidMount() {
     this.props.listVLANS()
   }
+
+  clickFunc = (event, name) => {
+    event.preventDefault();
+    this.props.updateVLAN(name) 
+  }
+
   render() {
     return (
-      <NetworkList vlans={this.props.vlans} />
+      <NetworkList vlans={this.props.vlans} clickFunc={this.clickFunc}/>
     )
   }
 }
@@ -20,6 +26,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch)  => ({
   listVLANS: () => dispatch(listVLANs()),
+  updateVLAN: (vlan) => dispatch(updateVLAN(vlan)),
 })
 
 export default connect(
