@@ -8,14 +8,18 @@ class Server extends Component {
     this.props.listServers()
   }
 
-  clickFunc = (event, i, servers) => {
+  clickFunc = (event, server, servers) => {
     event.preventDefault();
     // check with list of servers to see if active
     // if not make it active, if it is uncheck it. 
-    var server = servers[i];
-    server.selected ? server.selected = false : server.selected = true;
-    servers[i] = server
-    this.props.updateServers(servers)
+    for (var i = 0; i < servers.length; i ++ ) {
+      if (JSON.stringify(servers[i]) === JSON.stringify(server)) {
+          server.selected ? server.selected = false : server.selected = true;
+          servers[i] = server
+          this.props.updateServers(servers)
+          return
+      }
+    }
   }
 
   render() {

@@ -11,13 +11,13 @@ var ServerList = ({servers, clickFunc}) => (
         <ul className="list-group" > 
           { servers.filter( (server, i) => ( server.type === "blade")).map( (server, i) => 
                 server.selected ? 
-                <li className="list-group-item list-group-item-action active" key={i} onClick={(e)=> clickFunc(e, i, servers)}>
+                <li className="list-group-item list-group-item-action active" key={i} onClick={(e)=> clickFunc(e, server, servers)}>
                   Chassis: {server.chassis_id} Slot: {server.slot}
                   <br/>
                   {server.model}
                 </li>
                 :
-                <li className="list-group-item list-group-item-action" key={i} onClick={(e)=> clickFunc(e, i, servers)}>
+                <li className="list-group-item list-group-item-action" key={i} onClick={(e)=> clickFunc(e, server, servers)}>
                   Chassis: {server.chassis_id} Slot: {server.slot}
                   <br/>
                   {server.model}
@@ -30,13 +30,13 @@ var ServerList = ({servers, clickFunc}) => (
         <ul className="list-group"> 
           { servers.filter( (server, i) => (server.type === "rack")).map( (server, i) => 
                 server.selected ? 
-                <li className="list-group-item list-group-item-action active" key={i} onClick={(e) => clickFunc(e, i, servers)}>
+                <li className="list-group-item list-group-item-action active" key={i} onClick={(e) => clickFunc(e, server, servers)}>
                   Rack Unit: {server.rack_id}
                   <br/>
                   {server.model}
                 </li>
                 :
-                <li className="list-group-item list-group-item-action" key={i} onClick={(e) => clickFunc(e, i, servers)}>
+                <li className="list-group-item list-group-item-action" key={i} onClick={(e) => clickFunc(e, server, servers)}>
                   Rack Unit: {server.rack_id}
                   <br/>
                   {server.model}
