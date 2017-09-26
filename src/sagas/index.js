@@ -2,6 +2,7 @@ import { put, all, call, takeEvery } from 'redux-saga/effects'
 import sessionApi from '../services/session'
 import networkApi from '../services/network'
 import serverApi from '../services/server'
+import osApi from '../services/os'
 import * as actions from '../actions'
 
 export function* login(action) {
@@ -66,6 +67,16 @@ export function* updateServers(action) {
   yield put(actions.receivedServers(response.servers))
 }
 
+export function* listOSes() {
+  let response = yield call(osApi.list)
+  if (response.error) {
+    return yield put (actions.kubamError(response.error))
+  }
+  yield put(actions.fetching())
+  yield put(actions.receivedOSes(response.isos))
+}
+
+
 export function* watchLoginRequest() {
   yield takeEvery(actions.SUBMIT_CREDS, login);
   yield takeEvery(actions.CHECK_LOGIN, get_login);
@@ -76,7 +87,8 @@ export function* watchUCSRequest() {
   yield takeEvery(actions.UCS_LIST_VLANS, listVLANs)
   yield takeEvery(actions.UCS_UPDATE_VLAN, updateVLAN)
   yield takeEvery(actions.UCS_LIST_SERVERS, listServers)
-  yield takeEvery(actions.UCS_UPDATE_SERVERS, updateServers)
+  yield takeEvery(actions.UCS_UPDATE_SERVERS, listOSes)
+  yield takeEvery(actions.LIST_OSES, listOSes)
 }
 
 export default function* rootSaga() {

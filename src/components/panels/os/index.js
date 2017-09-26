@@ -1,17 +1,26 @@
 import React from 'react'
 
-var OS = () => (
-
+var OSList = ({osList}) => (
+  
   <div className="card-body">
     <div className="row">
       <div className="col"></div>
-      <div className="col align-self-center text-center">
-        <h3 className="lead">Operating System</h3>
+      <div className="col align-self-center">
+        <h3 className="lead text-center">ISO Images</h3>
+        <p></p>
+        <p className="text-center"><small></small></p>
+        <p></p>
+        <ul className="list-group"> 
+        { osList.map( (os, i) => 
+              <li className="list-group-item " key={i}> {os} </li>
+          )
+        }
+        </ul>
       </div>
       <div className="col"></div>
     </div>
   </div>
 );
 
-export default OS
+export default OSList
 

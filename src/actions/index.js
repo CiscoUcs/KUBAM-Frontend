@@ -1,8 +1,11 @@
-export const SUBMIT_CREDS = 'SUBMIT_CREDENTIALS'
-export const CONFIRM_LOGIN = 'CONFIRM_LOGIN'
-export const CHECK_LOGIN = 'CHECK_LOGIN'
-export const LOGIN_CHECKED = 'LOGIN_CHECKED'
-export const LOGOUT = 'LOGOUT'
+export const SELECTED_TAB = 'SELECTED_TAB';
+export const SUBMIT_CREDS = 'SUBMIT_CREDENTIALS';
+export const CONFIRM_LOGIN = 'CONFIRM_LOGIN';
+export const CHECK_LOGIN = 'CHECK_LOGIN';
+export const LOGIN_CHECKED = 'LOGIN_CHECKED';
+export const LOGOUT = 'LOGOUT';
+export const LIST_OSES = 'LIST_OSES';
+export const KUBAM_ERROR = 'KUBAM_API_ERROR';
 export const SET_LOGIN_PENDING = 'SET_LOGIN_PENDING';
 export const SET_LOGIN_SUCCESS = 'SET_LOGIN_SUCCESS';
 export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
@@ -13,6 +16,8 @@ export const UCS_LIST_SERVERS = 'UCS_LIST_SERVERS';
 export const UCS_UPDATE_SERVERS = 'UCS_UPDATE_SERVERS';
 export const UCS_RECEIVED_SERVERS = 'UCS_RECEIVED_SERVERS';
 export const UCS_ERROR = 'UCS_ERROR';
+export const FETCHING = 'FETCHING';
+export const RECEIVED_OS = 'RECEIVED_THE_OS_STUFF';
 
 let nextTodoId = 0
 export const addTodo = (text) => ({
@@ -32,7 +37,7 @@ export const toggleTodo = (id) => ({
 })
 
 export const selectTab = (selected) => ({
-  type: 'SELECTED_TAB',
+  type: SELECTED_TAB,
   selected
 })
 
@@ -105,4 +110,20 @@ export const updateServers = (servers) => ({
 })
 
 // operating system actions.
+export const listOSes = () => ({
+  type: LIST_OSES,
+})
 
+export const kubamError = (error) => ({
+  type: KUBAM_ERROR,
+  error
+})
+
+export const fetching = () => ({
+  type: FETCHING,
+})
+
+export const receivedOSes = (osList) => ({
+  type: RECEIVED_OS,
+  osList,
+})

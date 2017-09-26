@@ -3,7 +3,7 @@ import React from 'react'
 import LoginFormContainer from '../containers/LoginFormContainer'
 import Network from '../containers/Network'
 import Server from '../containers/Server'
-import OS from './panels/os/'
+import OS from '../containers/OS'
 import Deploy from './panels/deploy/'
 
 var Panel = ({selected}) => {

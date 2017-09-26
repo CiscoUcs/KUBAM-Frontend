@@ -5,6 +5,7 @@ import login from './login'
 import submitCreds from './creds'
 import network from './network'
 import server from './server'
+import os from './os'
 import visibilityFilter from './visibilityFilter'
 
 const kubamApp = combineReducers({
@@ -13,6 +14,7 @@ const kubamApp = combineReducers({
   login,
   network,
   server,
+  os, 
   submitCreds,
   visibilityFilter
 })

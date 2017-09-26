@@ -3,12 +3,11 @@ import { selectTab } from '../actions'
 import StepsBar from '../components/StepsBar'
 
 const mapStateToProps = (state, ownProps) => ({
-  selected: state.tabs
+  selected: state.tabs.selected
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onClick: (tab) => {
-    //console.log(tab)
     dispatch(selectTab(tab))
   }
 
