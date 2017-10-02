@@ -87,7 +87,7 @@ export function* watchUCSRequest() {
   yield takeEvery(actions.UCS_LIST_VLANS, listVLANs)
   yield takeEvery(actions.UCS_UPDATE_VLAN, updateVLAN)
   yield takeEvery(actions.UCS_LIST_SERVERS, listServers)
-  yield takeEvery(actions.UCS_UPDATE_SERVERS, listOSes)
+  yield takeEvery(actions.UCS_UPDATE_SERVERS, updateServers)
   yield takeEvery(actions.LIST_OSES, listOSes)
 }
 
