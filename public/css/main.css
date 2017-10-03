@@ -45,3 +45,8 @@ a .fa {
   margin-top: 40px;
 
 }
+
+.scrolling-list {
+  height: 350px;
+  overflow: auto;
+}
