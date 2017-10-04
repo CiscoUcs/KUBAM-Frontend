@@ -18,7 +18,6 @@ const networkApi = {
     })
   },
   updateVLAN(userData) {
-    console.log(userData)
     return fetch(url + '/networks/vlan', {
       method: 'POST',
       headers: {
@@ -36,7 +35,30 @@ const networkApi = {
     .catch( (error) => { 
       return error
     })
-  }
+  },
+  updateNetwork(userData) {
+    console.log("updateNetwork")
+    console.log(userData)
+    return fetch(url + '/networks', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+
+        vlan: userData.vlan,
+        network: userData.network,
+      }),
+    })
+    .then(statusHelper)
+    .then(data => {
+      return data
+    })
+    .catch( (error) => { 
+      return error
+    })
+  },
 }
 
 // thanks: https://github.com/redux-saga/redux-saga/issues/561

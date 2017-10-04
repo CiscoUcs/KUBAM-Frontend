@@ -34,21 +34,22 @@ export function* delete_login() {
   //yield put(actions.receivedLoginResponse(response))
 }
 
-export function* listVLANs() {
+
+export function* fetchNetwork() {
   let response = yield call(networkApi.list)
   if (response.error) {
     return yield put (actions.ucsError(response.error))
   }
-  yield put(actions.receivedVLANs(response.vlans))
+  yield put(actions.receivedNetwork(response.vlans, response.network))
 }
 
-// update vlans 
-export function* updateVLAN(action) {
-  let response = yield call(networkApi.updateVLAN, { vlan : action.vlan})
+export function* updateNetwork(action) {
+  let response = yield call(networkApi.updateNetwork, { vlan : action.vlan, network: action.network})
   if (response.error) {
     return yield put (actions.ucsError(response.error))
   }
-  yield put(actions.receivedVLANs(response.vlans))
+  
+  yield put(actions.receivedNetwork(response.vlans, response.network))
 }
 
 export function* listServers() {
@@ -84,8 +85,8 @@ export function* watchLoginRequest() {
 }
 
 export function* watchUCSRequest() {
-  yield takeEvery(actions.UCS_LIST_VLANS, listVLANs)
-  yield takeEvery(actions.UCS_UPDATE_VLAN, updateVLAN)
+  yield takeEvery(actions.UCS_FETCH_NETWORK, fetchNetwork)
+  yield takeEvery(actions.UCS_UPDATE_NETWORK, updateNetwork)
   yield takeEvery(actions.UCS_LIST_SERVERS, listServers)
   yield takeEvery(actions.UCS_UPDATE_SERVERS, updateServers)
   yield takeEvery(actions.LIST_OSES, listOSes)

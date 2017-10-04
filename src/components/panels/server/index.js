@@ -87,11 +87,15 @@ var ServerList = ({servers, clickFunc}) => (
                 <li className="list-group-item list-group-item-action active" key={i} onClick={(e)=> clickFunc(e, server, servers)}>
                   Chassis: {server.chassis_id} Slot: {server.slot}
                   <br/>
+                  Service Profile: { server.association === "associated" ?  server.service_profile : "Unassociated" }
+                  <br/>
                   {server.model}
                 </li>
                 :
                 <li className="list-group-item list-group-item-action" key={i} onClick={(e)=> clickFunc(e, server, servers)}>
                   Chassis: {server.chassis_id} Slot: {server.slot}
+                  <br/>
+                  Service Profile: { server.association === "associated" ?  server.service_profile : "Unassociated" }
                   <br/>
                   {server.model}
                 </li>
@@ -105,11 +109,15 @@ var ServerList = ({servers, clickFunc}) => (
                 <li className="list-group-item list-group-item-action active" key={i} onClick={(e) => clickFunc(e, server, servers)}>
                   Rack Unit: {server.rack_id}
                   <br/>
+                  Service Profile: { server.association === "associated" ?  server.service_profile : "Unassociated" }
+                  <br/>
                   {server.model}
                 </li>
                 :
                 <li className="list-group-item list-group-item-action" key={i} onClick={(e) => clickFunc(e, server, servers)}>
                   Rack Unit: {server.rack_id}
+                  <br/>
+                  Service Profile: { server.association === "associated" ?  server.service_profile : "Unassociated" }
                   <br/>
                   {server.model}
                 </li>

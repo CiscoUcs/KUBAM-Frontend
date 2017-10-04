@@ -1,23 +1,27 @@
 import {
  /* UCS_LIST_VLANS, */
   UCS_ERROR,
-  UCS_UPDATE_VLAN,
-  UCS_RECEIVED_VLANS,
+  UCS_RECEIVED_NETWORK,
+  UCS_UPDATE_NETWORK,
 } from '../actions'
 
 const network = (state = {
   vlans: [],
   vlan: "",
+  network: {},
   ucsError: "",
   }, action) => {
   switch (action.type) {
-    case UCS_RECEIVED_VLANS:
+    case UCS_RECEIVED_NETWORK:
       return Object.assign({}, state, {
         vlans: action.vlans,
+        network: action.network,
       })
-    case UCS_UPDATE_VLAN:
+
+    case UCS_UPDATE_NETWORK:
       return Object.assign({}, state, {
         vlan: action.vlan,
+        network: action.network
       })
     
     case UCS_ERROR: 

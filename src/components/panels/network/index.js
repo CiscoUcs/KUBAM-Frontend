@@ -1,6 +1,7 @@
 import React from 'react'
 
-var NetworkList = ({vlans, clickFunc}) => (
+
+var NetworkList = ({vlans, network, clickFunc}) => (
   
   <div className="card-body">
     <div className="row">
@@ -18,7 +19,7 @@ var NetworkList = ({vlans, clickFunc}) => (
     </div>
     <div className="row">
       <div className="col">
-        <select className="custom-select">
+        <select className="custom-select" id="vlan">
           {vlans.map( (vlan, i) => 
                 vlan.selected ? 
                 <option value={vlan.name} key={i} defaultValue>{vlan.name} {vlan.id}</option>

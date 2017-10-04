@@ -10,8 +10,10 @@ export const SET_LOGIN_PENDING = 'SET_LOGIN_PENDING';
 export const SET_LOGIN_SUCCESS = 'SET_LOGIN_SUCCESS';
 export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
 export const UCS_LIST_VLANS = 'UCS_LIST_VLANS';
-export const UCS_RECEIVED_VLANS = 'UCS_RECEIVED_VLANS';
+export const UCS_FETCH_NETWORK = 'UCS_FETCH_NETWORK';
+export const UCS_RECEIVED_NETWORK = 'UCS_RECEIVED_NETWORK';
 export const UCS_UPDATE_VLAN = 'UCS_UPDATE_VLAN';
+export const UCS_UPDATE_NETWORK = 'UCS_UPDATE_NETWORK';
 export const UCS_LIST_SERVERS = 'UCS_LIST_SERVERS';
 export const UCS_UPDATE_SERVERS = 'UCS_UPDATE_SERVERS';
 export const UCS_RECEIVED_SERVERS = 'UCS_RECEIVED_SERVERS';
@@ -75,8 +77,9 @@ export const receivedLoginResponse = (response) => ({
 })
 
 // network
-export const listVLANs = () => ({
-  type: UCS_LIST_VLANS
+// get all the network settings for the network panel
+export const fetchNetwork = () => ({
+  type: UCS_FETCH_NETWORK
 })
 
 export const ucsError = (error) => ({
@@ -84,14 +87,17 @@ export const ucsError = (error) => ({
   error
 })
 
-export const receivedVLANs = (vlans) => ({
-  type: UCS_RECEIVED_VLANS,
-  vlans
+
+export const receivedNetwork = (vlans, network) => ({
+  type: UCS_RECEIVED_NETWORK,
+  vlans,
+  network
 })
 
-export const updateVLAN = (vlan) => ({
-  type: UCS_UPDATE_VLAN,
-  vlan
+export const updateNetwork = (vlan, network) => ({
+  type: UCS_UPDATE_NETWORK,
+  vlan,
+  network,
 })
 
 // servers
