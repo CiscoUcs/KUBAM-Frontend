@@ -11,26 +11,7 @@ var StepsBar = ({selected, onClick}) => (
               onClick={e => {  e.preventDefault() 
                              onClick("Credentials") }}
             >
-            <a className="nav-link">Credentials</a>
-          </li>
-          <li className={ selected === "Network" ?
-                                      "nav-item active" : 
-                                      "nav-item" } 
-
-              onClick={e => {  e.preventDefault() 
-                             onClick("Network") }}
-            >
-            <a className="nav-link ">Network</a>
-          </li> 
-          <li className={ selected === "Servers" ?
-                                      "nav-item active" : 
-                                      "nav-item" } 
-
-              onClick={e => {  e.preventDefault() 
-                             onClick("Servers") }}
-            >
-
-            <a className="nav-link" >Servers</a>
+            <a className="nav-link">1. Credentials</a>
           </li>
           <li className={ selected === "OS" ?
                                       "nav-item active" : 
@@ -41,7 +22,26 @@ var StepsBar = ({selected, onClick}) => (
             >
 
 
-            <a className="nav-link" >Operating System</a>
+            <a className="nav-link" >2. Operating System</a>
+          </li>
+          <li className={ selected === "Network" ?
+                                      "nav-item active" : 
+                                      "nav-item" } 
+
+              onClick={e => {  e.preventDefault() 
+                             onClick("Network") }}
+            >
+            <a className="nav-link ">3. Network</a>
+          </li> 
+          <li className={ selected === "Servers" ?
+                                      "nav-item active" : 
+                                      "nav-item" } 
+
+              onClick={e => {  e.preventDefault() 
+                             onClick("Servers") }}
+            >
+
+            <a className="nav-link" >4. Servers</a>
           </li>
           <li className={ selected === "Deploy" ?
                                       "nav-item active" : 
@@ -50,7 +50,7 @@ var StepsBar = ({selected, onClick}) => (
               onClick={e => {  e.preventDefault() 
                              onClick("Deploy") }}
             >
-            <a className="nav-link" >Deploy</a>
+            <a className="nav-link" >5. Deploy</a>
           </li>
         </ul>
           </div>
