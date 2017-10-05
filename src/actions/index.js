@@ -105,14 +105,16 @@ export const listServers = () => ({
   type: UCS_LIST_SERVERS
 })
 
-export const receivedServers = (servers) => ({
+export const receivedServers = (servers, hosts) => ({
   type: UCS_RECEIVED_SERVERS,
-  servers
+  servers,
+  hosts
 })
 
-export const updateServers = (servers) => ({
+export const updateServers = (servers, hosts) => ({
   type: UCS_UPDATE_SERVERS,
-  servers
+  servers,
+  hosts
 })
 
 // operating system actions.

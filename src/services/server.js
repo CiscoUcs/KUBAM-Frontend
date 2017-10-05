@@ -27,6 +27,7 @@ const serverApi = {
       },
       body: JSON.stringify({
         servers: userData.servers,
+        hosts: userData.hosts,
       }),
     })
     .then(statusHelper)

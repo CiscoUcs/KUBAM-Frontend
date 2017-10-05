@@ -1,9 +1,9 @@
 import React from 'react'
 
 
-var NetworkList = ({vlans, network, clickFunc}) => (
-  
+var NetworkList = ({vlans, network, clickFunc, onChange}) => (
   <div className="card-body">
+    {console.log(network)}  
     <div className="row">
       <div className="col">
         <h1 className="">UCS Network Settings</h1>
@@ -44,19 +44,19 @@ var NetworkList = ({vlans, network, clickFunc}) => (
         <div className="form-group row">
           <label htmlFor="netmask" className="col-sm-2 col-form-label text-right">Netmask</label>
           <div className="col-sm-6">
-            <input type="text" className="form-control" id="netmask" />
+            <input type="text" onChange={onChange} className="form-control" id="netmask" value={network.netmask} />
           </div>
         </div>
         <div className="form-group row">
           <label htmlFor="router" className="col-sm-2 col-form-label text-right">Router</label>
           <div className="col-sm-6">
-            <input type="text" className="form-control" id="router" />
+            <input type="text" onChange={onChange} className="form-control" id="gateway" value={network.gateway}/>
           </div>
         </div>
         <div className="form-group row">
           <label htmlFor="nameserver" className="col-sm-2 col-form-label text-right">Nameserver</label>
           <div className="col-sm-6">
-            <input type="text" className="form-control" id="nameserver" />
+            <input type="text" onChange={onChange} className="form-control" id="nameserver" value={network.nameserver}></input>
           </div>
         </div>
       </form>

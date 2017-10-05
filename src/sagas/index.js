@@ -57,15 +57,15 @@ export function* listServers() {
   if (response.error) {
     return yield put (actions.ucsError(response.error))
   }
-  yield put(actions.receivedServers(response.servers))
+  yield put(actions.receivedServers(response.servers, response.hosts))
 }
 
 export function* updateServers(action) {
-  let response = yield call(serverApi.updateServers, { servers : action.servers})
+  let response = yield call(serverApi.updateServers, { servers : action.servers, hosts: action.hosts})
   if (response.error) {
     return yield put (actions.ucsError(response.error))
   }
-  yield put(actions.receivedServers(response.servers))
+  yield put(actions.receivedServers(response.servers, response.hosts))
 }
 
 export function* listOSes() {
