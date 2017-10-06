@@ -3,7 +3,6 @@ import React from 'react'
 
 var NetworkList = ({vlans, network, clickFunc, onChange}) => (
   <div className="card-body">
-    {console.log(network)}  
     <div className="row">
       <div className="col">
         <h1 className="">UCS Network Settings</h1>

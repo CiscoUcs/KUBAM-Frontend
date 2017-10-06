@@ -20,23 +20,11 @@ export const UCS_RECEIVED_SERVERS = 'UCS_RECEIVED_SERVERS';
 export const UCS_ERROR = 'UCS_ERROR';
 export const FETCHING = 'FETCHING';
 export const RECEIVED_OS = 'RECEIVED_THE_OS_STUFF';
-
-let nextTodoId = 0
-export const addTodo = (text) => ({
-  type: 'ADD_TODO',
-  id: nextTodoId++,
-  text
-})
-
-export const setVisibilityFilter = (filter) => ({
-  type: 'SET_VISIBILITY_FILTER',
-  filter
-})
-
-export const toggleTodo = (id) => ({
-  type: 'TOGGLE_TODO',
-  id
-})
+export const GET_KEYS = 'GET_KEYS';
+export const RECEIVED_KEYS = 'RECEIVED_KEYS';
+export const GET_KUBAM_IP = 'GET_KUBAM_IP';
+export const RECEIVED_KUBAM_IP = 'RECEIVED_KUBAM_IP';
+export const DEPLOY = 'DEPLOY';
 
 export const selectTab = (selected) => ({
   type: SELECTED_TAB,
@@ -134,4 +122,28 @@ export const fetching = () => ({
 export const receivedOSes = (osList) => ({
   type: RECEIVED_OS,
   osList,
+})
+
+export const getKUBAMIP = () => ({
+  type: GET_KUBAM_IP
+})
+
+export const receivedKUBAMIP = (kubam_ip) => ({
+  type: RECEIVED_KUBAM_IP,
+  kubam_ip,
+})
+
+export const getKeys = () => ({
+  type: GET_KEYS
+})
+
+export const receivedKeys = (keys) => ({
+  type: RECEIVED_KEYS,
+  keys,
+})
+
+export const deploy = (kubam_ip, keys) =>  ({
+  type: DEPLOY,
+  kubam_ip,
+  keys,
 })

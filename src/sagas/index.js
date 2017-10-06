@@ -3,6 +3,7 @@ import sessionApi from '../services/session'
 import networkApi from '../services/network'
 import serverApi from '../services/server'
 import osApi from '../services/os'
+import deployApi from '../services/deploy'
 import * as actions from '../actions'
 
 export function* login(action) {
@@ -78,6 +79,33 @@ export function* listOSes() {
 }
 
 
+export function* getKeys() {
+  //yield put(actions.fetching())
+  let response = yield call(deployApi.fetchKeys)
+  if (response.error) {
+    return yield put (actions.kubamError(response.error))
+  }
+  yield put(actions.receivedKeys(response.keys))
+}
+
+export function* getKUBAMIP() {
+  //yield put(actions.fetching())
+  let response = yield call(deployApi.fetchKUBAMIP)
+  if (response.error) {
+    return yield put (actions.kubamError(response.error))
+  }
+  yield put(actions.receivedKUBAMIP(response.kubam_ip))
+}
+  
+export function* deploy(action) {
+  let response = yield call(deployApi.deploy, { keys : action.keys, kubam_ip: action.kubam_ip})
+  if (response.error) {
+    return yield put (actions.kubamError(response.error))
+  }
+  //TODO: do something here to show that it deployed. 
+}
+  
+
 export function* watchLoginRequest() {
   yield takeEvery(actions.SUBMIT_CREDS, login);
   yield takeEvery(actions.CHECK_LOGIN, get_login);
@@ -90,6 +118,9 @@ export function* watchUCSRequest() {
   yield takeEvery(actions.UCS_LIST_SERVERS, listServers)
   yield takeEvery(actions.UCS_UPDATE_SERVERS, updateServers)
   yield takeEvery(actions.LIST_OSES, listOSes)
+  yield takeEvery(actions.GET_KEYS, getKeys)
+  yield takeEvery(actions.GET_KUBAM_IP, getKUBAMIP)
+  yield takeEvery(actions.DEPLOY, deploy)
 }
 
 export default function* rootSaga() {

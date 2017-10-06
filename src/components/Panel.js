@@ -4,7 +4,7 @@ import LoginFormContainer from '../containers/LoginFormContainer'
 import Network from '../containers/Network'
 import Server from '../containers/Server'
 import OS from '../containers/OS'
-import Deploy from './panels/deploy/'
+import Deploy from '../containers/Deploy'
 
 var Panel = ({selected}) => {
   let p = null;

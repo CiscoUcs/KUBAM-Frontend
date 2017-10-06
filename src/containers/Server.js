@@ -15,7 +15,6 @@ class Server extends Component {
     this.hostOnblur = this.hostOnblur.bind(this)
     this.incrementHost = this.incrementHost.bind(this)
     this.hostOnChange = this.hostOnChange.bind(this)
-    //this.bumpIP = this.bumpIP.bind(this)
   }
 
   componentDidMount() {
@@ -36,13 +35,11 @@ class Server extends Component {
         hosts.pop();
       }
     } 
-    console.log("updateHOsts new hosts:", hosts)
     return hosts;
   }
 
   // after the list servers returns, update the state
   componentWillReceiveProps(nextProps) {
-    console.log("nextProps", nextProps)
     var newHosts = nextProps.hosts 
     
     newHosts = this.updateHosts(nextProps.servers, newHosts)

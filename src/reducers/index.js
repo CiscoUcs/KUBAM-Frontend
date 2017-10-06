@@ -1,22 +1,20 @@
 import { combineReducers } from 'redux'
-import todos from './todos'
 import tabs from './tabs'
 import login from './login'
 import submitCreds from './creds'
 import network from './network'
 import server from './server'
 import os from './os'
-import visibilityFilter from './visibilityFilter'
+import deploy from './deploy'
 
 const kubamApp = combineReducers({
-  todos,
   tabs,
   login,
   network,
   server,
   os, 
   submitCreds,
-  visibilityFilter
+  deploy,
 })
 
 export default kubamApp
