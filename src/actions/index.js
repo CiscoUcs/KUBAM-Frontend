@@ -4,7 +4,18 @@ export const CONFIRM_LOGIN = 'CONFIRM_LOGIN';
 export const CHECK_LOGIN = 'CHECK_LOGIN';
 export const LOGIN_CHECKED = 'LOGIN_CHECKED';
 export const LOGOUT = 'LOGOUT';
+/* for getting the ISOs */
 export const LIST_OSES = 'LIST_OSES';
+export const RECEIVED_OS = 'RECEIVED_THE_OS_STUFF';
+/* for getting and updating the ISO Maps */
+export const GET_ISO_MAP = 'GET_ISO_MAP';
+export const RECEIVED_ISO_MAP = 'RECEIVED_ISO_MAP';
+export const UPDATE_ISO_MAP = 'UPDATE_ISO_MAP';
+/* make ISO images */
+export const MAKE_ISO_IMAGES = 'MAKE_ISO_IMAGES';
+export const FINISHED_MAKING_ISO_IMAGES = 'MADE_ISO_IMAGES';
+export const ISO_ERROR = 'ISO_ERROR'
+
 export const KUBAM_ERROR = 'KUBAM_API_ERROR';
 export const SET_LOGIN_PENDING = 'SET_LOGIN_PENDING';
 export const SET_LOGIN_SUCCESS = 'SET_LOGIN_SUCCESS';
@@ -19,7 +30,6 @@ export const UCS_UPDATE_SERVERS = 'UCS_UPDATE_SERVERS';
 export const UCS_RECEIVED_SERVERS = 'UCS_RECEIVED_SERVERS';
 export const UCS_ERROR = 'UCS_ERROR';
 export const FETCHING = 'FETCHING';
-export const RECEIVED_OS = 'RECEIVED_THE_OS_STUFF';
 export const GET_KEYS = 'GET_KEYS';
 export const RECEIVED_KEYS = 'RECEIVED_KEYS';
 export const GET_KUBAM_IP = 'GET_KUBAM_IP';
@@ -119,11 +129,40 @@ export const fetching = () => ({
   type: FETCHING,
 })
 
+// ISO manipulation
 export const receivedOSes = (osList) => ({
   type: RECEIVED_OS,
   osList,
 })
 
+export const getISOMap = () => ({
+  type: GET_ISO_MAP
+})
+
+export const receivedISOMap = (isoMap) => ({
+  type: RECEIVED_ISO_MAP,
+  isoMap: isoMap,
+})
+
+export const updateISOMap = (isoMap) => ({
+  type: UPDATE_ISO_MAP,
+  isoMap,
+})
+
+export const makeISOImages = () => ({
+  type: MAKE_ISO_IMAGES,
+})
+
+export const didMakeISOImages = () => ({
+  type: FINISHED_MAKING_ISO_IMAGES,
+})
+
+export const isoError = (error) => ({
+  type: ISO_ERROR,
+  error
+})
+
+// KUBAM IP address
 export const getKUBAMIP = () => ({
   type: GET_KUBAM_IP
 })
@@ -133,6 +172,7 @@ export const receivedKUBAMIP = (kubam_ip) => ({
   kubam_ip,
 })
 
+// SSH keys
 export const getKeys = () => ({
   type: GET_KEYS
 })
@@ -142,6 +182,7 @@ export const receivedKeys = (keys) => ({
   keys,
 })
 
+// Deploy
 export const deploy = (kubam_ip, keys) =>  ({
   type: DEPLOY,
   kubam_ip,

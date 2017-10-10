@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { listOSes } from '../actions'
+import { listOSes, getISOMap, makeISOImages } from '../actions'
 import OSList from '../components/panels/os/'
 
 class OS extends Component {
   componentDidMount() {
     this.props.listOSes()
+    this.props.getISOMap()
   }
   /*
   clickFunc = (event, os, oss) => {
@@ -24,17 +25,21 @@ class OS extends Component {
 
   render() {
     return (
-      <OSList osList={this.props.osList} />
+      <OSList error={this.props.error} isoMap={this.props.isoMap} osList={this.props.osList} makeBootFunc={this.props.makeISOImages}/>
     )
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  osList: state.os.osList
+  osList: state.os.osList,
+  isoMap: state.os.isoMap,
+  error: state.os.error
 })
 
 const mapDispatchToProps = (dispatch)  => ({
   listOSes: () => dispatch(listOSes()),
+  getISOMap: () => dispatch(getISOMap()),
+  makeISOImages: () => dispatch(makeISOImages()),
 })
 
 export default connect(

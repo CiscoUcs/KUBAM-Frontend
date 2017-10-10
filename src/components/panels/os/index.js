@@ -1,8 +1,17 @@
 import React from 'react'
 
-var OSList = ({osList}) => (
+var OSList = ({error, isoMap, osList, makeBootFunc}) => (
   
   <div className="card-body">
+    {error === "" ? 
+      <div></div>
+      :
+      <div className="row">
+        <div className="col">
+          {error}
+        </div> 
+      </div>
+    }
     <div className="row">
       <div className="col">
         <h1 className="">Operating Systems</h1>
@@ -23,6 +32,13 @@ var OSList = ({osList}) => (
           )
         }
         </ul>
+      </div>
+    </div>
+    <div className="row">
+      <div className="col text-center">
+        <br/>
+        <hr/>
+        <button onClick={(e) => makeBootFunc(e)} className="btn btn-lg btn-primary">Make Boot Images</button>
       </div>
     </div>
   </div>

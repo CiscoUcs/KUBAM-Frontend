@@ -5,10 +5,10 @@ import {
 
 const tabs = (state = {
   //selected: "Credentials",
-  //selected: "OS",
   //selected: "Network",
   //selected: "Servers",
-  selected: "Deploy",
+  selected: "OS",
+  //selected: "Deploy",
   }, action) => {
   switch (action.type) {
     case SELECTED_TAB:

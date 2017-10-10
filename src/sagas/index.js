@@ -106,6 +106,31 @@ export function* deploy(action) {
 }
   
 
+export function* makeISOImages() {
+  let response = yield call(osApi.makeISOImages)
+  if (response.error) {
+    return yield put (actions.isoError(response.error))
+  }
+  yield put(actions.didMakeISOImages(response))
+}
+
+export function* getISOMap() {
+  let response = yield call(osApi.listMap)
+  if (response.error) {
+    return yield put (actions.isoError(response.error))
+  }
+  yield put(actions.receivedISOMap(response.iso_map))
+}
+
+export function* updateISOMap(action) {
+  console.log("updateISOMap")
+  let response = yield call(osApi.updateISOMap, { iso_map : action.isoMap})
+  if (response.error) {
+    return yield put (actions.isoError(response.error))
+  }
+  yield put(actions.receivedOSes(response.iso_map))
+}
+
 export function* watchLoginRequest() {
   yield takeEvery(actions.SUBMIT_CREDS, login);
   yield takeEvery(actions.CHECK_LOGIN, get_login);
@@ -121,6 +146,9 @@ export function* watchUCSRequest() {
   yield takeEvery(actions.GET_KEYS, getKeys)
   yield takeEvery(actions.GET_KUBAM_IP, getKUBAMIP)
   yield takeEvery(actions.DEPLOY, deploy)
+  yield takeEvery(actions.GET_ISO_MAP, getISOMap)
+  yield takeEvery(actions.UPDATE_ISO_MAP, updateISOMap)
+  yield takeEvery(actions.MAKE_ISO_IMAGES, makeISOImages)
 }
 
 export default function* rootSaga() {

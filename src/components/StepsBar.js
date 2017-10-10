@@ -13,17 +13,6 @@ var StepsBar = ({selected, onClick}) => (
             >
             <a className="nav-link">1. Credentials</a>
           </li>
-          <li className={ selected === "OS" ?
-                                      "nav-item active" : 
-                                      "nav-item" } 
-
-              onClick={e => {  e.preventDefault() 
-                             onClick("OS") }}
-            >
-
-
-            <a className="nav-link" >2. Operating System</a>
-          </li>
           <li className={ selected === "Network" ?
                                       "nav-item active" : 
                                       "nav-item" } 
@@ -31,7 +20,7 @@ var StepsBar = ({selected, onClick}) => (
               onClick={e => {  e.preventDefault() 
                              onClick("Network") }}
             >
-            <a className="nav-link ">3. Network</a>
+            <a className="nav-link ">2. Network</a>
           </li> 
           <li className={ selected === "Servers" ?
                                       "nav-item active" : 
@@ -41,7 +30,16 @@ var StepsBar = ({selected, onClick}) => (
                              onClick("Servers") }}
             >
 
-            <a className="nav-link" >4. Servers</a>
+            <a className="nav-link" >3. Servers</a>
+          </li>
+          <li className={ selected === "OS" ?
+                                      "nav-item active" : 
+                                      "nav-item" } 
+
+              onClick={e => {  e.preventDefault() 
+                             onClick("OS") }}
+            >
+            <a className="nav-link" >4. Operating System</a>
           </li>
           <li className={ selected === "Deploy" ?
                                       "nav-item active" : 
@@ -50,6 +48,7 @@ var StepsBar = ({selected, onClick}) => (
               onClick={e => {  e.preventDefault() 
                              onClick("Deploy") }}
             >
+
             <a className="nav-link" >5. Deploy</a>
           </li>
         </ul>
