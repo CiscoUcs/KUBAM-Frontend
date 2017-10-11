@@ -13,9 +13,6 @@ class Network extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("Next props", nextProps)
-    console.log("Next props", nextProps.network)
-    console.log("state:", this.state)
     this.setState({network : {netmask : nextProps.network.netmask,
                     gateway: nextProps.network.gateway,   
                     nameserver: nextProps.network.nameserver

@@ -37,8 +37,10 @@ const os = (state = {
         fetching: true,
       })
     case UPDATE_ISO_MAP:
+      console.log(action.isoMap)
       return Object.assign({}, state, {
         fetching: true,
+        isoMap: action.isoMap,
       })
     case RECEIVED_ISO_MAP:
       return Object.assign({}, state, {

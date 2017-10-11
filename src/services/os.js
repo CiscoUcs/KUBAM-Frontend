@@ -34,6 +34,7 @@ const osApi = {
     })
   },
   updateISOMap(userData) {
+    console.log(userData.isoMap)
     return fetch(url + '/isos/map', {
       method: 'POST',
       headers: {

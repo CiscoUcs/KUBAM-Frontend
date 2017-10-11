@@ -19,8 +19,6 @@ class Deploy extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("here we are!!!")
-    console.log(nextProps)
     this.setState({
       keys: Array.isArray(nextProps.keys) ? nextProps.keys[0] : "",
       kubam_ip: nextProps.kubam_ip,

@@ -11,7 +11,7 @@ var StepsBar = ({selected, onClick}) => (
               onClick={e => {  e.preventDefault() 
                              onClick("Credentials") }}
             >
-            <a className="nav-link">1. Credentials</a>
+            <a className="nav-link pointer">1. Credentials</a>
           </li>
           <li className={ selected === "Network" ?
                                       "nav-item active" : 
@@ -20,7 +20,7 @@ var StepsBar = ({selected, onClick}) => (
               onClick={e => {  e.preventDefault() 
                              onClick("Network") }}
             >
-            <a className="nav-link ">2. Network</a>
+            <a className="nav-link  pointer">2. Network</a>
           </li> 
           <li className={ selected === "Servers" ?
                                       "nav-item active" : 
@@ -30,7 +30,7 @@ var StepsBar = ({selected, onClick}) => (
                              onClick("Servers") }}
             >
 
-            <a className="nav-link" >3. Servers</a>
+            <a className="nav-link pointer" >3. Servers</a>
           </li>
           <li className={ selected === "OS" ?
                                       "nav-item active" : 
@@ -39,7 +39,7 @@ var StepsBar = ({selected, onClick}) => (
               onClick={e => {  e.preventDefault() 
                              onClick("OS") }}
             >
-            <a className="nav-link" >4. Operating System</a>
+            <a className="nav-link pointer" >4. Operating System</a>
           </li>
           <li className={ selected === "Deploy" ?
                                       "nav-item active" : 
@@ -49,7 +49,7 @@ var StepsBar = ({selected, onClick}) => (
                              onClick("Deploy") }}
             >
 
-            <a className="nav-link" >5. Deploy</a>
+            <a className="nav-link pointer" >5. Deploy</a>
           </li>
         </ul>
           </div>

@@ -123,12 +123,11 @@ export function* getISOMap() {
 }
 
 export function* updateISOMap(action) {
-  console.log("updateISOMap")
-  let response = yield call(osApi.updateISOMap, { iso_map : action.isoMap})
+  let response = yield call(osApi.updateISOMap, { isoMap : action.isoMap})
   if (response.error) {
     return yield put (actions.isoError(response.error))
   }
-  yield put(actions.receivedOSes(response.iso_map))
+  yield put(actions.receivedISOMap(response.iso_map))
 }
 
 export function* watchLoginRequest() {

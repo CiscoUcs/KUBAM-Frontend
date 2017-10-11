@@ -50,3 +50,7 @@ a .fa {
   height: 350px;
   overflow: auto;
 }
+
+.pointer {
+  cursor: pointer;
+}
