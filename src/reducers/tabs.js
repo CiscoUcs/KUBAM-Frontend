@@ -4,10 +4,10 @@ import {
 
 
 const tabs = (state = {
-  //selected: "Credentials",
+  selected: "Credentials",
   //selected: "Network",
   //selected: "Servers",
-  selected: "OS",
+  //selected: "OS",
   //selected: "Deploy",
   }, action) => {
   switch (action.type) {

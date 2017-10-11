@@ -1,4 +1,5 @@
-const url = "http://localhost/api/v1"
+import {KUBAM_API} from './api'
+const url = KUBAM_API
 
 const networkApi = {
   list(userData) {
@@ -6,7 +7,7 @@ const networkApi = {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+       'Content-Type': 'application/json'
       },
     })
     .then(statusHelper)

@@ -3,15 +3,6 @@ import React from 'react'
 var OSList = ({error, isoMap, isoMapSelect, makeBootFunc }) => (
   
   <div className="card-body">
-    {error === "" ? 
-      <div></div>
-      :
-      <div className="row">
-        <div className="col">
-          {error}
-        </div> 
-      </div>
-    }
     <div className="row">
       <div className="col">
         <h1 className="">Operating Systems</h1>

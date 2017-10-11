@@ -1,4 +1,5 @@
-const url = "http://localhost/api/v1"
+import {KUBAM_API} from './api'
+const url = KUBAM_API
 
 const osApi = {
   list() {

@@ -4,6 +4,7 @@ import { listOSes, getISOMap, updateISOMap, makeISOImages } from '../actions'
 import OSList from '../components/panels/os/'
 import OSModal from '../components/panels/os/modal'
 import DelModal from '../components/panels/os/delModal'
+import Error from '../components/Error'
 
 class OS extends Component {
   constructor(props) {
@@ -66,6 +67,7 @@ class OS extends Component {
   render() {
     return (
     <div>
+      <Error error={this.props.error} />
       <OSList error={this.props.error} isoMap={this.props.isoMap} isoMapSelect={this.isoMapSelect} makeBootFunc={this.props.makeISOImages} />
       <OSModal selectedISO={this.state.iso} osList={this.props.osList} isoSelect={this.isoSelect} isoOsSelect={this.isoOsSelect} modalClose={this.modalClose} />
       <DelModal selectedOS={this.state.os} selectedISO={this.state.iso} isoOsDelete={this.isoOsDelete} modalClose={this.modalClose} />
