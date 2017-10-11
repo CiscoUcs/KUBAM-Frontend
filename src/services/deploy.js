@@ -54,6 +54,24 @@ const deployApi = {
       return error
     })
   },
+  destroy(userData) {
+    return fetch(url + '/deploy', {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+      }),
+    })
+    .then(statusHelper)
+    .then(data => {
+      return data
+    })
+    .catch( (error) => { 
+      return error
+    })
+  },
 }
 
 // thanks: https://github.com/redux-saga/redux-saga/issues/561

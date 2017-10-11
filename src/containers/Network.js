@@ -2,13 +2,17 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchNetwork, updateNetwork } from '../actions'
 import NetworkList  from '../components/panels/network/'
+import Error from '../components/Error'
 
 class Network extends Component {
   constructor(props) {
     super(props);
     this.state = { network : {netmask: this.props.network.netmask || "", 
                   gateway: this.props.network.gateway || "",
-                  nameserver: this.props.network.nameserver || ""}}
+                  nameserver: this.props.network.nameserver || ""
+                  },
+                  vlans: this.props.vlans || [],
+                  }
     this.handleChange = this.handleChange.bind(this)
   }
 
@@ -16,16 +20,18 @@ class Network extends Component {
     this.setState({network : {netmask : nextProps.network.netmask,
                     gateway: nextProps.network.gateway,   
                     nameserver: nextProps.network.nameserver
-                  }})
+                    },
+                   vlans: nextProps.vlans})
   }
 
   componentDidMount() {
     this.props.fetchNetwork()
   }
- 
+
   // update the form elements 
   handleChange = (event) => {
     const network = this.state.network
+    var vlans = this.state.vlans
     switch(event.target.id) {
       case "netmask":
         network.netmask = event.target.value
@@ -35,6 +41,16 @@ class Network extends Component {
         break;
       case "nameserver":
         network.nameserver = event.target.value
+        break;
+      case "vlan":
+        var newVlans = vlans.map( (v) => {
+            v.selected = false
+            if (v.name === event.target.value) {
+              v.selected = true
+            }
+            return v
+          })
+        vlans = newVlans
         break;
       default:
         network.nameserver = network.nameserver
@@ -55,14 +71,18 @@ class Network extends Component {
 
   render() {
     return (
-      <NetworkList vlans={this.props.vlans} network={this.state.network} clickFunc={this.clickFunc} onChange={this.handleChange} />
+      <div>
+        <Error error={this.props.error} />
+        <NetworkList vlans={this.state.vlans} network={this.state.network} clickFunc={this.clickFunc} onChange={this.handleChange} />
+      </div>
     )
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
   vlans: state.network.vlans,
-  network: state.network.network
+  network: state.network.network,
+  error: state.network.error,
 })
 
 const mapDispatchToProps = (dispatch)  => ({

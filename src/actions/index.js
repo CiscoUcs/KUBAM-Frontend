@@ -14,7 +14,6 @@ export const UPDATE_ISO_MAP = 'UPDATE_ISO_MAP';
 /* make ISO images */
 export const MAKE_ISO_IMAGES = 'MAKE_ISO_IMAGES';
 export const FINISHED_MAKING_ISO_IMAGES = 'MADE_ISO_IMAGES';
-export const ISO_ERROR = 'ISO_ERROR'
 
 export const KUBAM_ERROR = 'KUBAM_API_ERROR';
 export const SET_LOGIN_PENDING = 'SET_LOGIN_PENDING';
@@ -28,13 +27,14 @@ export const UCS_UPDATE_NETWORK = 'UCS_UPDATE_NETWORK';
 export const UCS_LIST_SERVERS = 'UCS_LIST_SERVERS';
 export const UCS_UPDATE_SERVERS = 'UCS_UPDATE_SERVERS';
 export const UCS_RECEIVED_SERVERS = 'UCS_RECEIVED_SERVERS';
-export const UCS_ERROR = 'UCS_ERROR';
 export const FETCHING = 'FETCHING';
 export const GET_KEYS = 'GET_KEYS';
 export const RECEIVED_KEYS = 'RECEIVED_KEYS';
 export const GET_KUBAM_IP = 'GET_KUBAM_IP';
 export const RECEIVED_KUBAM_IP = 'RECEIVED_KUBAM_IP';
 export const DEPLOY = 'DEPLOY';
+export const DESTROY = 'DESTROY';
+export const DID_DEPLOY = 'DID_DEPLOY';
 
 export const selectTab = (selected) => ({
   type: SELECTED_TAB,
@@ -79,12 +79,6 @@ export const receivedLoginResponse = (response) => ({
 export const fetchNetwork = () => ({
   type: UCS_FETCH_NETWORK
 })
-
-export const ucsError = (error) => ({
-  type: UCS_ERROR,
-  error
-})
-
 
 export const receivedNetwork = (vlans, network) => ({
   type: UCS_RECEIVED_NETWORK,
@@ -157,11 +151,6 @@ export const didMakeISOImages = () => ({
   type: FINISHED_MAKING_ISO_IMAGES,
 })
 
-export const isoError = (error) => ({
-  type: ISO_ERROR,
-  error
-})
-
 // KUBAM IP address
 export const getKUBAMIP = () => ({
   type: GET_KUBAM_IP
@@ -188,3 +177,13 @@ export const deploy = (kubam_ip, keys) =>  ({
   kubam_ip,
   keys,
 })
+
+export const destroy = () =>  ({
+  type: DESTROY,
+})
+
+export const didDeploy= (msg) =>  ({
+  type: DID_DEPLOY,
+  msg,
+})
+

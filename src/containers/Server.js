@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { listServers, updateServers } from '../actions'
 import ServerList  from '../components/panels/server/'
+import Error from '../components/Error'
 
 class Server extends Component {
   // initial state of the components.
@@ -28,7 +29,7 @@ class Server extends Component {
     if (hosts.length < servlen) {
       const tl = (servlen - hosts.length) 
       for (var i = 0; i < tl; i++) {
-        hosts.push({"name": "", "ip": "", "os": "", "role": ""})
+        hosts.push({"name": "", "ip": "", "os": "centos7.3", "role": ""})
       }
     }else if (servlen < hosts.length) {
       for (i = hosts.length; i > servlen; i--) {
@@ -169,7 +170,10 @@ class Server extends Component {
 
   render() {
     return (
-      <ServerList hosts={this.state.hosts} servers={this.state.servers} serverSelectFunc={this.selectServers} clickFunc={this.clickFunc} hostOnblur={this.hostOnblur} hostOnChange={this.hostOnChange} ipOnblur={this.ipOnblur}/>
+      <div>
+        <Error error={this.props.error} />
+        <ServerList hosts={this.state.hosts} servers={this.state.servers} serverSelectFunc={this.selectServers} clickFunc={this.clickFunc} hostOnblur={this.hostOnblur} hostOnChange={this.hostOnChange} ipOnblur={this.ipOnblur}/>
+      </div>
     )
   }
 }
@@ -177,7 +181,7 @@ class Server extends Component {
 const mapStateToProps = (state, ownProps) => ({
   servers: state.server.servers,
   hosts: state.server.hosts,
-  error: state.ucsError,
+  error: state.server.error,
 })
 
 const mapDispatchToProps = (dispatch)  => ({

@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getKUBAMIP, getKeys, deploy  } from '../actions'
+import { getKUBAMIP, getKeys, deploy, destroy  } from '../actions'
 import DeployPanel from '../components/panels/deploy/'
+import Error from '../components/Error'
 
 class Deploy extends Component {
   constructor(props) {
@@ -46,22 +47,34 @@ class Deploy extends Component {
     this.props.deploy(this.state.kubam_ip, [this.state.keys]);
   }
 
+  destroyFunc = (event) => {
+    this.props.destroy()
+  }
+
   render() {
     return (
-      <DeployPanel keys={this.state.keys} kubam_ip={this.state.kubam_ip} onChange={this.handleChange} deployFunc={this.deployFunc} />
+      <div>
+        <Error error={this.props.error} />
+        <DeployPanel keys={this.state.keys} kubam_ip={this.state.kubam_ip} onChange={this.handleChange} deployFunc={this.deployFunc} destroyFunc={this.destroyFunc}/>
+      </div>
+      
     )
+    
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
   keys: state.deploy.keys,
-  kubam_ip: state.deploy.kubam_ip
+  kubam_ip: state.deploy.kubam_ip,
+  working: state.deploy.fetching,
+  error: state.deploy.error, 
 })
 
 const mapDispatchToProps = (dispatch)  => ({
   getKUBAMIP: () => dispatch(getKUBAMIP()),
   getKeys: () => dispatch(getKeys()),
   deploy: (kubam_ip, keys) => dispatch(deploy(kubam_ip, keys)),
+  destroy: () => dispatch(destroy()),
 })
 
 export default connect(

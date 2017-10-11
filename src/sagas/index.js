@@ -39,7 +39,7 @@ export function* delete_login() {
 export function* fetchNetwork() {
   let response = yield call(networkApi.list)
   if (response.error) {
-    return yield put (actions.ucsError(response.error))
+    return yield put (actions.kubamError(response.error))
   }
   yield put(actions.receivedNetwork(response.vlans, response.network))
 }
@@ -47,16 +47,15 @@ export function* fetchNetwork() {
 export function* updateNetwork(action) {
   let response = yield call(networkApi.updateNetwork, { vlan : action.vlan, network: action.network})
   if (response.error) {
-    return yield put (actions.ucsError(response.error))
+    return yield put (actions.kubamError(response.error))
   }
-  
   yield put(actions.receivedNetwork(response.vlans, response.network))
 }
 
 export function* listServers() {
   let response = yield call(serverApi.list)
   if (response.error) {
-    return yield put (actions.ucsError(response.error))
+    return yield put (actions.kubamError(response.error))
   }
   yield put(actions.receivedServers(response.servers, response.hosts))
 }
@@ -64,7 +63,7 @@ export function* listServers() {
 export function* updateServers(action) {
   let response = yield call(serverApi.updateServers, { servers : action.servers, hosts: action.hosts})
   if (response.error) {
-    return yield put (actions.ucsError(response.error))
+    return yield put (actions.kubamError(response.error))
   }
   yield put(actions.receivedServers(response.servers, response.hosts))
 }
@@ -74,7 +73,6 @@ export function* listOSes() {
   if (response.error) {
     return yield put (actions.kubamError(response.error))
   }
-  yield put(actions.fetching())
   yield put(actions.receivedOSes(response.isos))
 }
 
@@ -103,13 +101,22 @@ export function* deploy(action) {
     return yield put (actions.kubamError(response.error))
   }
   //TODO: do something here to show that it deployed. 
+  yield put(actions.didDeploy("Deployed UCS Servers"))
 }
-  
+ 
+export function* destroy(action) {
+  let response = yield call(deployApi.destroy)
+  if (response.error) {
+    return yield put (actions.kubamError(response.error))
+  }
+  //TODO: do something here to show that it deployed. 
+  yield put(actions.didDeploy("UCS Servers have been deprovisioned"))
+} 
 
 export function* makeISOImages() {
   let response = yield call(osApi.makeISOImages)
   if (response.error) {
-    return yield put (actions.isoError(response.error))
+    return yield put (actions.kubamError(response.error))
   }
   yield put(actions.didMakeISOImages(response))
 }
@@ -117,7 +124,7 @@ export function* makeISOImages() {
 export function* getISOMap() {
   let response = yield call(osApi.listMap)
   if (response.error) {
-    return yield put (actions.isoError(response.error))
+    return yield put (actions.kubamError(response.error))
   }
   yield put(actions.receivedISOMap(response.iso_map))
 }
@@ -125,7 +132,7 @@ export function* getISOMap() {
 export function* updateISOMap(action) {
   let response = yield call(osApi.updateISOMap, { isoMap : action.isoMap})
   if (response.error) {
-    return yield put (actions.isoError(response.error))
+    return yield put (actions.kubamError(response.error))
   }
   yield put(actions.receivedISOMap(response.iso_map))
 }
@@ -145,6 +152,7 @@ export function* watchUCSRequest() {
   yield takeEvery(actions.GET_KEYS, getKeys)
   yield takeEvery(actions.GET_KUBAM_IP, getKUBAMIP)
   yield takeEvery(actions.DEPLOY, deploy)
+  yield takeEvery(actions.DESTROY, destroy)
   yield takeEvery(actions.GET_ISO_MAP, getISOMap)
   yield takeEvery(actions.UPDATE_ISO_MAP, updateISOMap)
   yield takeEvery(actions.MAKE_ISO_IMAGES, makeISOImages)

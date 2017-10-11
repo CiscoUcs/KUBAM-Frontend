@@ -1,6 +1,6 @@
 import React from 'react'
 
-var DeployPanel = ({keys, kubam_ip, onChange, deployFunc}) => (
+var DeployPanel = ({keys, kubam_ip, onChange, deployFunc, destroyFunc}) => (
 
   <div className="card-body">
     <div className="row">
@@ -46,6 +46,14 @@ var DeployPanel = ({keys, kubam_ip, onChange, deployFunc}) => (
         <br/>
         <hr/>
         <button onClick={(e) => deployFunc(e)} className="btn btn-lg btn-primary">Deploy</button>
+        <hr/>
+        <div className="alert alert-danger">
+          <div className="small text-red">
+            Warning: Pressing the button below will delete the entire cluster from UCS.  There is no going back.
+          </div>
+          <p></p>
+          <button onClick={(e) => destroyFunc(e)} className="btn btn-lg btn-danger">Destroy</button>
+        </div>
       </div>
     </div>
   </div>

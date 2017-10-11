@@ -1,6 +1,6 @@
 import React from 'react'
 
-var OSList = ({error, isoMap, isoMapSelect, makeBootFunc }) => (
+var OSList = ({isoMap, isoMapSelect, makeBootFunc }) => (
   
   <div className="card-body">
     <div className="row">

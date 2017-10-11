@@ -6,7 +6,7 @@ import {
   UPDATE_ISO_MAP,
   MAKE_ISO_IMAGES,
   FINISHED_MAKING_ISO_IMAGES,
-  ISO_ERROR,
+  KUBAM_ERROR,
 } from '../actions'
 
 const os = (state = {
@@ -26,7 +26,7 @@ const os = (state = {
       return Object.assign({}, state, {
         fetching: true,
       })
-    case ISO_ERROR: 
+    case KUBAM_ERROR: 
       return Object.assign({}, state, {
         error: action.error,
         fetching: false,

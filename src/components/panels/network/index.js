@@ -1,5 +1,12 @@
 import React from 'react'
 
+var defValue = (vlans) => {
+  var selected = vlans.find( (v) => (v.selected === true))
+  if (typeof selected !== 'undefined') {
+    selected =  selected.name
+  }
+  return selected
+}
 
 var NetworkList = ({vlans, network, clickFunc, onChange}) => (
   <div className="card-body">
@@ -18,12 +25,9 @@ var NetworkList = ({vlans, network, clickFunc, onChange}) => (
     </div>
     <div className="row">
       <div className="col">
-        <select className="custom-select" id="vlan">
+        <select className="custom-select" id="vlan" value={ defValue(vlans)} onChange={onChange}>
           {vlans.map( (vlan, i) => 
-                vlan.selected ? 
-                <option value={vlan.name} key={i} defaultValue>{vlan.name} {vlan.id}</option>
-                :
-                <option value={vlan.name} key={i}>{vlan.name} {vlan.id}</option>
+                <option value={vlan.name} key={i} >{vlan.name} {vlan.id}</option>
             )
           }
         </select>
