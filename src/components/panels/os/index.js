@@ -1,6 +1,6 @@
 import React from 'react'
 
-var OSList = ({isoMap, isoMapSelect, makeBootFunc }) => (
+var OSList = ({working, isoMap, isoMapSelect }) => (
   
   <div className="card-body">
     <div className="row">
@@ -37,13 +37,6 @@ var OSList = ({isoMap, isoMapSelect, makeBootFunc }) => (
         </div>
       </div>
     } 
-    <div className="row">
-      <div className="col text-center">
-        <br/>
-        <hr/>
-        <button onClick={(e) => makeBootFunc(e)} className="btn btn-lg btn-primary">Make Boot Images</button>
-      </div>
-    </div>
   </div>
 );
 

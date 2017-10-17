@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { listOSes, getISOMap, updateISOMap, makeISOImages } from '../actions'
+import { listOSes, getISOMap, updateISOMap } from '../actions'
 import OSList from '../components/panels/os/'
 import OSModal from '../components/panels/os/modal'
 import DelModal from '../components/panels/os/delModal'
@@ -68,7 +68,7 @@ class OS extends Component {
     return (
     <div>
       <Error error={this.props.error} />
-      <OSList error={this.props.error} isoMap={this.props.isoMap} isoMapSelect={this.isoMapSelect} makeBootFunc={this.props.makeISOImages} />
+      <OSList working={this.props.working} error={this.props.error} isoMap={this.props.isoMap} isoMapSelect={this.isoMapSelect} />
       <OSModal selectedISO={this.state.iso} osList={this.props.osList} isoSelect={this.isoSelect} isoOsSelect={this.isoOsSelect} modalClose={this.modalClose} />
       <DelModal selectedOS={this.state.os} selectedISO={this.state.iso} isoOsDelete={this.isoOsDelete} modalClose={this.modalClose} />
     </div>
@@ -79,14 +79,14 @@ class OS extends Component {
 const mapStateToProps = (state, ownProps) => ({
   osList: state.os.osList,
   isoMap: state.os.isoMap,
-  error: state.os.error
+  error: state.os.error,
+  working: state.os.fetching
 })
 
 const mapDispatchToProps = (dispatch)  => ({
   listOSes: () => dispatch(listOSes()),
   getISOMap: () => dispatch(getISOMap()),
   updateISOMap: (isoMap) => dispatch(updateISOMap(isoMap)),
-  makeISOImages: () => dispatch(makeISOImages()),
 })
 
 export default connect(

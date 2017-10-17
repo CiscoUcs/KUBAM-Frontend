@@ -41,6 +41,15 @@ var StepsBar = ({selected, onClick}) => (
             >
             <a className="nav-link pointer" >4. Operating System</a>
           </li>
+          <li className={ selected === "Settings" ?
+                                      "nav-item active" : 
+                                      "nav-item" } 
+
+              onClick={e => {  e.preventDefault() 
+                             onClick("Settings") }}
+            >
+            <a className="nav-link pointer" >5. Settings</a>
+          </li>
           <li className={ selected === "Deploy" ?
                                       "nav-item active" : 
                                       "nav-item" } 
@@ -48,8 +57,7 @@ var StepsBar = ({selected, onClick}) => (
               onClick={e => {  e.preventDefault() 
                              onClick("Deploy") }}
             >
-
-            <a className="nav-link pointer" >5. Deploy</a>
+            <a className="nav-link pointer" >6. Deploy</a>
           </li>
         </ul>
           </div>

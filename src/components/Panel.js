@@ -4,6 +4,7 @@ import LoginFormContainer from '../containers/LoginFormContainer'
 import Network from '../containers/Network'
 import Server from '../containers/Server'
 import OS from '../containers/OS'
+import Settings from '../containers/Settings'
 import Deploy from '../containers/Deploy'
 
 var Panel = ({selected}) => {
@@ -20,6 +21,9 @@ var Panel = ({selected}) => {
       break;
     case "OS":
       p = <OS />
+      break;
+    case "Settings":
+      p = <Settings />
       break;
     case "Deploy":
       p = <Deploy />

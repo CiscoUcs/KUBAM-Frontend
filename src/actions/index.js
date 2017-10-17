@@ -32,6 +32,8 @@ export const GET_KEYS = 'GET_KEYS';
 export const RECEIVED_KEYS = 'RECEIVED_KEYS';
 export const GET_KUBAM_IP = 'GET_KUBAM_IP';
 export const RECEIVED_KUBAM_IP = 'RECEIVED_KUBAM_IP';
+export const UPDATE_SETTINGS = 'UPDATE_SETTINGS';
+export const DID_UPDATE_SETTINGS = 'DID_UPDATE_SETTINGS';
 export const DEPLOY = 'DEPLOY';
 export const DESTROY = 'DESTROY';
 export const DID_DEPLOY = 'DID_DEPLOY';
@@ -171,11 +173,20 @@ export const receivedKeys = (keys) => ({
   keys,
 })
 
-// Deploy
-export const deploy = (kubam_ip, keys) =>  ({
-  type: DEPLOY,
+// update settings
+export const updateSettings = (kubam_ip, keys) =>  ({
+  type: UPDATE_SETTINGS,
   kubam_ip,
   keys,
+})
+
+export const didUpdateSettings = () => ({
+  type: DID_UPDATE_SETTINGS,
+})
+
+// Deploy
+export const deploy = () =>  ({
+  type: DEPLOY,
 })
 
 export const destroy = () =>  ({

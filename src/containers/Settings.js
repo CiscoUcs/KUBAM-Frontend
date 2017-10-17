@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getKUBAMIP, getKeys, deploy, destroy, makeISOImages  } from '../actions'
-import DeployPanel from '../components/panels/deploy/'
+import { getKUBAMIP, getKeys, updateSettings } from '../actions'
+import SettingsPanel from '../components/panels/settings/'
 import Error from '../components/Error'
 
-class Deploy extends Component {
+class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,6 +13,7 @@ class Deploy extends Component {
       working: this.props.working,
     }
     this.handleChange = this.handleChange.bind(this)
+    this.updateFunc = this.updateFunc.bind(this)
   }
 
   componentDidMount() {
@@ -43,41 +44,35 @@ class Deploy extends Component {
     this.forceUpdate();
   }
 
-  deployFunc = (event) => {
-    this.props.deploy()
-  }
-
-  destroyFunc = (event) => {
-    this.props.destroy()
+  updateFunc = (event) => {
+    // get the ip and the key. 
+    // the keys should be in an array.  Right now the interface only allows for one key. 
+    this.props.updateSettings(this.state.kubam_ip, [this.state.keys]);
   }
 
   render() {
     return (
       <div>
         <Error error={this.props.error} />
-        <DeployPanel working={this.state.working} keys={this.state.keys} kubam_ip={this.state.kubam_ip} onChange={this.handleChange} deployFunc={this.deployFunc} destroyFunc={this.destroyFunc} makeBootFunc={this.props.makeISOImages}/>
+        <SettingsPanel working={this.state.working} keys={this.state.keys} kubam_ip={this.state.kubam_ip} onChange={this.handleChange} updateSettingsFunc={this.updateFunc} />
       </div>
-      
     )
-    
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  keys: state.deploy.keys,
-  kubam_ip: state.deploy.kubam_ip,
-  working: state.deploy.fetching,
-  error: state.deploy.error, 
+  keys: state.settings.keys,
+  kubam_ip: state.settings.kubam_ip,
+  working: state.settings.fetching,
+  error: state.settings.error, 
 })
 
 const mapDispatchToProps = (dispatch)  => ({
   getKUBAMIP: () => dispatch(getKUBAMIP()),
   getKeys: () => dispatch(getKeys()),
-  deploy: (kubam_ip, keys) => dispatch(deploy(kubam_ip, keys)),
-  destroy: () => dispatch(destroy()),
-  makeISOImages: () => dispatch(makeISOImages()),
+  updateSettings: (kubam_ip, keys) => dispatch(updateSettings(kubam_ip, keys)),
 })
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps)(Deploy)
+  mapDispatchToProps)(Settings)

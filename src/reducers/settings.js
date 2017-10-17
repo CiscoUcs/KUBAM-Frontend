@@ -1,26 +1,30 @@
 import {
-  DEPLOY, 
-  DESTROY, 
-  DID_DEPLOY, 
+  RECEIVED_KEYS,
+  RECEIVED_KUBAM_IP, 
   KUBAM_ERROR,
-  MAKE_ISO_IMAGES,
-  FINISHED_MAKING_ISO_IMAGES,
+  UPDATE_SETTINGS,
+  DID_UPDATE_SETTINGS,
 } from '../actions'
 
-const deploy = (state = {
+const settings = (state = {
+  keys: [],
+  kubam_ip: "",
   fetching: false, 
   msg: "", 
   error: "", 
   }, action) => {
   switch (action.type) {
-    case DEPLOY: 
+    case RECEIVED_KEYS:
       return Object.assign({}, state, {
-        fetching: true,
+        keys: action.keys,
+        fetching: false,
         error: "",
       })
-    case DESTROY: 
+    case RECEIVED_KUBAM_IP:   
+      console.log(action.kubam_ip)
       return Object.assign({}, state, {
-        fetching: true,
+        kubam_ip: action.kubam_ip,
+        fetching: false,
         error: "",
       })
     case KUBAM_ERROR: 
@@ -28,24 +32,22 @@ const deploy = (state = {
         fetching: false,
         error: action.error,
       })
-    case DID_DEPLOY: 
+    case UPDATE_SETTINGS:
       return Object.assign({}, state, {
-        msg: action.msg,
-        fetching: false,
-        error: "",
-      })
-     case MAKE_ISO_IMAGES:
-      return Object.assign({}, state, {
-        error: "",
+        keys: action.keys,
+        kubam_ip: action.kubam_ip,
         fetching: true,
+        error: "",
       })
-    case FINISHED_MAKING_ISO_IMAGES:
+    case DID_UPDATE_SETTINGS:
       return Object.assign({}, state, {
         fetching: false,
+        error: "",
       })
+    
     
     default:
       return state
   }
 }
-export default deploy
+export default settings

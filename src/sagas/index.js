@@ -3,6 +3,7 @@ import sessionApi from '../services/session'
 import networkApi from '../services/network'
 import serverApi from '../services/server'
 import osApi from '../services/os'
+import settingsApi from '../services/settings'
 import deployApi from '../services/deploy'
 import * as actions from '../actions'
 
@@ -79,7 +80,7 @@ export function* listOSes() {
 
 export function* getKeys() {
   //yield put(actions.fetching())
-  let response = yield call(deployApi.fetchKeys)
+  let response = yield call(settingsApi.fetchKeys)
   if (response.error) {
     return yield put (actions.kubamError(response.error))
   }
@@ -88,19 +89,28 @@ export function* getKeys() {
 
 export function* getKUBAMIP() {
   //yield put(actions.fetching())
-  let response = yield call(deployApi.fetchKUBAMIP)
+  let response = yield call(settingsApi.fetchKUBAMIP)
   if (response.error) {
     return yield put (actions.kubamError(response.error))
   }
   yield put(actions.receivedKUBAMIP(response.kubam_ip))
 }
-  
+ 
+
+export function* updateSettings(action) {
+  let response = yield call(settingsApi.updateSettings, { keys : action.keys, kubam_ip: action.kubam_ip})
+  if (response.error) {
+    return yield put (actions.kubamError(response.error))
+  }
+  yield put(actions.didUpdateSettings("Settings saved"))
+}
+
+ 
 export function* deploy(action) {
   let response = yield call(deployApi.deploy, { keys : action.keys, kubam_ip: action.kubam_ip})
   if (response.error) {
     return yield put (actions.kubamError(response.error))
   }
-  //TODO: do something here to show that it deployed. 
   yield put(actions.didDeploy("Deployed UCS Servers"))
 }
  
@@ -151,6 +161,7 @@ export function* watchUCSRequest() {
   yield takeEvery(actions.LIST_OSES, listOSes)
   yield takeEvery(actions.GET_KEYS, getKeys)
   yield takeEvery(actions.GET_KUBAM_IP, getKUBAMIP)
+  yield takeEvery(actions.UPDATE_SETTINGS, updateSettings)
   yield takeEvery(actions.DEPLOY, deploy)
   yield takeEvery(actions.DESTROY, destroy)
   yield takeEvery(actions.GET_ISO_MAP, getISOMap)
