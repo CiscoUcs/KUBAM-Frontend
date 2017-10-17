@@ -10,7 +10,8 @@ class Server extends Component {
     super(props);
     this.state = {
       servers : this.props.servers || [],
-      hosts : this.props.hosts || []
+      hosts : this.props.hosts || [],
+      working: this.props.working || false,
     }
     this.updateHosts = this.updateHosts.bind(this)
     this.hostOnblur = this.hostOnblur.bind(this)
@@ -48,6 +49,7 @@ class Server extends Component {
     this.setState({
       servers: nextProps.servers,
       hosts: newHosts,
+      working: nextProps.working,
     })
   }
 
@@ -172,7 +174,7 @@ class Server extends Component {
     return (
       <div>
         <Error error={this.props.error} />
-        <ServerList hosts={this.state.hosts} servers={this.state.servers} serverSelectFunc={this.selectServers} clickFunc={this.clickFunc} hostOnblur={this.hostOnblur} hostOnChange={this.hostOnChange} ipOnblur={this.ipOnblur}/>
+        <ServerList working={this.state.working} hosts={this.state.hosts} servers={this.state.servers} serverSelectFunc={this.selectServers} clickFunc={this.clickFunc} hostOnblur={this.hostOnblur} hostOnChange={this.hostOnChange} ipOnblur={this.ipOnblur}/>
       </div>
     )
   }
@@ -182,6 +184,7 @@ const mapStateToProps = (state, ownProps) => ({
   servers: state.server.servers,
   hosts: state.server.hosts,
   error: state.server.error,
+  working: state.server.working,
 })
 
 const mapDispatchToProps = (dispatch)  => ({

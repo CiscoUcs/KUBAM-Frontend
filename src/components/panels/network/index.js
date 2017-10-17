@@ -8,7 +8,7 @@ var defValue = (vlans) => {
   return selected
 }
 
-var NetworkList = ({vlans, network, clickFunc, onChange}) => (
+var NetworkList = ({working, vlans, network, clickFunc, onChange}) => (
   <div className="card-body">
     <div className="row">
       <div className="col">
@@ -69,7 +69,12 @@ var NetworkList = ({vlans, network, clickFunc, onChange}) => (
       <div className="col text-right">
         <br/>
         <hr/>
-        <button onClick={(e) => clickFunc(e, "")} className="btn btn-primary">Next</button>
+        { working ? 
+          <button onClick={(e) => clickFunc(e, "")} className="btn btn-primary" type="button" disabled>
+            <i className="fa fa-cog fa-spin">  </i>  Updating</button>
+          :
+          <button onClick={(e) => clickFunc(e, "")} className="btn btn-primary" type="button">Update</button>
+          }
       </div>
     </div>
   </div>

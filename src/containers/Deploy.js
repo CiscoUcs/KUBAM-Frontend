@@ -9,7 +9,8 @@ class Deploy extends Component {
     super(props);
     this.state = {
       keys: this.props.keys ,
-      kubam_ip: this.props.kubam_ip
+      kubam_ip: this.props.kubam_ip,
+      working: this.props.working,
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -23,6 +24,7 @@ class Deploy extends Component {
     this.setState({
       keys: Array.isArray(nextProps.keys) ? nextProps.keys[0] : "",
       kubam_ip: nextProps.kubam_ip,
+      working: nextProps.working,
     })
   }
 
@@ -55,7 +57,7 @@ class Deploy extends Component {
     return (
       <div>
         <Error error={this.props.error} />
-        <DeployPanel keys={this.state.keys} kubam_ip={this.state.kubam_ip} onChange={this.handleChange} deployFunc={this.deployFunc} destroyFunc={this.destroyFunc}/>
+        <DeployPanel working={this.state.working} keys={this.state.keys} kubam_ip={this.state.kubam_ip} onChange={this.handleChange} deployFunc={this.deployFunc} destroyFunc={this.destroyFunc}/>
       </div>
       
     )

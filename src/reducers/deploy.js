@@ -18,12 +18,14 @@ const deploy = (state = {
     case RECEIVED_KEYS:
       return Object.assign({}, state, {
         keys: action.keys,
+        fetching: false,
         error: "",
       })
     case RECEIVED_KUBAM_IP:   
       console.log(action.kubam_ip)
       return Object.assign({}, state, {
         kubam_ip: action.kubam_ip,
+        fetching: false,
         error: "",
       })
     case DEPLOY: 

@@ -11,6 +11,7 @@ class Network extends Component {
                   gateway: this.props.network.gateway || "",
                   nameserver: this.props.network.nameserver || ""
                   },
+                  working: this.props.working || false, 
                   vlans: this.props.vlans || [],
                   }
     this.handleChange = this.handleChange.bind(this)
@@ -21,6 +22,7 @@ class Network extends Component {
                     gateway: nextProps.network.gateway,   
                     nameserver: nextProps.network.nameserver
                     },
+                   working: nextProps.working,
                    vlans: nextProps.vlans})
   }
 
@@ -73,7 +75,7 @@ class Network extends Component {
     return (
       <div>
         <Error error={this.props.error} />
-        <NetworkList vlans={this.state.vlans} network={this.state.network} clickFunc={this.clickFunc} onChange={this.handleChange} />
+        <NetworkList working={this.state.working} vlans={this.state.vlans} network={this.state.network} clickFunc={this.clickFunc} onChange={this.handleChange} />
       </div>
     )
   }
@@ -83,6 +85,7 @@ const mapStateToProps = (state, ownProps) => ({
   vlans: state.network.vlans,
   network: state.network.network,
   error: state.network.error,
+  working: state.network.fetching, 
 })
 
 const mapDispatchToProps = (dispatch)  => ({

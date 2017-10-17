@@ -1,6 +1,6 @@
 import React from 'react'
 
-var ServerList = ({hosts, servers, serverSelectFunc, clickFunc, hostOnblur, hostOnChange, ipOnblur}) => (
+var ServerList = ({working, hosts, servers, serverSelectFunc, clickFunc, hostOnblur, hostOnChange, ipOnblur}) => (
   <div className="card-body">
      <div className="row">
       <div className="col">
@@ -121,7 +121,12 @@ var ServerList = ({hosts, servers, serverSelectFunc, clickFunc, hostOnblur, host
       <div className="col text-right">
         <br/>
         <hr/>
-        <button onClick={(e) => clickFunc(e)} className="btn btn-primary">Next</button>
+        { working ? 
+          <button onClick={(e) => clickFunc(e)} className="btn btn-primary" disabled>
+            <i className="fa fa-cog fa-spin" > </i> Updating</button>
+          :
+          <button onClick={(e) => clickFunc(e)} className="btn btn-primary">Update</button>
+        }
       </div>
     </div>
   </div>
