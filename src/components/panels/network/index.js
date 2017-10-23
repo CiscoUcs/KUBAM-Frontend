@@ -47,19 +47,19 @@ var NetworkList = ({working, vlans, network, clickFunc, onChange}) => (
         <div className="form-group row">
           <label htmlFor="netmask" className="col-sm-2 col-form-label text-right">Netmask</label>
           <div className="col-sm-6">
-            <input type="text" onChange={onChange} className="form-control" id="netmask" value={network.netmask} />
+            <input type="text" onChange={onChange} className="form-control" id="netmask" defaultValue={network.netmask} />
           </div>
         </div>
         <div className="form-group row">
           <label htmlFor="router" className="col-sm-2 col-form-label text-right">Router</label>
           <div className="col-sm-6">
-            <input type="text" onChange={onChange} className="form-control" id="gateway" value={network.gateway}/>
+            <input type="text" onChange={onChange} className="form-control" id="gateway" defaultValue={network.gateway}/>
           </div>
         </div>
         <div className="form-group row">
           <label htmlFor="nameserver" className="col-sm-2 col-form-label text-right">Nameserver</label>
           <div className="col-sm-6">
-            <input type="text" onChange={onChange} className="form-control" id="nameserver" value={network.nameserver}></input>
+            <input type="text" onChange={onChange} className="form-control" id="nameserver" defaultValue={network.nameserver}></input>
           </div>
         </div>
       </form>
