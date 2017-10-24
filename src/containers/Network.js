@@ -9,7 +9,8 @@ class Network extends Component {
     super(props);
     this.state = { network : {netmask: this.props.network.netmask || "", 
                   gateway: this.props.network.gateway || "",
-                  nameserver: this.props.network.nameserver || ""
+                  nameserver: this.props.network.nameserver || "",
+                  ntpserver: this.props.network.ntpserver || ""
                   },
                   working: this.props.working || false, 
                   vlans: this.props.vlans || [],
@@ -20,7 +21,8 @@ class Network extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({network : {netmask : nextProps.network.netmask,
                     gateway: nextProps.network.gateway,   
-                    nameserver: nextProps.network.nameserver
+                    nameserver: nextProps.network.nameserver,
+                    ntpserver: nextProps.network.ntpserver
                     },
                    working: nextProps.working,
                    vlans: nextProps.vlans})
@@ -43,6 +45,9 @@ class Network extends Component {
         break;
       case "nameserver":
         network.nameserver = event.target.value
+        break;
+      case "ntpserver":
+        network.ntpserver = event.target.value
         break;
       case "vlan":
         var newVlans = vlans.map( (v) => {
@@ -67,6 +72,7 @@ class Network extends Component {
     network['netmask'] = document.getElementById("netmask").value;
     network['gateway'] = document.getElementById("gateway").value;
     network['nameserver'] = document.getElementById("nameserver").value;
+    network['ntpserver'] = document.getElementById("ntpserver").value;
     var vlan = document.getElementById("vlan").value
     this.props.updateNetwork(vlan, network) 
   }
