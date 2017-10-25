@@ -26,7 +26,7 @@ var NetworkList = ({working, vlans, network, clickFunc, onChange}) => (
     <div className="row">
       <div className="col">
         <select className="custom-select" id="vlan" value={ defValue(vlans)} onChange={onChange}>
-          {vlans.map( (vlan, i) => 
+          {vlans.map( (vlan, i) =>
                 <option value={vlan.name} key={i} >{vlan.name} {vlan.id}</option>
             )
           }
@@ -62,6 +62,12 @@ var NetworkList = ({working, vlans, network, clickFunc, onChange}) => (
             <input type="text" onChange={onChange} className="form-control" id="nameserver" defaultValue={network.nameserver}></input>
           </div>
         </div>
+        <div className="form-group row">
+          <label htmlFor="ntpserver" className="col-sm-2 col-form-label text-right">NTP server</label>
+          <div className="col-sm-6">
+            <input type="text" onChange={onChange} className="form-control" id="ntpserver" defaultValue={network.ntpserver}></input>
+          </div>
+        </div>
       </form>
       </div>
     </div>
@@ -69,7 +75,7 @@ var NetworkList = ({working, vlans, network, clickFunc, onChange}) => (
       <div className="col text-right">
         <br/>
         <hr/>
-        { working ? 
+        { working ?
           <button onClick={(e) => clickFunc(e, "")} className="btn btn-primary" type="button" disabled>
             <i className="fa fa-cog fa-spin">  </i>  Updating</button>
           :
@@ -81,4 +87,3 @@ var NetworkList = ({working, vlans, network, clickFunc, onChange}) => (
 );
 
 export default NetworkList
-
