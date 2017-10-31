@@ -15,6 +15,10 @@ export const UPDATE_ISO_MAP = 'UPDATE_ISO_MAP';
 export const MAKE_ISO_IMAGES = 'MAKE_ISO_IMAGES';
 export const FINISHED_MAKING_ISO_IMAGES = 'MADE_ISO_IMAGES';
 
+/* get catalog */
+export const GET_CATALOG = 'GET_CATALOG';
+export const RECEIVED_CATALOG = 'RECEIVED_CATALOG';
+
 export const KUBAM_ERROR = 'KUBAM_API_ERROR';
 export const SET_LOGIN_PENDING = 'SET_LOGIN_PENDING';
 export const SET_LOGIN_SUCCESS = 'SET_LOGIN_SUCCESS';
@@ -198,3 +202,11 @@ export const didDeploy= (msg) =>  ({
   msg,
 })
 
+export const getCatalog = () => ({
+  type: GET_CATALOG,
+})
+
+export const receivedCatalog = (catalog) => ({
+  type: RECEIVED_CATALOG,
+  catalog,
+})

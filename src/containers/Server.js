@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { listServers, updateServers } from '../actions'
+import { listServers, updateServers, getCatalog } from '../actions'
 import ServerList  from '../components/panels/server/'
 import Error from '../components/Error'
 
@@ -12,6 +12,7 @@ class Server extends Component {
       servers : this.props.servers || [],
       hosts : this.props.hosts || [],
       working: this.props.working || false,
+      catalog: this.props.catalog || {},
     }
     this.updateHosts = this.updateHosts.bind(this)
     this.hostOnblur = this.hostOnblur.bind(this)
@@ -21,6 +22,7 @@ class Server extends Component {
 
   componentDidMount() {
     this.props.listServers()
+    this.props.getCatalog()
   }
 
   // make hosts the same length as servers by incrementing or decrmenting.
@@ -50,6 +52,7 @@ class Server extends Component {
       servers: nextProps.servers,
       hosts: newHosts,
       working: nextProps.working,
+      catalog: nextProps.catalog || {},
     })
   }
 
@@ -155,7 +158,7 @@ class Server extends Component {
     const id = e.target.id
     const index = parseInt(id.match(/\d+/)[0], 10);
     const hosts = this.state.hosts;
-    hosts[index].role=e.target.role;
+    hosts[index].role=e.target.value;
     this.forceUpdate();
   }
 
@@ -184,7 +187,7 @@ class Server extends Component {
     return (
       <div>
         <Error error={this.props.error} />
-        <ServerList working={this.state.working} hosts={this.state.hosts} servers={this.state.servers} serverSelectFunc={this.selectServers} clickFunc={this.clickFunc} hostOnblur={this.hostOnblur} hostOnChange={this.hostOnChange} ipOnblur={this.ipOnblur}/>
+        <ServerList catalog={this.state.catalog} working={this.state.working} hosts={this.state.hosts} servers={this.state.servers} serverSelectFunc={this.selectServers} clickFunc={this.clickFunc} hostOnblur={this.hostOnblur} hostOnChange={this.hostOnChange} ipOnblur={this.ipOnblur}/>
       </div>
     )
   }
@@ -195,10 +198,12 @@ const mapStateToProps = (state, ownProps) => ({
   hosts: state.server.hosts,
   error: state.server.error,
   working: state.server.working,
+  catalog: state.server.catalog,
 })
 
 const mapDispatchToProps = (dispatch)  => ({
   listServers: () => dispatch(listServers()),
+  getCatalog: () => dispatch(getCatalog()),
   updateServers: (servers, hosts) => dispatch(updateServers(servers, hosts)),
 })
 

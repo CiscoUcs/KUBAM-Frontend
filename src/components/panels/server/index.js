@@ -1,6 +1,6 @@
 import React from 'react'
 
-var ServerList = ({working, hosts, servers, serverSelectFunc, clickFunc, hostOnblur, hostOnChange, ipOnblur}) => (
+var ServerList = ({catalog, working, hosts, servers, serverSelectFunc, clickFunc, hostOnblur, hostOnChange, ipOnblur}) => (
   <div className="card-body">
      <div className="row">
       <div className="col">
@@ -108,25 +108,24 @@ var ServerList = ({working, hosts, servers, serverSelectFunc, clickFunc, hostOnb
                 value={hosts[i].os}
                 onChange={(e) => hostOnChange(e) }
                 id={"os["+i+"]"}>
-          <option value="centos7.3">CentOS 7.3</option>
-          <option value="rh7.3">RedHat 7.3</option>
-          <option value="esxi6.0">ESXi 6.0</option>
-          <option value="esxi6.5">ESXi 6.5</option>
+          { Object.keys(catalog).map( (os) =>  
+                <option value={os} key={os}>{os}</option>
+          )}
         </select>
       </div>
 
-  <div className="col">
-    <label htmlFor="role" className="text-muted">Node Role</label>
-    <select className="custom-select form-control"
-            value={hosts[i].role}
-            onChange={(e) => hostOnChange(e) }
-            id={"role["+i+"]"}>
-          <option value="KubernetesMaster">Kubernetes Master</option>
-          <option value="KubernetesWorkerNode">Kubernetes Worker Node</option>
-          <option value="Vanilla">Vanilla</option>
-    </select>
-  </div>
-
+      <div className="col">
+        <label htmlFor="role" className="text-muted">Node Role</label>
+        <select className="custom-select form-control"
+                value={hosts[i].role}
+                onChange={(e) => hostOnChange(e) }
+                id={"role["+i+"]"}>
+              { Object.keys(catalog).filter( (os) =>  os === hosts[i].os).map( (o) => 
+                    catalog[o].map( (role) => 
+                    <option value={role} key={role}>{role}</option>
+              ))}
+        </select>
+      </div>
     </div>
     )}
     </form>

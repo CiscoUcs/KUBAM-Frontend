@@ -61,6 +61,14 @@ export function* listServers() {
   yield put(actions.receivedServers(response.servers, response.hosts))
 }
 
+export function* getCatalog() {
+  let response = yield call(serverApi.getCatalog)
+  if (response.error) {
+    return yield put (actions.kubamError(response.error))
+  }
+  yield put(actions.receivedCatalog(response))
+}
+
 export function* updateServers(action) {
   let response = yield call(serverApi.updateServers, { servers : action.servers, hosts: action.hosts})
   if (response.error) {
@@ -167,6 +175,7 @@ export function* watchUCSRequest() {
   yield takeEvery(actions.GET_ISO_MAP, getISOMap)
   yield takeEvery(actions.UPDATE_ISO_MAP, updateISOMap)
   yield takeEvery(actions.MAKE_ISO_IMAGES, makeISOImages)
+  yield takeEvery(actions.GET_CATALOG, getCatalog)
 }
 
 export default function* rootSaga() {

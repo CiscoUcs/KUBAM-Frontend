@@ -19,7 +19,6 @@ const serverApi = {
     })
   },
   updateServers(userData) {
-    console.log(userData)
     return fetch(url + '/servers', {
       method: 'POST',
       headers: {
@@ -38,7 +37,23 @@ const serverApi = {
     .catch( (error) => {
       return error
     })
-  }
+  },
+  getCatalog() {
+    return fetch(url + '/catalog', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(statusHelper)
+    .then(data => {
+      return data
+    })
+    .catch( (error) => { 
+      return error
+    })
+  },
 }
 
 // thanks: https://github.com/redux-saga/redux-saga/issues/561
