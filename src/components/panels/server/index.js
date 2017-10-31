@@ -114,6 +114,19 @@ var ServerList = ({working, hosts, servers, serverSelectFunc, clickFunc, hostOnb
           <option value="esxi6.5">ESXi 6.5</option>
         </select>
       </div>
+
+  <div className="col">
+    <label htmlFor="role" className="text-muted">Node Role</label>
+    <select className="custom-select form-control"
+            value={hosts[i].role}
+            onChange={(e) => hostOnChange(e) }
+            id={"role["+i+"]"}>
+          <option value="KubernetesMaster">Kubernetes Master</option>
+          <option value="KubernetesWorkerNode">Kubernetes Worker Node</option>
+          <option value="Vanilla">Vanilla</option>
+    </select>
+  </div>
+
     </div>
     )}
     </form>

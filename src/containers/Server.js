@@ -150,7 +150,15 @@ class Server extends Component {
     }
     this.forceUpdate();
   }
-  
+
+  updateRole = (e) => {
+    const id = e.target.id
+    const index = parseInt(id.match(/\d+/)[0], 10);
+    const hosts = this.state.hosts;
+    hosts[index].role=e.target.role;
+    this.forceUpdate();
+  }
+
   hostOnChange = (event) => {
     const t = event.target.id
     switch(true) {
@@ -160,6 +168,8 @@ class Server extends Component {
         return this.updateIP(event)
       case /os/.test(t):
         return this.updateOS(event)
+      case /role/.test(t):
+        return this.updateRole(event)
       default:
         break;
     }
