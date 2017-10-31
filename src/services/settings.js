@@ -34,6 +34,22 @@ const settingsApi = {
       return error
     })
   },
+  fetchProxy(userData) {
+    return fetch(url + '/proxy', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(statusHelper)
+    .then(data => {
+      return data
+    })
+    .catch( (error) => { 
+      return error
+    })
+  },
   updateSettings(userData) {
     return fetch(url + '/settings', {
       method: 'POST',
@@ -44,6 +60,7 @@ const settingsApi = {
       body: JSON.stringify({
         kubam_ip: userData.kubam_ip,
         keys: userData.keys,
+        proxy: userData.proxy, 
       }),
     })
     .then(statusHelper)

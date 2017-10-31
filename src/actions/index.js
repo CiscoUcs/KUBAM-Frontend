@@ -36,6 +36,8 @@ export const GET_KEYS = 'GET_KEYS';
 export const RECEIVED_KEYS = 'RECEIVED_KEYS';
 export const GET_KUBAM_IP = 'GET_KUBAM_IP';
 export const RECEIVED_KUBAM_IP = 'RECEIVED_KUBAM_IP';
+export const GET_PROXY = 'GET_PROXY';
+export const RECEIVED_PROXY = 'RECEIVED_PROXY';
 export const UPDATE_SETTINGS = 'UPDATE_SETTINGS';
 export const DID_UPDATE_SETTINGS = 'DID_UPDATE_SETTINGS';
 export const DEPLOY = 'DEPLOY';
@@ -172,17 +174,28 @@ export const getKeys = () => ({
   type: GET_KEYS
 })
 
+export const getProxy = () => ({
+  type: GET_PROXY,
+})
+
+export const receivedProxy = (proxy) => ({
+  type: RECEIVED_PROXY,
+  proxy,
+})
+
 export const receivedKeys = (keys) => ({
   type: RECEIVED_KEYS,
   keys,
 })
 
 // update settings
-export const updateSettings = (kubam_ip, keys) =>  ({
+export const updateSettings = (kubam_ip, keys, proxy) =>  ({
   type: UPDATE_SETTINGS,
   kubam_ip,
   keys,
+  proxy,
 })
+
 
 export const didUpdateSettings = () => ({
   type: DID_UPDATE_SETTINGS,

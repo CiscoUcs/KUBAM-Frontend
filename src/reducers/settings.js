@@ -1,6 +1,7 @@
 import {
   RECEIVED_KEYS,
   RECEIVED_KUBAM_IP, 
+  RECEIVED_PROXY,
   KUBAM_ERROR,
   UPDATE_SETTINGS,
   DID_UPDATE_SETTINGS,
@@ -10,6 +11,7 @@ const settings = (state = {
   keys: [],
   kubam_ip: "",
   fetching: false, 
+  proxy: "", 
   msg: "", 
   error: "", 
   }, action) => {
@@ -21,9 +23,14 @@ const settings = (state = {
         error: "",
       })
     case RECEIVED_KUBAM_IP:   
-      console.log(action.kubam_ip)
       return Object.assign({}, state, {
         kubam_ip: action.kubam_ip,
+        fetching: false,
+        error: "",
+      })
+    case RECEIVED_PROXY:
+      return Object.assign({}, state, {
+        proxy: action.proxy,
         fetching: false,
         error: "",
       })
@@ -36,6 +43,7 @@ const settings = (state = {
       return Object.assign({}, state, {
         keys: action.keys,
         kubam_ip: action.kubam_ip,
+        proxy: action.proxy,
         fetching: true,
         error: "",
       })

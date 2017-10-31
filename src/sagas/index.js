@@ -96,17 +96,23 @@ export function* getKeys() {
 }
 
 export function* getKUBAMIP() {
-  //yield put(actions.fetching())
   let response = yield call(settingsApi.fetchKUBAMIP)
   if (response.error) {
     return yield put (actions.kubamError(response.error))
   }
   yield put(actions.receivedKUBAMIP(response.kubam_ip))
 }
- 
+
+export function* getProxy() {
+  let response = yield call(settingsApi.fetchProxy)
+  if (response.error) {
+    return yield put (actions.kubamError(response.error))
+  }
+  yield put(actions.receivedProxy(response.proxy))
+}
 
 export function* updateSettings(action) {
-  let response = yield call(settingsApi.updateSettings, { keys : action.keys, kubam_ip: action.kubam_ip})
+  let response = yield call(settingsApi.updateSettings, { keys : action.keys, kubam_ip: action.kubam_ip, proxy: action.proxy})
   if (response.error) {
     return yield put (actions.kubamError(response.error))
   }
@@ -176,6 +182,7 @@ export function* watchUCSRequest() {
   yield takeEvery(actions.UPDATE_ISO_MAP, updateISOMap)
   yield takeEvery(actions.MAKE_ISO_IMAGES, makeISOImages)
   yield takeEvery(actions.GET_CATALOG, getCatalog)
+  yield takeEvery(actions.GET_PROXY, getProxy)
 }
 
 export default function* rootSaga() {
