@@ -54,3 +54,34 @@ a .fa {
 .pointer {
   cursor: pointer;
 }
+
+/*
+Feedback field
+*/
+#feedback {
+    background-color: white;
+    width: 220px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    position: absolute;
+    bottom:0;
+    right: 0;
+    border-width: 1px;
+    border-color: grey;
+    border-top-style: solid;
+    border-left-style: solid;
+    border-right-style: off;
+    border-bottom-style: off;
+}
+
+#feedback:hover{
+    background-color: white;
+    border-width: 1px;
+    border-color: grey;
+    border-top-style: solid;
+    border-left-style: solid;
+    border-right-style: off;
+    border-bottom-style: off;
+}
+
