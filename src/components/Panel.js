@@ -41,3 +41,4 @@ var Panel = ({selected}) => {
 };
 
 export default Panel
+
