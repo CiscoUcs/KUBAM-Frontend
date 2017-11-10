@@ -3,6 +3,7 @@ import {
   RECEIVED_OS,
   GET_ISO_MAP,
   RECEIVED_ISO_MAP,
+  RECEIVED_CATALOG,
   UPDATE_ISO_MAP,
   KUBAM_ERROR,
 } from '../actions'
@@ -10,6 +11,7 @@ import {
 const os = (state = {
   osList: [],
   isoMap: [],
+  catalog: {},
   error: "",
   fetching: false,
   }, action) => {
@@ -45,6 +47,10 @@ const os = (state = {
         isoMap: action.isoMap,
         error: "",
         fetching: false,
+      })
+    case RECEIVED_CATALOG:
+      return Object.assign({}, state, {
+        catalog: action.catalog,
       })
     default:
       return state

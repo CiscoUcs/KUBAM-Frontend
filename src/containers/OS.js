@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { listOSes, getISOMap, updateISOMap } from '../actions'
+import { listOSes, getISOMap, updateISOMap, getCatalog } from '../actions'
 import OSList from '../components/panels/os/'
 import OSModal from '../components/panels/os/modal'
 import DelModal from '../components/panels/os/delModal'
@@ -22,7 +22,10 @@ class OS extends Component {
   componentDidMount() {
     this.props.listOSes()
     this.props.getISOMap()
+    this.props.getCatalog()
+    
   }
+  
   isoSelect = (event, iso) => {
     this.setState({
       iso: iso, 
@@ -69,7 +72,7 @@ class OS extends Component {
     <div>
       <Error error={this.props.error} />
       <OSList working={this.props.working} error={this.props.error} isoMap={this.props.isoMap} isoMapSelect={this.isoMapSelect} />
-      <OSModal selectedISO={this.state.iso} osList={this.props.osList} isoSelect={this.isoSelect} isoOsSelect={this.isoOsSelect} modalClose={this.modalClose} />
+      <OSModal catalog={this.props.catalog} selectedISO={this.state.iso} osList={this.props.osList} isoSelect={this.isoSelect} isoOsSelect={this.isoOsSelect} modalClose={this.modalClose} />
       <DelModal selectedOS={this.state.os} selectedISO={this.state.iso} isoOsDelete={this.isoOsDelete} modalClose={this.modalClose} />
     </div>
     )
@@ -80,11 +83,13 @@ const mapStateToProps = (state, ownProps) => ({
   osList: state.os.osList,
   isoMap: state.os.isoMap,
   error: state.os.error,
-  working: state.os.fetching
+  working: state.os.fetching,
+  catalog: state.os.catalog
 })
 
 const mapDispatchToProps = (dispatch)  => ({
   listOSes: () => dispatch(listOSes()),
+  getCatalog: () => dispatch(getCatalog()),
   getISOMap: () => dispatch(getISOMap()),
   updateISOMap: (isoMap) => dispatch(updateISOMap(isoMap)),
 })

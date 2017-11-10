@@ -1,6 +1,6 @@
 import React from 'react'
 
-var OSModal = ({selectedISO, osList, isoSelect, isoOsSelect, modalClose}) => (
+var OSModal = ({catalog, selectedISO, osList, isoSelect, isoOsSelect, modalClose}) => (
   <div className="modal fade" id="osModal" tabIndex="-1" role="dialog" aria-labelledby="osModalLabel" aria-hidden="true">
     <div className="modal-dialog" role="document">
     {selectedISO === "" ?
@@ -40,10 +40,9 @@ var OSModal = ({selectedISO, osList, isoSelect, isoOsSelect, modalClose}) => (
           <h4>{selectedISO}</h4>
           <p className="small text-muted">Map this OS</p>
           <select className="custom-select" id="isoMap">
-            <option value="centos7.3">CentOS 7.3</option>
-            <option value="rh7.3" >RedHat 7.3</option>
-            <option value="esxi6.0">ESXi 6.0</option>
-            <option value="esxi6.5">ESXi 6.5</option>
+            { Object.keys(catalog).map( (os) => 
+              <option key={os} value={os} >{os}</option>
+            )}
           </select>
           <p></p>
         </div>
