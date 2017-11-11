@@ -7,11 +7,10 @@ import Error from '../components/Error'
 class Network extends Component {
   constructor(props) {
     super(props);
-    this.state = { network : {netmask: this.props.network.netmask || "", 
-                  gateway: this.props.network.gateway || "",
-                  nameserver: this.props.network.nameserver || "",
-                  ntpserver: this.props.network.ntpserver || ""
-                  },
+    this.state = { netmask: this.props.network.netmask ,
+                   gateway: this.props.network.gateway ,
+                  nameserver: this.props.network.nameserver ,
+                  ntpserver: this.props.network.ntpserver ,
                   working: this.props.working || false, 
                   vlans: this.props.vlans || [],
                   }
@@ -19,13 +18,12 @@ class Network extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({network : {netmask : nextProps.network.netmask,
-                    gateway: nextProps.network.gateway,   
-                    nameserver: nextProps.network.nameserver,
-                    ntpserver: nextProps.network.ntpserver
-                    },
-                   working: nextProps.working,
-                   vlans: nextProps.vlans})
+    this.setState({netmask : nextProps.network.netmask ,
+                   gateway: nextProps.network.gateway ,   
+                   nameserver: nextProps.network.nameserver ,
+                   ntpserver: nextProps.network.ntpserver ,
+                   working: nextProps.working || false,
+                   vlans: nextProps.vlans })
   }
 
   componentDidMount() {
@@ -34,33 +32,32 @@ class Network extends Component {
 
   // update the form elements 
   handleChange = (event) => {
-    const network = this.state.network
-    var vlans = this.state.vlans
+    const s = this.state
     switch(event.target.id) {
       case "netmask":
-        network.netmask = event.target.value
+        s.netmask = event.target.value
         break;
       case "gateway":
-        network.gateway = event.target.value
+        s.gateway = event.target.value
         break;
       case "nameserver":
-        network.nameserver = event.target.value
+        s.nameserver = event.target.value
         break;
       case "ntpserver":
-        network.ntpserver = event.target.value
+        s.ntpserver = event.target.value
         break;
       case "vlan":
-        var newVlans = vlans.map( (v) => {
+        var newVlans = s.vlans.map( (v) => {
             v.selected = false
             if (v.name === event.target.value) {
               v.selected = true
             }
             return v
           })
-        vlans = newVlans
+        s.vlans = newVlans
         break;
       default:
-        network.nameserver = network.nameserver
+        s.netmask  = s.netmask
     }
     this.forceUpdate();
   }
@@ -69,10 +66,10 @@ class Network extends Component {
   clickFunc = (event) => {
     event.preventDefault();
     var network = {}
-    network['netmask'] = document.getElementById("netmask").value;
-    network['gateway'] = document.getElementById("gateway").value;
-    network['nameserver'] = document.getElementById("nameserver").value;
-    network['ntpserver'] = document.getElementById("ntpserver").value;
+    network['netmask'] = this.state.netmask; 
+    network['gateway'] = this.state.gateway;
+    network['nameserver'] = this.state.nameserver;
+    network['ntpserver'] = this.state.ntpserver;
     var vlan = document.getElementById("vlan").value
     this.props.updateNetwork(vlan, network) 
   }
@@ -81,7 +78,12 @@ class Network extends Component {
     return (
       <div>
         <Error error={this.props.error} />
-        <NetworkList working={this.state.working} vlans={this.state.vlans} network={this.state.network} clickFunc={this.clickFunc} onChange={this.handleChange} />
+        <NetworkList working={this.state.working} vlans={this.state.vlans} 
+                    netmask={this.state.netmask} 
+                    gateway={this.state.gateway} 
+                    nameserver={this.state.nameserver} 
+                    ntpserver={this.state.ntpserver} 
+                    clickFunc={this.clickFunc} onChange={this.handleChange} />
       </div>
     )
   }

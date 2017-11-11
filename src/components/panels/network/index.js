@@ -8,7 +8,7 @@ var defValue = (vlans) => {
   return selected
 }
 
-var NetworkList = ({working, vlans, network, clickFunc, onChange}) => (
+var NetworkList = ({working, vlans, netmask, gateway, nameserver, ntpserver, clickFunc, onChange}) => (
   <div className="card-body">
     <div className="row">
       <div className="col">
@@ -47,25 +47,25 @@ var NetworkList = ({working, vlans, network, clickFunc, onChange}) => (
         <div className="form-group row">
           <label htmlFor="netmask" className="col-sm-2 col-form-label text-right">Netmask</label>
           <div className="col-sm-6">
-            <input type="text" onChange={onChange} className="form-control" id="netmask" defaultValue={network.netmask} />
+            <input type="text" onChange={onChange} className="form-control" id="netmask" value={netmask || ""} />
           </div>
         </div>
         <div className="form-group row">
           <label htmlFor="router" className="col-sm-2 col-form-label text-right">Router</label>
           <div className="col-sm-6">
-            <input type="text" onChange={onChange} className="form-control" id="gateway" defaultValue={network.gateway}/>
+            <input type="text" onChange={onChange} className="form-control" id="gateway" value={gateway || ""}/>
           </div>
         </div>
         <div className="form-group row">
           <label htmlFor="nameserver" className="col-sm-2 col-form-label text-right">Nameserver</label>
           <div className="col-sm-6">
-            <input type="text" onChange={onChange} className="form-control" id="nameserver" defaultValue={network.nameserver}></input>
+            <input type="text" onChange={onChange} className="form-control" id="nameserver" value={nameserver || ""}></input>
           </div>
         </div>
         <div className="form-group row">
           <label htmlFor="ntpserver" className="col-sm-2 col-form-label text-right">NTP server</label>
           <div className="col-sm-6">
-            <input type="text" onChange={onChange} className="form-control" id="ntpserver" defaultValue={network.ntpserver}></input>
+            <input type="text" onChange={onChange} className="form-control" id="ntpserver" value={ntpserver || ""}></input>
           </div>
         </div>
       </form>
