@@ -61,13 +61,24 @@ var DeployPanel = ({working, keys, kubam_ip, onChange, makeBootFunc, deployFunc,
             <button onClick={(e) => destroyFunc(e)} className="btn btn-lg btn-danger" disabled>
             <i className="fa fa-cog fa-spin"></i>  Working</button>
             :
-            <button onClick={(e) => destroyFunc(e)} className="btn btn-lg btn-danger">Destroy</button>
+            <button onClick={destroycheck} className="btn btn-lg btn-danger">Destroy</button>
           }
         </div>
       </div>
+    </div>
+    <div id="destroyoverlay">
+        <span>Are you sure that you want to destroy the cluster?</span><br /><br />
+        <button className="btn btn-lg btn-danger" onClick={(e) => destroyFunc(e)}>Destroy</button> <button className="btn btn-lg btn-primary" onClick={closedestroy}>No, Abort!</button>
     </div>
   </div>
 );
 
 export default DeployPanel
 
+function destroycheck() {
+    document.getElementById('destroyoverlay').style.display = 'inline'
+}
+
+function closedestroy() {
+    document.getElementById('destroyoverlay').style.display = 'none'
+}
