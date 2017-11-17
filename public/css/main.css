@@ -100,3 +100,40 @@ Feedback field
     transform: translateX(-50%);
     display: none;
 }
+
+
+#feedbackoverlay{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    line-height: 30px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    z-index:9999;
+    color: black;
+    display:none;
+}
+
+#feedbackform{
+    position: relative;
+    text-align: center;
+    top:200px;
+    background:rgba(0, 0, 0, 0.4);
+    width: 550px;
+    height: 225px;
+    color: white;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin: 0 auto;
+}
+
+#closeform{
+    position: absolute;
+    right:8px;
+    top:3px;
+    cursor:pointer;
+    font-weight: bold;
+    font-size: 105%
+}
