@@ -7,6 +7,7 @@ import server from './server'
 import os from './os'
 import settings from './settings'
 import deploy from './deploy'
+import kubam from './kubam'
 
 const kubamApp = combineReducers({
   tabs,
@@ -17,6 +18,7 @@ const kubamApp = combineReducers({
   os, 
   settings,
   deploy,
+  kubam,
 })
 
 export default kubamApp

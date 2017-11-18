@@ -1,6 +1,6 @@
 import React from 'react'
 
-var SettingsPanel = ({working, keys, kubam_ip, proxy, onChange, updateSettingsFunc}) => (
+var SettingsPanel = ({working, keys, kubam_ip, proxy, org, onChange, updateSettingsFunc}) => (
 
   <div className="card-body">
     <div className="row">
@@ -23,6 +23,21 @@ var SettingsPanel = ({working, keys, kubam_ip, proxy, onChange, updateSettingsFu
             <label htmlFor="kubam_ip" className="col-sm-2 col-form-label">KUBAM IP address</label>
             <div className="col-sm-6">
               <input type="text" onChange={onChange} className="form-control" id="kubam_ip" value={kubam_ip} />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div className="row">
+      <div className="col">
+        <p className="small text-muted">
+          KUBAM will create resources inside UCS.  By default all resources will be created under the kubam org.  You can, however, put any org you want.  No spaces or tricky names.  UCS doesn't like that.
+        </p>
+        <form className="form">
+          <div className="form-group row">
+            <label htmlFor="org" className="col-sm-2 col-form-label">UCS Organization</label>
+            <div className="col-sm-6">
+              <input type="text" onChange={onChange} className="form-control" id="org" value={org} placeholder="kubam" />
             </div>
           </div>
         </form>

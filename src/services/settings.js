@@ -50,6 +50,22 @@ const settingsApi = {
       return error
     })
   },
+  fetchOrg(userData) {
+    return fetch(url + '/org', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(statusHelper)
+    .then(data => {
+      return data
+    })
+    .catch( (error) => { 
+      return error
+    })
+  },
   updateSettings(userData) {
     return fetch(url + '/settings', {
       method: 'POST',
@@ -61,6 +77,7 @@ const settingsApi = {
         kubam_ip: userData.kubam_ip,
         keys: userData.keys,
         proxy: userData.proxy, 
+        org: userData.org,
       }),
     })
     .then(statusHelper)

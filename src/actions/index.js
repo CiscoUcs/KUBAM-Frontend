@@ -38,11 +38,19 @@ export const GET_KUBAM_IP = 'GET_KUBAM_IP';
 export const RECEIVED_KUBAM_IP = 'RECEIVED_KUBAM_IP';
 export const GET_PROXY = 'GET_PROXY';
 export const RECEIVED_PROXY = 'RECEIVED_PROXY';
+
+export const GET_ORG = 'GET_ORG';
+export const RECEIVED_ORG = 'RECEIVED_ORG';
+
 export const UPDATE_SETTINGS = 'UPDATE_SETTINGS';
 export const DID_UPDATE_SETTINGS = 'DID_UPDATE_SETTINGS';
 export const DEPLOY = 'DEPLOY';
 export const DESTROY = 'DESTROY';
 export const DID_DEPLOY = 'DID_DEPLOY';
+/* Feedback */
+export const POST_FEEDBACK = 'POST_FEEDBACK';
+export const POSTED_FEEDBACK = 'POSTED_FEEDBACK';
+
 
 export const selectTab = (selected) => ({
   type: SELECTED_TAB,
@@ -183,17 +191,28 @@ export const receivedProxy = (proxy) => ({
   proxy,
 })
 
+export const getOrg = () => ({
+  type: GET_ORG,
+})
+
+export const receivedOrg = (org) => ({
+  type: RECEIVED_ORG,
+  org,
+})
+
+
 export const receivedKeys = (keys) => ({
   type: RECEIVED_KEYS,
   keys,
 })
 
 // update settings
-export const updateSettings = (kubam_ip, keys, proxy) =>  ({
+export const updateSettings = (kubam_ip, keys, proxy, org) =>  ({
   type: UPDATE_SETTINGS,
   kubam_ip,
   keys,
   proxy,
+  org,
 })
 
 
@@ -223,3 +242,15 @@ export const receivedCatalog = (catalog) => ({
   type: RECEIVED_CATALOG,
   catalog,
 })
+
+export const postFeedback = (feedback) =>  ({
+  type: POST_FEEDBACK,
+  feedback,
+})
+
+export const postedFeedback = (response) =>  ({
+  type: POSTED_FEEDBACK,
+  response,
+})
+
+

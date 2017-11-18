@@ -48,7 +48,8 @@ class Deploy extends Component {
   }
 
   destroyFunc = (event) => {
-    this.props.destroy()
+    this.props.destroy();
+    document.getElementById('destroyoverlay').style.display = 'none';
   }
 
   render() {

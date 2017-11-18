@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getKUBAMIP, getKeys, getProxy, updateSettings } from '../actions'
+import { getKUBAMIP, getKeys, getProxy, getOrg, updateSettings } from '../actions'
 import SettingsPanel from '../components/panels/settings/'
 import Error from '../components/Error'
 
@@ -10,6 +10,7 @@ class Settings extends Component {
     this.state = {
       keys: this.props.keys ,
       kubam_ip: this.props.kubam_ip,
+      org: this.props.org,
       proxy: this.props.proxy, 
       working: this.props.working,
     }
@@ -21,6 +22,7 @@ class Settings extends Component {
     this.props.getKUBAMIP()
     this.props.getKeys()
     this.props.getProxy()
+    this.props.getOrg()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -28,6 +30,7 @@ class Settings extends Component {
       keys: Array.isArray(nextProps.keys) ? nextProps.keys[0] : "",
       kubam_ip: nextProps.kubam_ip,
       proxy: nextProps.proxy, 
+      org: nextProps.org,
       working: nextProps.working,
     })
   }
@@ -44,6 +47,9 @@ class Settings extends Component {
       case "proxy":
         s.proxy = event.target.value;
         break;
+      case "org":
+        s.org = event.target.value;
+        break;
       default:
       
     }
@@ -53,14 +59,14 @@ class Settings extends Component {
   updateFunc = (event) => {
     // get the ip and the key. 
     // the keys should be in an array.  Right now the interface only allows for one key. 
-    this.props.updateSettings(this.state.kubam_ip, [this.state.keys], this.state.proxy);
+    this.props.updateSettings(this.state.kubam_ip, [this.state.keys], this.state.proxy, this.state.org);
   }
 
   render() {
     return (
       <div>
         <Error error={this.props.error} />
-        <SettingsPanel working={this.state.working} keys={this.state.keys} proxy={this.state.proxy} kubam_ip={this.state.kubam_ip} onChange={this.handleChange} updateSettingsFunc={this.updateFunc} />
+        <SettingsPanel working={this.state.working} keys={this.state.keys} org={this.state.org} proxy={this.state.proxy} kubam_ip={this.state.kubam_ip} onChange={this.handleChange} updateSettingsFunc={this.updateFunc} />
       </div>
     )
   }
@@ -70,6 +76,7 @@ const mapStateToProps = (state, ownProps) => ({
   keys: state.settings.keys,
   kubam_ip: state.settings.kubam_ip,
   proxy: state.settings.proxy, 
+  org: state.settings.org, 
   working: state.settings.fetching,
   error: state.settings.error, 
 })
@@ -78,7 +85,8 @@ const mapDispatchToProps = (dispatch)  => ({
   getKUBAMIP: () => dispatch(getKUBAMIP()),
   getKeys: () => dispatch(getKeys()),
   getProxy: () => dispatch(getProxy()),
-  updateSettings: (kubam_ip, keys, proxy) => dispatch(updateSettings(kubam_ip, keys, proxy)),
+  getOrg: () => dispatch(getOrg()),
+  updateSettings: (kubam_ip, keys, proxy, org) => dispatch(updateSettings(kubam_ip, keys, proxy, org)),
 })
 
 export default connect(

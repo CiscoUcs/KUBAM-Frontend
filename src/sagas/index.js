@@ -5,6 +5,7 @@ import serverApi from '../services/server'
 import osApi from '../services/os'
 import settingsApi from '../services/settings'
 import deployApi from '../services/deploy'
+import kubamApi from '../services/kubam'
 import * as actions from '../actions'
 
 export function* login(action) {
@@ -111,8 +112,16 @@ export function* getProxy() {
   yield put(actions.receivedProxy(response.proxy))
 }
 
+export function* getOrg() {
+  let response = yield call(settingsApi.fetchOrg)
+  if (response.error) {
+    return yield put (actions.kubamError(response.error))
+  }
+  yield put(actions.receivedOrg(response.org))
+}
+
 export function* updateSettings(action) {
-  let response = yield call(settingsApi.updateSettings, { keys : action.keys, kubam_ip: action.kubam_ip, proxy: action.proxy})
+  let response = yield call(settingsApi.updateSettings, { keys : action.keys, kubam_ip: action.kubam_ip, proxy: action.proxy, org: action.org })
   if (response.error) {
     return yield put (actions.kubamError(response.error))
   }
@@ -161,6 +170,15 @@ export function* updateISOMap(action) {
   yield put(actions.receivedISOMap(response.iso_map))
 }
 
+export function* postFeedback(action) {
+  console.log("posting feedback!")
+  let response = yield call(kubamApi.postFeedback, { feedback: action.feedback})
+  if (response.error) {
+    return yield put (actions.kubamError(response.error))
+  }
+  yield put(actions.postedFeedback(response))
+}
+
 export function* watchLoginRequest() {
   yield takeEvery(actions.SUBMIT_CREDS, login);
   yield takeEvery(actions.CHECK_LOGIN, get_login);
@@ -183,6 +201,8 @@ export function* watchUCSRequest() {
   yield takeEvery(actions.MAKE_ISO_IMAGES, makeISOImages)
   yield takeEvery(actions.GET_CATALOG, getCatalog)
   yield takeEvery(actions.GET_PROXY, getProxy)
+  yield takeEvery(actions.GET_ORG, getOrg)
+  yield takeEvery(actions.POST_FEEDBACK, postFeedback)
 }
 
 export default function* rootSaga() {
