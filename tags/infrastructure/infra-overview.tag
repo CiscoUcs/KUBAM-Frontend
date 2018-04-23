@@ -26,7 +26,7 @@
                         <div class="th">Tenant</div>
                         <div class="th">Model</div>
                         <div class="th">Firmware version</div>
-                        <div class="th">Site</div>
+                        <div class="th">Description</div>
                         <div class="th">Action</div>
                     </div>
                     <div class="tr" each={content}>
@@ -37,7 +37,7 @@
                         <div class="td">{tenant}</div>
                         <div class="td">{model}</div>
                         <div class="td">{firmware}</div>
-                        <div class="td">{site}</div>
+                        <div class="td">{description}</div>
                         <div class="td">
                                  <img src="./icons/edit.svg" class="table-icon">
                                  <img src="./icons/delete.svg" class="table-icon">
@@ -81,7 +81,7 @@
                 'tenant': 'Michael M.',
                 'model': 'UCS-M.6248UP',
                 'firmware': '...',
-                'site': 'Austria'
+                'description': 'Austria'
             },
             {
                 'type': 'ACI',
@@ -90,7 +90,7 @@
                 'tenant': 'Lara',
                 'model': '...',
                 'firmware': '...',
-                'site': 'Spain'
+                'description': 'Spain'
             }
         ]
         

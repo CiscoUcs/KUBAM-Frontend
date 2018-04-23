@@ -9,7 +9,7 @@
                 <route path="dashboard..">Dashboard</route>
                 <route path="images..">Server Images</route>
                 <route path="infrastructure..">Infrastructure</route>
-                <route path="servers..">Servers</route>
+                <route path="hosts..">Hosts</route>
                 <route path="kubernetes..">Kubernetes</route>
                 <route path="tutorial..">Tutorial</route>
                 <route path="feedback..">Feedback</route>

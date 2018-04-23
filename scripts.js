@@ -37,7 +37,7 @@ const reduxStore = Redux.createStore(
 )
 
 var ax = axios.create({
-    baseURL: 'http://10.93.234.96:8001/api/v1',
+    baseURL: 'http://10.93.234.96:8001/api/',
     timeout: 1000,
     headers: {
         'Accept': 'application/json',
@@ -46,7 +46,7 @@ var ax = axios.create({
 });
 
 function* testFunction(action) {
-    ax.get('/catalog', {})
+    ax.get('v1/catalog', {})
     .then(function (response) {
         reduxStore.dispatch({
             type: "FETCH_SUCCEEDED",

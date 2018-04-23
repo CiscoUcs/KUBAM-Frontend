@@ -18,11 +18,11 @@
         </route>
         
         <!-- **** Servers **** -->
-        <route path="/servers">
+        <route path="/hosts">
             <server-overview store={passStore}></server-overview>
         </route>
         
-        <route path="/servers/...">
+        <route path="/hosts/...">
             <servergroup-view></servergroup-view>
         </route>        
         
