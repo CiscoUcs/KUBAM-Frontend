@@ -97,7 +97,7 @@ riot.tag2('fancy-button', '<button class="{opts.color}" type="button"> <yield></
 });
 riot.tag2('fancy-dropdown', '<label for="{this.opts.inputid}">{this.opts.tag}</label> <select name="{this.opts.inputid}" id="{this.opts.inputid}"> <yield></yield> </select>', 'fancy-dropdown { margin: 10px; } fancy-dropdown select,[data-is="fancy-dropdown"] select,fancy-dropdown label,[data-is="fancy-dropdown"] label{ display:block; } fancy-dropdown select,[data-is="fancy-dropdown"] select{ color: #54596c; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; width: 225px; padding: 12px; text-overflow: ellipsis; padding: 5px 10px; white-space: nowrap; -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1); -webkit-appearance: button; -webkit-padding-start: 12px; -webkit-user-select: none; background-image: url(\'./icons/select_arrow.png\'); background-position: 96% center; background-repeat: no-repeat; } fancy-dropdown select:hover,[data-is="fancy-dropdown"] select:hover,fancy-dropdown select:active,[data-is="fancy-dropdown"] select:active,fancy-dropdown select:focus,[data-is="fancy-dropdown"] select:focus{ outline: none; } fancy-dropdown label,[data-is="fancy-dropdown"] label{ font-size: 12px; color: #8089a2; margin-bottom: 2px; }', '', function(opts) {
 });
-riot.tag2('fancy-input', '<label for="{this.opts.inputid}">{this.opts.tag}</label> <input type="text" id="{this.opts.inputid}" name="{this.opts.inputid}">', 'fancy-input { margin: 10px; } fancy-input input,[data-is="fancy-input"] input,fancy-input label,[data-is="fancy-input"] label{ display:block; } fancy-input input,[data-is="fancy-input"] input{ padding: 12px; color: #54596c; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; width: 200px; } fancy-input input:hover,[data-is="fancy-input"] input:hover,fancy-input input:active,[data-is="fancy-input"] input:active,fancy-input input:focus,[data-is="fancy-input"] input:focus{ outline: none; border: 1px solid #20B4F6; } fancy-input label,[data-is="fancy-input"] label{ font-size: 12px; color: #8089a2; margin-bottom: 2px; }', '', function(opts) {
+riot.tag2('fancy-input', '<label for="{this.opts.inputid}">{this.opts.tag}</label> <input id="{this.opts.inputid}" name="{this.opts.inputid}" type="{this.opts.settype}">', 'fancy-input { margin: 10px; } fancy-input input,[data-is="fancy-input"] input,fancy-input label,[data-is="fancy-input"] label{ display:block; } fancy-input input,[data-is="fancy-input"] input{ padding: 12px; color: #54596c; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; width: 200px; } fancy-input input:hover,[data-is="fancy-input"] input:hover,fancy-input input:active,[data-is="fancy-input"] input:active,fancy-input input:focus,[data-is="fancy-input"] input:focus{ outline: none; border: 1px solid #20B4F6; } fancy-input label,[data-is="fancy-input"] label{ font-size: 12px; color: #8089a2; margin-bottom: 2px; }', '', function(opts) {
 });
 riot.tag2('fancy-table', '<div class="table"><yield></yield></div>', 'fancy-table .table,[data-is="fancy-table"] .table,fancy-table .tr,[data-is="fancy-table"] .tr,fancy-table .th,[data-is="fancy-table"] .th,fancy-table .td,[data-is="fancy-table"] .td{ border: 1px solid #ecedf1; background-color: #FFF; } fancy-table .th,[data-is="fancy-table"] .th,fancy-table .td,[data-is="fancy-table"] .td{ padding: 12px; font-size: 0.8em; } fancy-table .th,[data-is="fancy-table"] .th{ background-color: #363c51; color: #FFF; font-weight: 100; }', '', function(opts) {
 });
@@ -142,7 +142,7 @@ riot.tag2('feedback', '<div class="container>"> <form> Thank you for your feedba
 
 
 
-riot.tag2('infra-overview', '<div class="infra-group"> <h1 class="categoryHeader">KUBAM Settings</h1> <div class="infra-container"> <fancy-input tag="KUBAM IP Address" inputid="infra-view-kubamip"> </fancy-input> <fancy-input tag="Proxy Server" inputid="infra-view-proxy"> </fancy-input> <hr> <fancy-button>Change Public Key</fancy-button> </div> </div> <div class="infra-group"> <div class="infra-container-big"> <table-search></table-search> <div class="table"> <div class="tr"> <div class="th"><input type="checkbox"> </div> <div class="th">Type</div> <div class="th">Health</div> <div class="th">Management IP</div> <div class="th">Tenant</div> <div class="th">Model</div> <div class="th">Firmware version</div> <div class="th">Description</div> <div class="th">Action</div> </div> <div class="tr" each="{content}"> <div class="td"><input type="checkbox"></div> <div class="td">{type}</div> <div class="td">{health}</div> <div class="td">{mgtip}</div> <div class="td">{tenant}</div> <div class="td">{model}</div> <div class="td">{firmware}</div> <div class="td">{description}</div> <div class="td"> <img src="./icons/edit.svg" class="table-icon"> <img src="./icons/delete.svg" class="table-icon"> </div> </div> </div> </div> </div> <add-button onclick="{addController}">Add Controller</add-button>', 'infra-overview .tablewidth,[data-is="infra-overview"] .tablewidth{ width: 720px; } infra-overview .infra-group,[data-is="infra-overview"] .infra-group{ padding-bottom: 15px; } infra-overview .infra-container,[data-is="infra-overview"] .infra-container{ background-color: white; padding: 20px; } infra-overview .infra-container-big,[data-is="infra-overview"] .infra-container-big{ background-color: white; padding: 34px 20px; }', '', function(opts) {
+riot.tag2('infra-overview', '<div class="infra-group"> <h1 class="categoryHeader">KUBAM Settings</h1> <div class="infra-container"> <fancy-input tag="KUBAM IP Address" inputid="infra-view-kubamip"> </fancy-input> <fancy-input tag="Proxy Server" inputid="infra-view-proxy"> </fancy-input> <hr> <fancy-button>Change Public Key</fancy-button> </div> </div> <div class="infra-group"> <div class="infra-container-big"> <table-search></table-search> <div class="table"> <div class="tr"> <div class="th"><input type="checkbox"> </div> <div class="th">Type</div> <div class="th">Health</div> <div class="th">Mgmt IP</div> <div class="th">Tenant</div> <div class="th">Model</div> <div class="th">Firmware version</div> <div class="th">Description</div> <div class="th">Action</div> </div> <div class="tr" each="{content}"> <div class="td"><input type="checkbox"></div> <div class="td">{type}</div> <div class="td">{health}</div> <div class="td">{mgtip}</div> <div class="td">{tenant}</div> <div class="td">{model}</div> <div class="td">{firmware}</div> <div class="td">{description}</div> <div class="td"> <img src="./icons/edit.svg" class="table-icon"> <img src="./icons/delete.svg" class="table-icon"> </div> </div> </div> </div> </div> <add-button onclick="{addController}">Add Controller</add-button>', 'infra-overview .tablewidth,[data-is="infra-overview"] .tablewidth{ width: 720px; } infra-overview .infra-group,[data-is="infra-overview"] .infra-group{ padding-bottom: 15px; } infra-overview .infra-container,[data-is="infra-overview"] .infra-container{ background-color: white; padding: 20px; } infra-overview .infra-container-big,[data-is="infra-overview"] .infra-container-big{ background-color: white; padding: 34px 20px; }', '', function(opts) {
 
         this.content=[
             {
@@ -174,19 +174,33 @@ riot.tag2('infra-overview', '<div class="infra-group"> <h1 class="categoryHeader
             modal_content.innerHTML = '';
             var tag = document.createElement("new-controller");
             modal_content.append(tag)
-            riot.mount(tag, 'new-controller');
+            passStore = this.opts.store
+            riot.mount(tag, 'new-controller', passStore);
 
             var modal_shadow = document.getElementById('modal-shadow')
             modal_shadow.style.display = 'table'
         }.bind(this)
 });
-riot.tag2('new-controller', '<div> <fancy-dropdown tag="Type" input-id="servergroup-new-type"> <option value="ucsm">UCS Manager</option> <option value="imc">UCS Standalone</option> <option value="aci">ACI Fabric</option> </fancy-dropdown> <fancy-input tag="Name" input-id="servergroup-new-name"> </fancy-input> <fancy-input tag="Description" input-id="servergroup-new-description"> </fancy-input> <fancy-input tag="IP Address" input-id="servergroup-new-ip"> </fancy-input> <fancy-input tag="Username" input-id="servergroup-new-username"> </fancy-input> <fancy-input tag="Password" input-id="servergroup-new-password"> </fancy-input> </div> <fancy-button onclick="{createServerGroup}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button>', 'new-controller { text-align: left; }', '', function(opts) {
+riot.tag2('new-controller', '<div> <fancy-dropdown tag="Type" inputid="srvgroup-new-type"> <option value="ucsm">UCS Manager</option> <option value="imc">UCS Standalone</option> <option value="aci">ACI Fabric</option> </fancy-dropdown> <fancy-input tag="Name" inputid="srvgroup-new-name"> </fancy-input> <fancy-input tag="Description" inputid="srvgroup-new-description"> </fancy-input> <fancy-input tag="IP Address" inputid="srvgroup-new-ip"> </fancy-input> <fancy-input tag="Username" inputid="srvgroup-new-username"> </fancy-input> <fancy-input tag="Password" inputid="srvgroup-new-password" settype="password"> </fancy-input> </div> <fancy-button onclick="{createSrvGroup}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button>', 'new-controller { text-align: left; }', '', function(opts) {
         this.closeModal = function() {
             document.getElementById('modal-shadow').style.display = 'None';
         }.bind(this)
 
-        this.createServerGroup = function() {
-            console.log('a')
+        this.createSrvGroup = function() {
+            passStore.dispatch({
+                type: 'CREATE_SRVGROUP',
+                data: {
+                    'type': document.getElementById('srvgroup-new-type').value,
+                    'name': document.getElementById('srvgroup-new-name').value,
+                    'description': document.getElementById('srvgroup-new-description').value,
+                    'credentials': {
+                        'user': document.getElementById('srvgroup-new-username').value,
+                        'password': document.getElementById('srvgroup-new-password').value,
+                        'server': document.getElementById('srvgroup-new-ip').value
+                    }
+                }
+            })
+            this.closeModal()
         }.bind(this)
 });
 riot.tag2('kubernetes', '<div>KUBERNETES</div>', '', '', function(opts) {

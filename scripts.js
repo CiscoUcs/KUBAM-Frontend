@@ -61,9 +61,21 @@ function* testFunction(action) {
     });
 }
 
+function* createServerGroup(action) {
+    console.log(action['data'])
+    ax.post('v2/servers', action['data'])
+    .then(function (response) {
+        console.log('a')
+    })
+    .catch(function (error) {
+        console.log('b')
+    });
+}
+
 function* watchUserRequests() {
   yield ReduxSaga.takeEvery('FETCH_IMAGES', testFunction)
   yield ReduxSaga.takeEvery('ADD_IMAGE', testFunction)
+  yield ReduxSaga.takeEvery('CREATE_SRVGROUP', createServerGroup)
 }
 
 function* rootSaga() {

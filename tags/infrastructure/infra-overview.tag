@@ -22,7 +22,7 @@
                         </div>
                         <div class="th">Type</div>
                         <div class="th">Health</div>
-                        <div class="th">Management IP</div>
+                        <div class="th">Mgmt IP</div>
                         <div class="th">Tenant</div>
                         <div class="th">Model</div>
                         <div class="th">Firmware version</div>
@@ -103,7 +103,8 @@
             modal_content.innerHTML = '';
             var tag = document.createElement("new-controller");
             modal_content.append(tag)
-            riot.mount(tag, 'new-controller');
+            passStore = this.opts.store
+            riot.mount(tag, 'new-controller', passStore);
             
             var modal_shadow = document.getElementById('modal-shadow')
             modal_shadow.style.display = 'table'

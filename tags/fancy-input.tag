@@ -1,6 +1,9 @@
 <fancy-input>
     <label for="{this.opts.inputid}">{this.opts.tag}</label>
-    <input type="text" id="{this.opts.inputid}" name="{this.opts.inputid}" />
+    <input id="{this.opts.inputid}"
+           name="{this.opts.inputid}"
+           type="{this.opts.settype}"
+           />
     
     <style>
         fancy-input {

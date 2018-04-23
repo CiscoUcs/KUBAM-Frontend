@@ -1,29 +1,30 @@
 <new-controller>
     <div>
         <fancy-dropdown tag="Type"
-                        input-id="servergroup-new-type">
+                        inputid="srvgroup-new-type">
             <option value="ucsm">UCS Manager</option>
             <option value="imc">UCS Standalone</option>
             <option value="aci">ACI Fabric</option>
         </fancy-dropdown>
 
         <fancy-input tag="Name"
-                     input-id="servergroup-new-name">
+                     inputid="srvgroup-new-name">
         </fancy-input>
         <fancy-input tag="Description"
-                     input-id="servergroup-new-description">
+                     inputid="srvgroup-new-description">
         </fancy-input>
         <fancy-input tag="IP Address"
-                     input-id="servergroup-new-ip">
+                     inputid="srvgroup-new-ip">
         </fancy-input>
         <fancy-input tag="Username"
-                     input-id="servergroup-new-username">
+                     inputid="srvgroup-new-username">
         </fancy-input>
         <fancy-input tag="Password"
-                     input-id="servergroup-new-password">
+                     inputid="srvgroup-new-password"
+                     settype="password">
         </fancy-input>
     </div>
-    <fancy-button onclick={createServerGroup}>Create</fancy-button>
+    <fancy-button onclick={createSrvGroup}>Create</fancy-button>
     <fancy-button color="gray" onclick={closeModal}>Cancel</fancy-button>
 
     
@@ -32,8 +33,21 @@
             document.getElementById('modal-shadow').style.display = 'None';
         }
         
-        createServerGroup() {
-            console.log('a')
+        createSrvGroup() {
+            passStore.dispatch({
+                type: 'CREATE_SRVGROUP',
+                data: {
+                    'type': document.getElementById('srvgroup-new-type').value,
+                    'name': document.getElementById('srvgroup-new-name').value,
+                    'description': document.getElementById('srvgroup-new-description').value,
+                    'credentials': {
+                        'user': document.getElementById('srvgroup-new-username').value,
+                        'password': document.getElementById('srvgroup-new-password').value,
+                        'server': document.getElementById('srvgroup-new-ip').value
+                    }                    
+                }
+            })
+            this.closeModal()
         }
     </script>
     
