@@ -59,17 +59,11 @@
     </style>
     
     <script>
-        let currentValue
         let store = this.opts.store
-        
-        store.dispatch({
-            type: 'FLUSH'
-        })
         
         store.dispatch({
             type: 'FETCH_IMAGES'
         })
-
     
         addServerimage() {
             var modal_title = document.getElementById('modal-title');
@@ -86,12 +80,25 @@
             modal_shadow.style.display = 'table'
         }
         
+        let currentValue
         this.opts.store.subscribe(function(){
             let previousValue = currentValue;
             currentValue = store.getState()
-            console.log(this)
-            if (previousValue !== currentValue) {
-                riot.update();
+            currentTab = window.location.hash.substr(1);
+            if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
+                if(currentTab == 'images') {
+                    riot.update();
+                    
+//                    if(previousValue == undefined) {
+//                        riot.update();
+//                        console.log('UPDATING IMAGES')
+//                    } else {
+//                        console.log(previousValue)
+//                        console.log(currentValue)
+//                        console.log('UPDATING IMAGES')
+//                        riot.update();
+//                    }
+                }
             }
         })
     </script>

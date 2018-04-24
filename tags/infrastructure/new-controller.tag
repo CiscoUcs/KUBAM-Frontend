@@ -43,7 +43,7 @@
                     'credentials': {
                         'user': document.getElementById('srvgroup-new-username').value,
                         'password': document.getElementById('srvgroup-new-password').value,
-                        'server': document.getElementById('srvgroup-new-ip').value
+                        'ip': document.getElementById('srvgroup-new-ip').value
                     }                    
                 }
             })

@@ -24,20 +24,20 @@
                         <div class="th">Health</div>
                         <div class="th">Mgmt IP</div>
                         <div class="th">Tenant</div>
-                        <div class="th">Model</div>
+                        <div class="th">Name</div>
                         <div class="th">Firmware version</div>
                         <div class="th">Description</div>
                         <div class="th">Action</div>
                     </div>
-                    <div class="tr" each={content}>
+                    <div class="tr" each={comp in this.opts.store.getState().infracomponents}>
                         <div class="td"><input type="checkbox"></div>
-                        <div class="td">{type}</div>
-                        <div class="td">{health}</div>
-                        <div class="td">{mgtip}</div>
-                        <div class="td">{tenant}</div>
-                        <div class="td">{model}</div>
-                        <div class="td">{firmware}</div>
-                        <div class="td">{description}</div>
+                        <div class="td">{comp.type}</div>
+                        <div class="td">HEALTH</div>
+                        <div class="td">{comp.credentials.ip}</div>
+                        <div class="td">{comp.credentials.user}</div>
+                        <div class="td">{comp.name}</div>
+                        <div class="td">FIRMWARE</div>
+                        <div class="td">{comp.description}</div>
                         <div class="td">
                                  <img src="./icons/edit.svg" class="table-icon">
                                  <img src="./icons/delete.svg" class="table-icon">
@@ -71,13 +71,30 @@
         }
     </style>
     
-    <script>
+    <script>        
+        let currentValue
+        let store = this.opts.store
+                
+        store.dispatch({
+            type: 'FETCH_INFRA'
+        })
+                
+        this.opts.store.subscribe(function(){
+            let previousValue = currentValue;
+            currentValue = store.getState()
+            currentTab = window.location.hash.substr(1);
+            if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
+                if(currentTab == 'infrastructure') {
+                    riot.update();
+                }
+            }
+        })
         
         this.content=[
             {
                 'type': 'UCS Manager',
                 'health': 'UP',
-                'mgtip': '64.101.169.13',
+                'ip': '64.101.169.13',
                 'tenant': 'Michael M.',
                 'model': 'UCS-M.6248UP',
                 'firmware': '...',
@@ -86,7 +103,7 @@
             {
                 'type': 'ACI',
                 'health': 'DOWN',
-                'mgtip': '64.101.169.13',
+                'ip': '64.101.169.13',
                 'tenant': 'Lara',
                 'model': '...',
                 'firmware': '...',

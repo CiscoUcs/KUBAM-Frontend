@@ -1,5 +1,5 @@
 <dashboard>
-        <div id="server-health">
+    <div id="server-health">
         <div class="servergroup clearfloat" each={categories}>
             <h1 class="categoryHeader serverCat">{type}</h1>
             <servergroup-box onclick="route('servers/{group.id}')"

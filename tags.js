@@ -1,15 +1,6 @@
 riot.tag2('add-button', '<div class="button-container"> <div class="plus-icon"></div> </div>', 'add-button .button-container,[data-is="add-button"] .button-container{ background-color: rgb(41,182,246); color: white; font-size: 28px; border-radius: 999px; width: 50px; height: 50px; cursor: pointer; position: fixed; right: 28px; bottom: 50px; } add-button .button-container:hover,[data-is="add-button"] .button-container:hover{ background-color: rgb(40, 153, 230); } add-button .plus-icon,[data-is="add-button"] .plus-icon{ height: 50px; width: 50px; background: url(\'icons/plus_icon.png\') no-repeat center center; }', '', function(opts) {
 });
 riot.tag2('app', '<top-bar store="{this.opts.store}"></top-bar> <side-bar store="{this.opts.store}"></side-bar> <content store="{this.opts.store}"></content>', '', '', function(opts) {
-        let currentValue
-        this.opts.store.subscribe(function () {
-            this.state = this.opts.store.getState();
-            let previousValue = currentValue;
-            currentValue = this.opts.store.getState();
-            if (previousValue !== currentValue) {
-                riot.update();
-            }
-        }.bind(this));
 });
 riot.tag2('content', '<loading-spinner if="{this.opts.store.getState().isLoading}"></loading-spinner> <router> <route path="/dashboard"> <dashboard store="{passStore}"></dashboard> </route> <route path="/images"> <serverimages-overview store="{passStore}"></serverimages-overview> </route> <route path="/infrastructure"> <infra-overview store="{passStore}"></infra-overview> </route> <route path="/hosts"> <server-overview store="{passStore}"></server-overview> </route> <route path="/hosts/..."> <servergroup-view></servergroup-view> </route> <route path="/kubernetes"> <kubernetes store="{passStore}"></kubernetes> </route> <route path="/feedback"> <feedback store="{passStore}"></feedback> </route> <route path="/tutorial"> <tutorial store="{passStore}"></tutorial> </route> </router> <div id="modal-shadow" style="display:none;"> <div id="modal-container"> <div id="modal-box"> <modal></modal> </div> </div> </div>', 'content { position: absolute; left: 200px; top: 50px; padding: 20px; } content #modal-shadow,[data-is="content"] #modal-shadow{ position: fixed; display: table; top: 0; left: 0; height: 100%; width: 100%; z-index: 9999; background-color: rgba(0,0,0,0.6); } content #modal-container,[data-is="content"] #modal-container{ display:table-cell; text-align:center; padding-top: 200px; } content #modal-box,[data-is="content"] #modal-box{ position: relative; display: inline-block; background-color: white; border-radius: 4px; padding: 34px; }', '', function(opts) {
         passStore = this.opts.store
@@ -142,13 +133,31 @@ riot.tag2('feedback', '<div class="container>"> <form> Thank you for your feedba
 
 
 
-riot.tag2('infra-overview', '<div class="infra-group"> <h1 class="categoryHeader">KUBAM Settings</h1> <div class="infra-container"> <fancy-input tag="KUBAM IP Address" inputid="infra-view-kubamip"> </fancy-input> <fancy-input tag="Proxy Server" inputid="infra-view-proxy"> </fancy-input> <hr> <fancy-button>Change Public Key</fancy-button> </div> </div> <div class="infra-group"> <div class="infra-container-big"> <table-search></table-search> <div class="table"> <div class="tr"> <div class="th"><input type="checkbox"> </div> <div class="th">Type</div> <div class="th">Health</div> <div class="th">Mgmt IP</div> <div class="th">Tenant</div> <div class="th">Model</div> <div class="th">Firmware version</div> <div class="th">Description</div> <div class="th">Action</div> </div> <div class="tr" each="{content}"> <div class="td"><input type="checkbox"></div> <div class="td">{type}</div> <div class="td">{health}</div> <div class="td">{mgtip}</div> <div class="td">{tenant}</div> <div class="td">{model}</div> <div class="td">{firmware}</div> <div class="td">{description}</div> <div class="td"> <img src="./icons/edit.svg" class="table-icon"> <img src="./icons/delete.svg" class="table-icon"> </div> </div> </div> </div> </div> <add-button onclick="{addController}">Add Controller</add-button>', 'infra-overview .tablewidth,[data-is="infra-overview"] .tablewidth{ width: 720px; } infra-overview .infra-group,[data-is="infra-overview"] .infra-group{ padding-bottom: 15px; } infra-overview .infra-container,[data-is="infra-overview"] .infra-container{ background-color: white; padding: 20px; } infra-overview .infra-container-big,[data-is="infra-overview"] .infra-container-big{ background-color: white; padding: 34px 20px; }', '', function(opts) {
+riot.tag2('infra-overview', '<div class="infra-group"> <h1 class="categoryHeader">KUBAM Settings</h1> <div class="infra-container"> <fancy-input tag="KUBAM IP Address" inputid="infra-view-kubamip"> </fancy-input> <fancy-input tag="Proxy Server" inputid="infra-view-proxy"> </fancy-input> <hr> <fancy-button>Change Public Key</fancy-button> </div> </div> <div class="infra-group"> <div class="infra-container-big"> <table-search></table-search> <div class="table"> <div class="tr"> <div class="th"><input type="checkbox"> </div> <div class="th">Type</div> <div class="th">Health</div> <div class="th">Mgmt IP</div> <div class="th">Tenant</div> <div class="th">Name</div> <div class="th">Firmware version</div> <div class="th">Description</div> <div class="th">Action</div> </div> <div class="tr" each="{comp in this.opts.store.getState().infracomponents}"> <div class="td"><input type="checkbox"></div> <div class="td">{comp.type}</div> <div class="td">HEALTH</div> <div class="td">{comp.credentials.ip}</div> <div class="td">{comp.credentials.user}</div> <div class="td">{comp.name}</div> <div class="td">FIRMWARE</div> <div class="td">{comp.description}</div> <div class="td"> <img src="./icons/edit.svg" class="table-icon"> <img src="./icons/delete.svg" class="table-icon"> </div> </div> </div> </div> </div> <add-button onclick="{addController}">Add Controller</add-button>', 'infra-overview .tablewidth,[data-is="infra-overview"] .tablewidth{ width: 720px; } infra-overview .infra-group,[data-is="infra-overview"] .infra-group{ padding-bottom: 15px; } infra-overview .infra-container,[data-is="infra-overview"] .infra-container{ background-color: white; padding: 20px; } infra-overview .infra-container-big,[data-is="infra-overview"] .infra-container-big{ background-color: white; padding: 34px 20px; }', '', function(opts) {
+
+        let currentValue
+        let store = this.opts.store
+
+        store.dispatch({
+            type: 'FETCH_INFRA'
+        })
+
+        this.opts.store.subscribe(function(){
+            let previousValue = currentValue;
+            currentValue = store.getState()
+            currentTab = window.location.hash.substr(1);
+            if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
+                if(currentTab == 'infrastructure') {
+                    riot.update();
+                }
+            }
+        })
 
         this.content=[
             {
                 'type': 'UCS Manager',
                 'health': 'UP',
-                'mgtip': '64.101.169.13',
+                'ip': '64.101.169.13',
                 'tenant': 'Michael M.',
                 'model': 'UCS-M.6248UP',
                 'firmware': '...',
@@ -157,7 +166,7 @@ riot.tag2('infra-overview', '<div class="infra-group"> <h1 class="categoryHeader
             {
                 'type': 'ACI',
                 'health': 'DOWN',
-                'mgtip': '64.101.169.13',
+                'ip': '64.101.169.13',
                 'tenant': 'Lara',
                 'model': '...',
                 'firmware': '...',
@@ -196,7 +205,7 @@ riot.tag2('new-controller', '<div> <fancy-dropdown tag="Type" inputid="srvgroup-
                     'credentials': {
                         'user': document.getElementById('srvgroup-new-username').value,
                         'password': document.getElementById('srvgroup-new-password').value,
-                        'server': document.getElementById('srvgroup-new-ip').value
+                        'ip': document.getElementById('srvgroup-new-ip').value
                     }
                 }
             })
@@ -219,12 +228,7 @@ riot.tag2('modal', '<div> <div id="close-modal">x</div> <div id="modal-title"></
 riot.tag2('new-serverimage', '<form> OS: <fancy-dropdown name="OS"> <option value="CentOS">CentOS</option> <option value="VMware ESXi">VMware ESXi</option> </fancy-dropdown><br> <fancy-input tag="Name" input-id="servergroup-new-name"> </fancy-input> <fancy-input tag="Version" input-id="servergroup-new-version"> </fancy-input> </form> <fancy-button onclick="{createServerGroup}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button>', 'new-serverimage form,[data-is="new-serverimage"] form{ align-content: center; align-items: center; }', '', function(opts) {
 });
 riot.tag2('serverimages-overview', '<div class="osgroup" hide="{this.opts.store.getState().isLoading}"> <div class="os-container"> <table-search></table-search> <div class="table"> <div class="tr"> <div class="th"><input type="checkbox"></div> <div class="th">Group name</div> <div class="th">Name</div> <div class="th">Version</div> <div class="th">Size</div> <div class="th">Action</div> </div> <div class="tr" each="{img in this.opts.store.getState().images}"> <div class="td"><input type="checkbox"></div> <div class="td">GROUPNAME</div> <div class="td">{img}</div> <div class="td">VERSION</div> <div class="td">SIZE</div> <div class="td"> <img src="./icons/edit.svg" class="table-icon"> <img src="./icons/delete.svg" class="table-icon"> </div> </div> </div> </div> </div> <add-button onclick="{addServerimage}">Add new Image</add-button>', 'serverimages-overview .os-container,[data-is="serverimages-overview"] .os-container{ background-color: white; padding: 34px 20px; } serverimages-overview .osgroup,[data-is="serverimages-overview"] .osgroup{ margin-bottom: 25px; margin-right: 25px; float: left; } serverimages-overview .osselect,[data-is="serverimages-overview"] .osselect{ background-color: #363c51; font-size: 0.95em; color: white; border: 1px solid #ecedf1; padding: 10px; width: 580px; } serverimages-overview .centeralign,[data-is="serverimages-overview"] .centeralign{ text-align: center; } serverimages-overview .tablewidth,[data-is="serverimages-overview"] .tablewidth{ width: 600px; }', '', function(opts) {
-        let currentValue
         let store = this.opts.store
-
-        store.dispatch({
-            type: 'FLUSH'
-        })
 
         store.dispatch({
             type: 'FETCH_IMAGES'
@@ -245,12 +249,16 @@ riot.tag2('serverimages-overview', '<div class="osgroup" hide="{this.opts.store.
             modal_shadow.style.display = 'table'
         }.bind(this)
 
+        let currentValue
         this.opts.store.subscribe(function(){
             let previousValue = currentValue;
             currentValue = store.getState()
-            console.log(this)
-            if (previousValue !== currentValue) {
-                riot.update();
+            currentTab = window.location.hash.substr(1);
+            if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
+                if(currentTab == 'images') {
+                    riot.update();
+
+                }
             }
         })
 });
