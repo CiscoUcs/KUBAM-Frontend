@@ -15,6 +15,22 @@
         
         <hr />
     
+        <div class="settings-group"> 
+                <div class="settings-container-big">
+                    <table-search></table-search>
+                    <div class="table">
+                        <div class="tr">
+                            <div class="th">KUBAM IP Address</div>
+                            <div class="th">Public Key</div>
+                        </div>
+                        <div class="tr">
+                            <div class="td">198.18.134.242</div>
+                            <div class="td">ssh -rsa ....</div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    
     </div>
     
     <style>
