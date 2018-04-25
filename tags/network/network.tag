@@ -1,31 +1,11 @@
 <network>
     <div class="network-group">
         <h1 class="categoryHeader">New Network Group</h1>
-        <div class="network-container">
-            <fancy-input tag="Network Group Name"
-                         inputid="network-view-groupname">
-            </fancy-input>
-            <fancy-input tag="Netmask"
-                         inputid="network-view-netmask">
-            </fancy-input>
-            <fancy-input tag="Router"
-                         inputid="network-view-router">
-            </fancy-input>
-            <fancy-input tag="Name Server"
-                         inputid="network-view-nameserver">
-            </fancy-input>
-            <fancy-input tag="NTP Server"
-                         inputid="network-view-ntp">
-            </fancy-input>
-            <fancy-input tag="Proxy Server (optional)"
-                         inputid="network-view-proxy">
-            </fancy-input>
-            <fancy-input tag="VLAN (optional)"
-                         inputid="network-view-vlan">
-            </fancy-input>
-            <hr />
-            <fancy-button>Create</fancy-button>
         </div>
+        
+        <add-button onclick={addNetworkGroup}>
+            Add Network Group
+        </add-button>
         
         <hr />
 
@@ -67,4 +47,21 @@
             padding: 20px;
         }
     </style>
+    
+    <script>
+        addNetworkGroup() {
+            var modal_title = document.getElementById('modal-title');
+            var modal_content = document.getElementById('modal-content');
+            
+            modal_title.innerHTML = 'Add a new Image'
+            
+            modal_content.innerHTML = '';
+            var tag = document.createElement("new-networkgroup");
+            modal_content.append(tag)
+            riot.mount(tag, 'new-networkgroup');
+            
+            var modal_shadow = document.getElementById('modal-shadow')
+            modal_shadow.style.display = 'table'
+        }
+    </script>
 </network>

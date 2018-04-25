@@ -72,7 +72,7 @@
         #modal-container {
             display:table-cell;
             text-align:center;
-            padding-top: 200px;
+            padding-top: 5%;
         }
         
         #modal-box {

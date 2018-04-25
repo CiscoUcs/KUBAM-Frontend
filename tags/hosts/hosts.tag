@@ -19,7 +19,7 @@
                 <div class="th">Images</div>
                 <div class="th">Network Group</div>
             </div>
-            <div class="tr" each={servers}>
+<!--            <div class="tr" each={servers}>
                 <div class="td">
                     <input type="checkbox">
                 </div>
@@ -65,7 +65,7 @@
                         <option value="2">2</option>
                     </fancy-dropdown>
                 </div>
-                </div>
+                </div>-->
             </div>
         </div>
         
@@ -73,9 +73,9 @@
             Commit
         </fancy-button>
         
-        //<add-button onclick={addController}>
-          //  Add Controller
-        //</add-button>
+        <add-button onclick={addController}>
+            Add Controller
+        </add-button>
     
     <script>
         servers = ['a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b']

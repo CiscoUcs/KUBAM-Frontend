@@ -8,9 +8,6 @@
             <fancy-input tag="Public Key"
                          inputid="settings-view-key">
             </fancy-input>
-            
-            <hr />
-            <fancy-button>Update</fancy-button>
         </div>
         
         <hr />
@@ -24,14 +21,17 @@
                             <div class="th">Public Key</div>
                         </div>
                         <div class="tr">
-                            <div class="td">198.18.134.242</div>
-                            <div class="td">ssh -rsa ....</div>
+                           <div class="td"></div>
+                            <div class="td"></div>
                         </div>
                     </div>
                 </div>
         </div>
     
     </div>
+    
+    <add-button onclick={createSvrGroup}>Create new Server Group</add-button>
+
     
     <style>
         .settings-group {
