@@ -1,0 +1,35 @@
+pipeline:
+  # build our test image and deploy it for testing
+  
+  # publish docker image to docker hub
+  docker:
+    image: plugins/docker
+    repo: kubam/web
+    tags: v2
+    user: kubam
+    secrets: [docker_username, docker_password]
+    when: 
+      branch: v2.0
+
+  # bring up our test machine so it has the latest API. 
+  ssh:
+    image: appleboy/drone-ssh
+    host: 10.93.234.96
+    username: vallard
+    port: 22
+    secrets: [ ssh_password ]
+    script: 
+      - docker rm -f kubam-web || true
+      - docker pull kubam/web:v2
+      - sudo docker run -p 8002:80 -d --name kubam-web kubam/web:v2
+
+  # use Cisco Spark to notify that build was successful. 
+  notify:
+    image: vallard/drone-spark
+    room: "KUBAM Feedback"
+    environment:
+      - https_proxy=proxy.esl.cisco.com:80
+      - http_proxy=proxy.esl.cisco.com:80
+    secrets: [ SPARK_TOKEN ]
+    when:
+      status: [success, failure]

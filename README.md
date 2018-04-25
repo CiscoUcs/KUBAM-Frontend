@@ -37,3 +37,13 @@ In the ```src``` directory there are the following:
 * ```reducers```: Takes the actions and updates the state in the database.  
 
 as well as the ```index.js``` which is the main starting point of the node application. 
+
+
+## CI/CD
+
+```
+drone secret add -repository CiscoUcs/KUBAM-Frontend -image vallard/drone-spark -name SPARK_TOKEN -value YmI...
+drone secret add -repository CiscoUcs/KUBAM-Frontend -image plugins/docker -name docker_username -value kubam
+drone secret add -repository CiscoUcs/KUBAM-Frontend -image plugins/docker -name docker_password -value mysecret
+drone secret add -repository CiscoUcs/KUBAM-Frontend -image appleboy/drone-ssh -name ssh_password -value secretpasswrd
+```
