@@ -7,9 +7,7 @@
             Add Network Group
         </add-button>
         
-        <hr />
-
-        <div class="infra-group"> 
+        <div class="network-group"> 
             <div class="network-container-big">
                 <table-search></table-search>
                 <div class="table">
@@ -35,11 +33,11 @@
             </div>
         </div>
     
-    </div>
-    
     <style>
         .network-group {
             padding-bottom: 15px;
+            background-color: white;
+            padding: 20px;
         }
         
         .network-container {
