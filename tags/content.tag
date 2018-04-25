@@ -2,11 +2,6 @@
     <loading-spinner if="{this.opts.store.getState().isLoading}"></loading-spinner>
     
     <router>
-        <!-- **** Dashboard **** -->
-        <route path="/dashboard">
-            <dashboard store={passStore}></dashboard>
-        </route>
-        
         <!-- **** Server Images **** -->
         <route path="/images">
             <serverimages-overview store={passStore}></serverimages-overview>
@@ -17,18 +12,23 @@
             <infra-overview store={passStore}></infra-overview>
         </route>
         
-        <!-- **** Servers **** -->
+        <!-- **** Hosts **** -->
         <route path="/hosts">
-            <server-overview store={passStore}></server-overview>
+            <hosts store={passStore}></hosts>
         </route>
         
         <route path="/hosts/...">
-            <servergroup-view></servergroup-view>
+            <hosts store={passStore}></hosts>
         </route>        
         
-        <!-- **** Kubernetes **** -->
-        <route path="/kubernetes">
-            <kubernetes store={passStore}></kubernetes>
+        <!-- **** Network **** -->
+        <route path="/network">
+            <network store={passStore}></network>
+        </route>
+        
+        <!-- **** Settings **** -->
+        <route path="/settings">
+            <settings store={passStore}></settings>
         </route>
         
         <!-- **** Feedback **** -->

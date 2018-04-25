@@ -7,11 +7,11 @@
  
     <script>
         menu=[
-        { title: "Dashboard",img:"./icons/dashboard.png", route:"dashboard" },
         { title: "Server images",img:"./icons/serverimage.png", route:"images" },
-        { title: "Infrastructure", img:"./icons/network.png", route:"infrastructure" },
-        { title: "Hosts", img:"./icons/ucs.png", route:"hosts" },
-        { title: "Kubernetes", img:"./icons/kubernetes.png", route:"kubernetes" },
+        { title: "Infrastructure", img:"./icons/ucs.png", route:"infrastructure" },
+        { title: "Hosts", img:"./icons/host.png", route:"hosts" },
+        { title: "Network",img:"./icons/network.png", route:"network" },
+        { title: "Settings", img:"./icons/settings.png", route:"settings" },
         { title: "Feedback", img:"./icons/feedback.png", route:"feedback" }
         ];
         

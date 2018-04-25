@@ -6,11 +6,11 @@
         
         <div id="currentpage">
             <router>
-                <route path="dashboard..">Dashboard</route>
+                <route path="network..">Network</route>
                 <route path="images..">Server Images</route>
                 <route path="infrastructure..">Infrastructure</route>
                 <route path="hosts..">Hosts</route>
-                <route path="kubernetes..">Kubernetes</route>
+                <route path="settings..">Settings</route>
                 <route path="tutorial..">Tutorial</route>
                 <route path="feedback..">Feedback</route>
             </router>
