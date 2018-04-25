@@ -1,6 +1,6 @@
 <network>
     <div class="network-group">
-        <h1 class="categoryHeader">New Network Group</h1>
+        <h1 class="categoryHeader">Network Groups</h1>
         </div>
         
         <add-button onclick={addNetworkGroup}>
@@ -51,7 +51,7 @@
             var modal_title = document.getElementById('modal-title');
             var modal_content = document.getElementById('modal-content');
             
-            modal_title.innerHTML = 'Add a new Image'
+            modal_title.innerHTML = 'Add a new Network group'
             
             modal_content.innerHTML = '';
             var tag = document.createElement("new-networkgroup");

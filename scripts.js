@@ -1,7 +1,7 @@
 var sagaMiddleware = ReduxSaga.default()
 
 if(window.location.hash.substring(1) == '') {
-    route('dashboard')
+    route('images')
 }
 
 var defaultState = {

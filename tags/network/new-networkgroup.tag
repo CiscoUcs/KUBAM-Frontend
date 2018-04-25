@@ -22,6 +22,7 @@
             <fancy-input tag="VLAN (optional)"
                          inputid="network-view-vlan">
             </fancy-input>
+        </div>
     </form>
         
     <fancy-button onclick={createServerGroup}>Create</fancy-button>
@@ -29,8 +30,8 @@
     
     <style>
         form{
-            align-content: center;
-            align-items: center;
+            text-align: left;
+            align-items: left;
         }
     
     </style>
