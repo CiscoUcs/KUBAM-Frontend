@@ -1,7 +1,4 @@
 pipeline:
-  # build our test image and deploy it for testing
-  
-  # publish docker image to docker hub
   docker:
     image: plugins/docker
     repo: kubam/web
