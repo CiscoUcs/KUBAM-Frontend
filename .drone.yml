@@ -1,5 +1,4 @@
 pipeline:
-  # publish docker image to docker hub
   #docker:
   #  image: plugins/docker
   #  repo: kubam/web
