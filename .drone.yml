@@ -2,14 +2,14 @@ pipeline:
   # build our test image and deploy it for testing
   
   # publish docker image to docker hub
-  docker:
-    image: plugins/docker
-    repo: kubam/web
-    tags: v2
-    user: kubam
-    secrets: [docker_username, docker_password]
-    when: 
-      branch: v2.0
+  #docker:
+  #  image: plugins/docker
+  #  repo: kubam/web
+  #  tags: v2
+  #  user: kubam
+  #  secrets: [docker_username, docker_password]
+  #  when: 
+  #    branch: v2.0
 
   # bring up our test machine so it has the latest API. 
   ssh:
