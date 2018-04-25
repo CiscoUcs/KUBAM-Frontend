@@ -13,8 +13,6 @@ The GUI aims to walk the user through the steps required to deploy an Operating 
 * Choose the operating system settings: lay them out, templates, etc. 
 * Deploy the system components. 
 
-
-
 ## CI/CD
 
 ```
