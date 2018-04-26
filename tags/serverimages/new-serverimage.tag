@@ -5,6 +5,8 @@
         <fancy-dropdown name="ISO" tag="ISO" inputid="mapping-iso">
             <option value="CentOS">CentOS</option>
             <option value="VMware ESXi">VMware ESXi</option>
+            
+            <option each={img in this.opts.store.getState().images} value="{img}">{img}</option>
         </fancy-dropdown><br>
     </form>
     <fancy-button onclick={createImageMapping}>Create</fancy-button>
@@ -18,6 +20,10 @@
     </style>
     
     <script>
+        store.dispatch({
+            type: 'FETCH_IMAGES'
+        })
+        
         closeModal() {
             document.getElementById('modal-shadow').style.display = 'None';
         }
