@@ -61,7 +61,7 @@ var ax = axios.create({
     }
 });
 
-function* testFunction(action) {
+function* getImages(action) {
     ax.get('v1/catalog', {})
     .then(function (response) {
         reduxStore.dispatch({
@@ -72,6 +72,7 @@ function* testFunction(action) {
     .catch(function (error) {
         reduxStore.dispatch({
             type: "OP_FAILED",
+            method: 'getImages',
             message: error.message
         });
     });
@@ -88,6 +89,7 @@ function* getInfraComponents(action) {
     .catch(function (error) {
         reduxStore.dispatch({
             type: "OP_FAILED",
+            method: 'getInfraComponents',
             message: error.message
         });
     });
@@ -102,14 +104,21 @@ function* createInfraComponent(action) {
     .catch(function (error) {
         reduxStore.dispatch({
             type: "OP_FAILED",
+            method: 'createInfraComponent',
             message: error.message
         });
     });
 }
 
+function* logError(action) {
+    console.error('ERROR in ' + action.method + ': ' + action.message)
+}
+
 function* watchUserRequests() {
-  yield ReduxSaga.takeEvery('FETCH_IMAGES', testFunction)
-  yield ReduxSaga.takeEvery('ADD_IMAGE', testFunction)
+  yield ReduxSaga.takeEvery('OP_FAILED', logError)
+    
+  yield ReduxSaga.takeEvery('FETCH_IMAGES', getImages)
+  yield ReduxSaga.takeEvery('ADD_IMAGE', getImages)
     
   yield ReduxSaga.takeEvery('FETCH_INFRA', getInfraComponents)
     
