@@ -22,7 +22,7 @@
             </fancy-dropdown><br>
 
     </form>
-    <fancy-button onclick={createServerGroup}>Create</fancy-button>
+    <fancy-button onclick={addHost}>Create</fancy-button>
     <fancy-button color="gray" onclick={closeModal}>Cancel</fancy-button>
     
     <style>
@@ -31,4 +31,21 @@
         }
     
     </style>
+    
+    <script>
+        
+            addHost() {
+            passStore.dispatch({
+                type: 'ADD_HOST',
+                data: {
+                    'key': document.getElementById('settings-view-key').value
+            }})
+            this.closeModal()
+        }
+
+            
+        closeModal() {
+            document.getElementById('modal-shadow').style.display = 'None';
+        }
+    </script>
 </new-host>

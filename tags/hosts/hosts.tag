@@ -72,7 +72,6 @@
         </div>
         
     <add-button onclick={addHost}>Add Host</add-button>
-
     
     <script>
         
@@ -109,6 +108,10 @@
                 }
             }
         })
+        
+        closeModal() {
+            document.getElementById('modal-shadow').style.display = 'None';
+        }
 
     </script>
     
