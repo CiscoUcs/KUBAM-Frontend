@@ -280,7 +280,21 @@ riot.tag2('network', '<div class="network-group"> <h1 class="categoryHeader">Net
 
 riot.tag2('new-networkgroup', '<form> <div class="network-container"> <fancy-input tag="Network Group Name" inputid="network-view-groupname"> </fancy-input> <fancy-input tag="Netmask" inputid="network-view-netmask"> </fancy-input> <fancy-input tag="Router" inputid="network-view-router"> </fancy-input> <fancy-input tag="Name Server" inputid="network-view-nameserver"> </fancy-input> <fancy-input tag="NTP Server" inputid="network-view-ntp"> </fancy-input> <fancy-input tag="Proxy Server (optional)" inputid="network-view-proxy"> </fancy-input> <fancy-input tag="VLAN (optional)" inputid="network-view-vlan"> </fancy-input> </div> </form> <fancy-button onclick="{createServerGroup}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button>', 'new-networkgroup form,[data-is="new-networkgroup"] form{ text-align: left; align-items: left; }', '', function(opts) {
 });
-riot.tag2('new-serverimage', '<form> <fancy-input tag="Name" input-id="servergroup-new-name"> </fancy-input> <fancy-dropdown name="ISO" tag="ISO"> <option value="CentOS">CentOS</option> <option value="VMware ESXi">VMware ESXi</option> </fancy-dropdown><br> </form> <fancy-button onclick="{createServerGroup}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button>', 'new-serverimage form,[data-is="new-serverimage"] form{ text-align: left; }', '', function(opts) {
+riot.tag2('new-serverimage', '<form> <fancy-input tag="Name" input-id="mapping-name"> </fancy-input> <fancy-dropdown name="ISO" tag="ISO"> <option value="CentOS">CentOS</option> <option value="VMware ESXi">VMware ESXi</option> </fancy-dropdown><br> </form> <fancy-button onclick="{createImageMapping}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button>', 'new-serverimage form,[data-is="new-serverimage"] form{ text-align: left; }', '', function(opts) {
+        this.closeModal = function() {
+            document.getElementById('modal-shadow').style.display = 'None';
+        }.bind(this)
+
+        this.createImageMapping = function() {
+            passStore.dispatch({
+                type: 'CREATE_IMGMAPPING',
+                data: {
+                    'name': document.getElementById('mapping-name').value,
+                    'iso': document.getElementById('mapping-iso').value
+                }
+            })
+            this.closeModal()
+        }.bind(this)
 });
 riot.tag2('serverimages-overview', '<div class="osgroup" hide="{this.opts.store.getState().isLoading}"> <div class="os-container"> <table-search></table-search> <div class="table"> <div class="tr"> <div class="th">Name</div> <div class="th">ISO</div> <div class="th">Delete</div> </div> <div class="tr" each="{img in this.opts.store.getState().images}"> <div class="td">NAME</div> <div class="td">{img}</div> <div class="td"> <img src="./icons/delete.svg" class="table-icon"> </div> </div> </div> </div> </div> <add-button onclick="{addServerimage}">Add new Image</add-button>', 'serverimages-overview .os-container,[data-is="serverimages-overview"] .os-container{ background-color: white; padding: 34px 20px; } serverimages-overview .osgroup,[data-is="serverimages-overview"] .osgroup{ margin-bottom: 25px; margin-right: 25px; float: left; } serverimages-overview .osselect,[data-is="serverimages-overview"] .osselect{ background-color: #363c51; font-size: 0.95em; color: white; border: 1px solid #ecedf1; padding: 10px; width: 580px; } serverimages-overview .centeralign,[data-is="serverimages-overview"] .centeralign{ text-align: center; } serverimages-overview .tablewidth,[data-is="serverimages-overview"] .tablewidth{ width: 600px; }', '', function(opts) {
         let store = this.opts.store
@@ -312,7 +326,6 @@ riot.tag2('serverimages-overview', '<div class="osgroup" hide="{this.opts.store.
             if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
                 if(currentTab == 'images') {
                     riot.update();
-
                 }
             }
         })

@@ -88,16 +88,6 @@
             if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
                 if(currentTab == 'images') {
                     riot.update();
-                    
-//                    if(previousValue == undefined) {
-//                        riot.update();
-//                        console.log('UPDATING IMAGES')
-//                    } else {
-//                        console.log(previousValue)
-//                        console.log(currentValue)
-//                        console.log('UPDATING IMAGES')
-//                        riot.update();
-//                    }
                 }
             }
         })
