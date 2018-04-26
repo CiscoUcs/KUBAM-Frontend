@@ -60,12 +60,12 @@ var ax = axios.create({
     }
 });
 
-function* getImages(action) {
+function* getIsos(action) {
     ax.get('v1/isos', {})
     .then(function (response) {
         reduxStore.dispatch({
             type: "FETCH_SUCCEEDED",
-            data: {'images': response['data']}
+            data: {'isos': response['data']['isos']}
         })
     })
     .catch(function (error) {
@@ -129,6 +129,21 @@ function* createInfraComponent(action) {
     });
 }
 
+function* addPublicKey(action) {
+    console.log(action['data'])
+    ax.post('v1/keys', action['data']['key'])
+    .then(function (response) {
+        console.log('Public Key added')
+    })
+    .catch(function (error) {
+        reduxStore.dispatch({
+            type: "OP_FAILED",
+            method: 'addPublicKey',
+            message: error.message
+        });
+    });
+}
+
 function* logError(action) {
     console.error('ERROR in ' + action.method + ': ' + action.message)
 }
@@ -136,12 +151,14 @@ function* logError(action) {
 function* watchUserRequests() {
   yield ReduxSaga.takeEvery('OP_FAILED', logError)
     
-  yield ReduxSaga.takeEvery('FETCH_IMAGES', getImages)
+  yield ReduxSaga.takeEvery('FETCH_IMAGES', getIsos)
   yield ReduxSaga.takeEvery('CREATE_IMGMAPPING', createImgMapping)
     
   yield ReduxSaga.takeEvery('FETCH_INFRA', getInfraComponents)
     
   yield ReduxSaga.takeEvery('CREATE_SRVGROUP', createInfraComponent)
+    
+  yield ReduxSaga.takeEvery('ADD_PUBLICKEY', addPublicKey)
 }
 
 function* rootSaga() {

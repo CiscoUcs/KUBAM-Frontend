@@ -42,7 +42,7 @@
             var modal_title = document.getElementById('modal-title');
             var modal_content = document.getElementById('modal-content');
             
-            modal_title.innerHTML = 'Add Settings'
+            modal_title.innerHTML = 'Add new Public Key'
             
             modal_content.innerHTML = '';
             var tag = document.createElement("new-setting");
