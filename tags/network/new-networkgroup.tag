@@ -35,4 +35,11 @@
         }
     
     </style>
+    
+    <script>
+            
+        closeModal() {
+            document.getElementById('modal-shadow').style.display = 'None';
+        }
+    </script>
 </new-networkgroup>
