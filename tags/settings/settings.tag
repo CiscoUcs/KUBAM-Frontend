@@ -1,8 +1,7 @@
 <settings>
     <div class="settings-group"> 
             <div class="settings-container-big">
-                <h1 class="categoryHeader">Settings</h1>        
-                <table-search></table-search>
+<!--                <table-search></table-search>-->
                 <div class="table">
                     <div class="tr">
                         <div class="th">KUBAM IP Address</div>

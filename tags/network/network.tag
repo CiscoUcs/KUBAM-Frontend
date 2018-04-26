@@ -1,15 +1,11 @@
-<network>
-    <div class="network-group">
-        <h1 class="categoryHeader">Network Groups</h1>
-        </div>
-        
+<network>      
         <add-button onclick={addNetworkGroup}>
             Add Network Group
         </add-button>
         
         <div class="network-group"> 
             <div class="network-container-big">
-                <table-search></table-search>
+<!--                <table-search></table-search>-->
                 <div class="table">
                     <div class="tr">
                         <div class="th">Network Group Name</div>

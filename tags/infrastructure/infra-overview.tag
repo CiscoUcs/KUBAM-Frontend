@@ -1,7 +1,7 @@
 <infra-overview>
     <div class="infra-group"> 
             <div class="infra-container-big">
-                <table-search></table-search>
+<!--                <table-search></table-search>-->
                 <div class="table">
                     <div class="tr">
                         <div class="th"><input type="checkbox">
