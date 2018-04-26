@@ -1,7 +1,7 @@
 <hosts>
     
     <div class="svrGrpServers">
-        <div>
+        <div class="top-actions">
             <fancy-dropdown inputid="actions" class="table-input">
                 <option value="none">Actions</option>
                 <option value="buildimage">Build Image</option>
@@ -19,7 +19,7 @@
                 <div class="th">Select items<input type="checkbox"></div>
                 <div class="th">Hostname</div>
                 <div class="th">IP</div>
-                <div class="th">Role [KUB]</div>
+                <div class="th">Role</div>
                 <div class="th">Server Group</div>
                 <div class="th">Images</div>
                 <div class="th">Network Group</div>
@@ -94,8 +94,6 @@
             modal_shadow.style.display = 'table'
         }
         
-        servers = ['a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b']
-        
         let store = this.opts.store
         
         store.dispatch({
@@ -117,10 +115,23 @@
     </script>
     
     <style>
+        .top-actions {
+            height: 55px;
+            margin-bottom: 5px;
+        }
+        
+        fancy-dropdown{
+            position: relative;
+            top: 7px;
+            float:left;
+         }
         
         fancy-button{
-            margin-left: 250px;
+            position: relative;
+            left: 7px;
+            float:left;
          }
+        
         servergroup-view {
             padding-bottom: 20px;
         }
