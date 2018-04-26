@@ -479,12 +479,12 @@ riot.tag2('settings', '<div class="settings-group"> <div class="settings-contain
 });
 riot.tag2('side-bar', '<div each="{menu}" onclick="route(\'{route}\')" class="sidebar-item" id="{route}-selector"> <div class="colorbar" style="background-color: #363c52;"></div> <img class="sidebar-image" riot-src="{img}"> <div class="sidebar-title">{title}</div> </div>', 'side-bar{ background-color: #363c52; color: white; width: 200px; height: 100%; position: fixed; z-index: 10; top: 0; left: 0; padding-top: 50px; } side-bar .sidebar-item,[data-is="side-bar"] .sidebar-item{ float: none; font-size:0.95em; height: 42px; line-height: 32px; cursor: pointer; } side-bar .sidebar-item:hover,[data-is="side-bar"] .sidebar-item:hover{ background-color: rgba(255,255,255,0.06); } side-bar .colorbar,[data-is="side-bar"] .colorbar{ width: 4px; height: 42px; float: left; top: 0; } side-bar .sidebar-image,[data-is="side-bar"] .sidebar-image{ float: left; padding-right: 5px; width: 18px; height: 18px; padding-top: 12px; padding-left: 14px; padding-right: 14px; } side-bar .sidebar-title,[data-is="side-bar"] .sidebar-title{ padding-top: 5px; }', '', function(opts) {
         menu=[
-        { title: "Server images",img:"./icons/serverimage.png", route:"images" },
-        { title: "Infrastructure", img:"./icons/ucs.png", route:"infrastructure" },
-        { title: "Hosts", img:"./icons/host.png", route:"hosts" },
-        { title: "Network",img:"./icons/network.png", route:"network" },
-        { title: "Settings", img:"./icons/settings.png", route:"settings" },
-        { title: "Feedback", img:"./icons/feedback.png", route:"feedback" }
+            { title: "Hosts", img:"./icons/host.png", route:"hosts" },
+            { title: "Network",img:"./icons/network.png", route:"network" },
+            { title: "Images",img:"./icons/serverimage.png", route:"images" },
+            { title: "Infrastructure", img:"./icons/ucs.png", route:"infrastructure" },
+            { title: "Settings", img:"./icons/settings.png", route:"settings" },
+            { title: "Feedback", img:"./icons/feedback.png", route:"feedback" }
         ];
 
         route(function(id) {
