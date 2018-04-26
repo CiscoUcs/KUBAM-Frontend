@@ -17,8 +17,6 @@
     </style>
     
     <script>
-        console.log(passStore)
-        
         passStore.dispatch({
             type: 'FETCH_IMAGES'
         })
