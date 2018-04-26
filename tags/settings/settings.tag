@@ -27,16 +27,21 @@
     
     <style>
         .settings-group {
-            padding-bottom: 15px;
+            padding: 15px;
             margin-bottom: 10px;
             background-color: white;
-            padding: 20px;
         }
         
-        .settings-container {
-            background-color: white;
-            padding: 20px;
+        fancy-input {
+            position: relative;
+            float: left;
+            top: -10px;
         }
+        
+        fancy-button{
+            position: relative;
+            top: 10px;
+         }
     </style>
     
     <script>
