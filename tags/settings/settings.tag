@@ -8,9 +8,9 @@
                         <div class="th">KUBAM IP Address</div>
                         <div class="th">Public Key</div>
                     </div>
-                    <div class="tr">
-                        <div class="td"></div>
-                        <div class="td"></div>
+                    <div class="tr" each={setting in this.opts.store.getState().settings}>
+                        <div class="td">{ip}</div>
+                        <div class="td">{public_key}</div>
                     </div>
                 </div>
             </div>
