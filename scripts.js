@@ -80,9 +80,14 @@ function* getImages(action) {
 
 function* createImgMapping(action) {
     console.log(action['data'])
-    ax.post('v1/isos/map', action['data'])
+    
+    post_data = {
+        'iso_map': [
+            {'os': action['data'].name, 'file': action['data'].iso}]
+    }
+    ax.post('v1/isos/map', post_data)
     .then(function (response) {
-        console.log('a')
+        console.log('Mapping created')
     })
     .catch(function (error) {
         reduxStore.dispatch({
