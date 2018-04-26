@@ -23,21 +23,20 @@ var reducer = function(state=defaultState, action) {
         case 'FETCH_SUCCEEDED':
             top_key = Object.keys(action.data)[0]
             
-            if(top_key == 'images') {
-                var add_data = []
-                for (var key in action.data[top_key]) {
-                    add_data.push(key)
-                }
-            } else if(top_key =='infracomponents') {
+            if(top_key =='infracomponents') {
                 servers = action.data[top_key]['servers']
                 var add_data = []
                 for (var s in servers) {
                     add_data.push(servers[s])
                 }
+            } else {
+                add_data = action.data[top_key]
             }
             
             x = {}
             x[top_key] = add_data
+            
+            console.log(x)
                         
             return Object.assign({},state,{isLoading: false},x)
             break;
@@ -62,7 +61,7 @@ var ax = axios.create({
 });
 
 function* getImages(action) {
-    ax.get('v1/catalog', {})
+    ax.get('v1/isos', {})
     .then(function (response) {
         reduxStore.dispatch({
             type: "FETCH_SUCCEEDED",
