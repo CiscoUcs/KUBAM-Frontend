@@ -11,10 +11,10 @@
                     <!--<div class="th">Size</div>-->
                     <div class="th">Delete</div>
                 </div>
-                <div class="tr" each={img in this.opts.store.getState().mappings}> 
+                <div class="tr" each={img in this.opts.store.getState().iso_map}> 
                     <!--<div class="td"><input type="checkbox"></div>-->
-                    <div class="td">{name}</div>
-                    <div class="td">{iso}</div>
+                    <div class="td">{img.os}</div>
+                    <div class="td">{img.file}</div>
                     <!--<div class="td">VERSION</div>-->
                     <!--<div class="td">SIZE</div>-->
                     <div class="td">

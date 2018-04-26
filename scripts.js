@@ -35,8 +35,6 @@ var reducer = function(state=defaultState, action) {
             
             x = {}
             x[top_key] = add_data
-            
-            console.log(x)
                         
             return Object.assign({},state,{isLoading: false},x)
             break;
@@ -77,9 +75,7 @@ function* getIsos(action) {
     });
 }
 
-function* createImgMapping(action) {
-    console.log(action['data'])
-    
+function* createImgMapping(action) {    
     post_data = {
         'iso_map': [
             {'os': action['data'].name, 'file': '/kubam/' + action['data'].iso}]
@@ -100,7 +96,10 @@ function* createImgMapping(action) {
 function* fetchMappings(action) {
     ax.get('v1/isos/map', {})
     .then(function (response) {
-        console.log(response['data'])
+        reduxStore.dispatch({
+            type: "FETCH_SUCCEEDED",
+            data: {'iso_map': response['data']['iso_map']}
+        })
     })
     .catch(function (error) {
         reduxStore.dispatch({
@@ -134,7 +133,7 @@ function* createInfraComponent(action) {
     console.log(action['data'])
     ax.post('v2/servers', action['data'])
     .then(function (response) {
-        console.log('a')
+        console.log('Infra component created')
     })
     .catch(function (error) {
         reduxStore.dispatch({
@@ -146,7 +145,6 @@ function* createInfraComponent(action) {
 }
 
 function* addPublicKey(action) {
-    console.log(action['data'])
     ax.post('v1/keys', action['data']['key'])
     .then(function (response) {
         console.log('Public Key added')
