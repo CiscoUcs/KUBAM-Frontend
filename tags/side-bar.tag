@@ -7,12 +7,12 @@
  
     <script>
         menu=[
-        { title: "Server images",img:"./icons/serverimage.png", route:"images" },
-        { title: "Infrastructure", img:"./icons/ucs.png", route:"infrastructure" },
-        { title: "Hosts", img:"./icons/host.png", route:"hosts" },
-        { title: "Network",img:"./icons/network.png", route:"network" },
-        { title: "Settings", img:"./icons/settings.png", route:"settings" },
-        { title: "Feedback", img:"./icons/feedback.png", route:"feedback" }
+            { title: "Hosts", img:"./icons/host.png", route:"hosts" },
+            { title: "Network",img:"./icons/network.png", route:"network" },
+            { title: "Images",img:"./icons/serverimage.png", route:"images" },
+            { title: "Infrastructure", img:"./icons/ucs.png", route:"infrastructure" },
+            { title: "Settings", img:"./icons/settings.png", route:"settings" },
+            { title: "Feedback", img:"./icons/feedback.png", route:"feedback" }
         ];
         
         route(function(id) {

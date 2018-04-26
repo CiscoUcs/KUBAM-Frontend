@@ -1,11 +1,4 @@
 <settings>
-    
-    <div class="settings-group"> 
-        <fancy-input tag="KUBAM IP Address"
-                     inputid="srvgroup-new-name" />
-        <fancy-button>Update</fancy-button>
-    </div>    
-    
     <div class="settings-group"> 
             <div class="settings-container-big">
                 <!--                <table-search></table-search>-->
@@ -49,7 +42,7 @@
             var modal_title = document.getElementById('modal-title');
             var modal_content = document.getElementById('modal-content');
             
-            modal_title.innerHTML = 'Add new Public Key'
+            modal_title.innerHTML = 'Add Settings'
             
             modal_content.innerHTML = '';
             var tag = document.createElement("new-setting");
