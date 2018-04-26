@@ -20,14 +20,14 @@
                         <div class="th">Proxy Server</div>
                         <div class="th">VLAN</div>
                     </div>
-                    <div class="tr" each={comp in this.opts.store.getState().infracomponents}>
-                        <div class="td"></div>
-                        <div class="td"></div>
-                        <div class="td"></div>
-                        <div class="td"></div>
-                        <div class="td"></div>
-                        <div class="td"></div>
-                        <div class="td"></div>
+                    <div class="tr" each={nw in this.opts.store.getState().network}>
+                        <div class="td">{nw_group_name}</div>
+                        <div class="td">{netmask}</div>
+                        <div class="td">{router}</div>
+                        <div class="td">{nameserver}</div>
+                        <div class="td">{ntp_server}</div>
+                        <div class="td">{proxy_server}</div>
+                        <div class="td">{vlan}</div>
                     </div>
                 </div>
             </div>
