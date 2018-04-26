@@ -7,9 +7,6 @@
                 <option value="buildimage">Build Image</option>
                 <option value="deploy">Deploy</option>    
             </fancy-dropdown>
-            <fancy-button>
-                Commit
-            </fancy-button>
         </div>
 
         
@@ -89,7 +86,7 @@
             var tag = document.createElement("new-host");
             modal_content.append(tag)
             store = this.opts.store
-            riot.mount(tag, 'new-controller', store);
+            riot.mount(tag, 'new-host', store);
             
             var modal_shadow = document.getElementById('modal-shadow')
             modal_shadow.style.display = 'table'
