@@ -74,7 +74,8 @@
             modal_content.innerHTML = '';
             var tag = document.createElement("new-serverimage");
             modal_content.append(tag)
-            riot.mount(tag, 'new-serverimage');
+            passStore = this.opts.store
+            riot.mount(tag, 'new-serverimage', passStore);
             
             var modal_shadow = document.getElementById('modal-shadow')
             modal_shadow.style.display = 'table'

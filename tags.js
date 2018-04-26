@@ -142,7 +142,8 @@ riot.tag2('hosts', '<div class="svrGrpServers"> <div class="top-actions"> <fancy
             modal_content.innerHTML = '';
             var tag = document.createElement("new-host");
             modal_content.append(tag)
-            riot.mount(tag, 'new-host');
+            store = this.opts.store
+            riot.mount(tag, 'new-controller', store);
 
             var modal_shadow = document.getElementById('modal-shadow')
             modal_shadow.style.display = 'table'
@@ -167,7 +168,7 @@ riot.tag2('hosts', '<div class="svrGrpServers"> <div class="top-actions"> <fancy
         })
 
 });
-riot.tag2('new-host', '<form> <fancy-input tag="Hostname" input-id="servergroup-new-hostname"></fancy-input> <fancy-input tag="IP" input-id="servergroup-new-ip"></fancy-input> Role: <fancy-dropdown name="Role"> <option value="Master">Master</option> <option value="Worker">Worker</option> </fancy-dropdown><br> Server Group: <fancy-dropdown name="Server Group"> <option value="option1">Option 1</option> <option value="option2">Option 2</option> </fancy-dropdown><br> Images: <fancy-dropdown name="Images"> <option value="image1">Image 1</option> <option value="image2">Image 2</option> </fancy-dropdown><br> Network Group: <fancy-dropdown name="Network Group"> <option value="networkgroup1">Network Group 1</option> <option value="networkgroup2">Network Group 2</option> </fancy-dropdown><br> </form> <fancy-button onclick="{createServerGroup}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button>', 'new-host form,[data-is="new-host"] form{ align-content: center; align-items: center; }', '', function(opts) {
+riot.tag2('new-host', '<form> <fancy-input tag="Hostname" input-id="servergroup-new-hostname"></fancy-input> <fancy-input tag="IP" input-id="servergroup-new-ip"></fancy-input> <fancy-dropdown name="Role" tag="Role"> <option value="Master">Master</option> <option value="Worker">Worker</option> </fancy-dropdown><br> <fancy-dropdown name="Server Group" tag="Server Group"> <option value="option1">Option 1</option> <option value="option2">Option 2</option> </fancy-dropdown><br> <fancy-dropdown name="Images" tag="Images"> <option value="image1">Image 1</option> <option value="image2">Image 2</option> </fancy-dropdown><br> <fancy-dropdown name="Network Group" tag="Network Group"> <option value="networkgroup1">Network Group 1</option> <option value="networkgroup2">Network Group 2</option> </fancy-dropdown><br> </form> <fancy-button onclick="{createServerGroup}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button>', 'new-host form,[data-is="new-host"] form{ text-align: left; }', '', function(opts) {
 });
 riot.tag2('infra-overview', '<div class="infra-group"> <div class="infra-container-big"> <div class="table"> <div class="tr"> <div class="th"><input type="checkbox"> </div> <div class="th">Name</div> <div class="th">Description</div> <div class="th">Type</div> <div class="th">Health</div> <div class="th">Mgmt IP</div> <div class="th">Tenant</div> <div class="th">Action</div> </div> <div class="tr" each="{comp in this.opts.store.getState().infracomponents}"> <div class="td"><input type="checkbox"></div> <div class="td">{comp.name}</div> <div class="td">{comp.description}</div> <div class="td">{comp.type}</div> <div class="td">HEALTH</div> <div class="td">{comp.credentials.ip}</div> <div class="td">{comp.credentials.user}</div> <div class="td"> <img src="./icons/edit.svg" class="table-icon"> <img src="./icons/delete.svg" class="table-icon"> </div> </div> </div> </div> </div> <add-button onclick="{addController}">Add Controller</add-button>', 'infra-overview .tablewidth,[data-is="infra-overview"] .tablewidth{ width: 720px; } infra-overview .infra-group,[data-is="infra-overview"] .infra-group{ padding-bottom: 15px; } infra-overview .infra-container,[data-is="infra-overview"] .infra-container{ background-color: white; padding: 20px; } infra-overview .infra-container-big,[data-is="infra-overview"] .infra-container-big{ background-color: white; padding: 34px 20px; }', '', function(opts) {
 
@@ -278,8 +279,10 @@ riot.tag2('network', '<add-button onclick="{addNetworkGroup}"> Add Network Group
 
 riot.tag2('new-networkgroup', '<form> <div class="network-container"> <fancy-input tag="Network Group Name" inputid="network-view-groupname"> </fancy-input> <fancy-input tag="Netmask" inputid="network-view-netmask"> </fancy-input> <fancy-input tag="Router" inputid="network-view-router"> </fancy-input> <fancy-input tag="Name Server" inputid="network-view-nameserver"> </fancy-input> <fancy-input tag="NTP Server" inputid="network-view-ntp"> </fancy-input> <fancy-input tag="Proxy Server (optional)" inputid="network-view-proxy"> </fancy-input> <fancy-input tag="VLAN (optional)" inputid="network-view-vlan"> </fancy-input> </div> </form> <fancy-button onclick="{createServerGroup}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button>', 'new-networkgroup form,[data-is="new-networkgroup"] form{ text-align: left; align-items: left; }', '', function(opts) {
 });
-riot.tag2('new-serverimage', '<form> <fancy-input tag="Name" inputid="mapping-name"> </fancy-input> <fancy-dropdown name="ISO" tag="ISO" inputid="mapping-iso"> <option value="CentOS">CentOS</option> <option value="VMware ESXi">VMware ESXi</option> <option each="{img in this.opts.store.getState().images}" riot-value="{img}">{img}</option> </fancy-dropdown><br> </form> <fancy-button onclick="{createImageMapping}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button>', 'new-serverimage form,[data-is="new-serverimage"] form{ text-align: left; }', '', function(opts) {
-        store.dispatch({
+riot.tag2('new-serverimage', '<form> <fancy-input tag="Name" inputid="mapping-name"> </fancy-input> <fancy-dropdown name="ISO" tag="ISO" inputid="mapping-iso"> <option each="{img in passStore.getState().images}" riot-value="{img}">{img}</option> </fancy-dropdown><br> </form> <fancy-button onclick="{createImageMapping}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button>', 'new-serverimage form,[data-is="new-serverimage"] form{ text-align: left; }', '', function(opts) {
+        console.log(passStore)
+
+        passStore.dispatch({
             type: 'FETCH_IMAGES'
         })
 
@@ -314,7 +317,8 @@ riot.tag2('serverimages-overview', '<div class="osgroup" hide="{this.opts.store.
             modal_content.innerHTML = '';
             var tag = document.createElement("new-serverimage");
             modal_content.append(tag)
-            riot.mount(tag, 'new-serverimage');
+            passStore = this.opts.store
+            riot.mount(tag, 'new-serverimage', passStore);
 
             var modal_shadow = document.getElementById('modal-shadow')
             modal_shadow.style.display = 'table'
