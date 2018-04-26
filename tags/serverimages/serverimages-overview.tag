@@ -11,10 +11,10 @@
                     <!--<div class="th">Size</div>-->
                     <div class="th">Delete</div>
                 </div>
-                <div class="tr" each={img in this.opts.store.getState().images}> 
+                <div class="tr" each={img in this.opts.store.getState().mappings}> 
                     <!--<div class="td"><input type="checkbox"></div>-->
-                    <div class="td">NAME</div>
-                    <div class="td">{img}</div>
+                    <div class="td">{name}</div>
+                    <div class="td">{iso}</div>
                     <!--<div class="td">VERSION</div>-->
                     <!--<div class="td">SIZE</div>-->
                     <div class="td">
@@ -62,7 +62,7 @@
         let store = this.opts.store
         
         store.dispatch({
-            type: 'FETCH_IMAGES'
+            type: 'FETCH_MAPPINGS'
         })
     
         addServerimage() {
