@@ -8,8 +8,8 @@
                 <option value="deploy">Deploy</option>    
             </fancy-dropdown>
         </div>
+<!--        <table-search></table-search>-->
 
-        
 <!--        <table-search></table-search>-->
         <div class="table">
             <div class="tr">
