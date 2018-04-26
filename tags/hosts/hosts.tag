@@ -88,7 +88,8 @@
             modal_content.innerHTML = '';
             var tag = document.createElement("new-host");
             modal_content.append(tag)
-            riot.mount(tag, 'new-host');
+            store = this.opts.store
+            riot.mount(tag, 'new-controller', store);
             
             var modal_shadow = document.getElementById('modal-shadow')
             modal_shadow.style.display = 'table'

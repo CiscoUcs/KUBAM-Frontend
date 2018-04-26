@@ -2,11 +2,8 @@
     <form>        
         <fancy-input tag="Name" inputid="mapping-name">
         </fancy-input>
-        <fancy-dropdown name="ISO" tag="ISO" inputid="mapping-iso">
-            <option value="CentOS">CentOS</option>
-            <option value="VMware ESXi">VMware ESXi</option>
-            
-            <option each={img in this.opts.store.getState().images} value="{img}">{img}</option>
+        <fancy-dropdown name="ISO" tag="ISO" inputid="mapping-iso">            
+            <option each={img in passStore.getState().images} value="{img}">{img}</option>
         </fancy-dropdown><br>
     </form>
     <fancy-button onclick={createImageMapping}>Create</fancy-button>
@@ -20,7 +17,9 @@
     </style>
     
     <script>
-        store.dispatch({
+        console.log(passStore)
+        
+        passStore.dispatch({
             type: 'FETCH_IMAGES'
         })
         
@@ -33,7 +32,7 @@
                 type: 'CREATE_IMGMAPPING',
                 data: {
                     'name': document.getElementById('mapping-name').value,
-                    'iso': document.getElementById('mapping-iso').value                  
+                    'iso': document.getElementById('mapping-iso').value
                 }
             })
             this.closeModal()
