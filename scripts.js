@@ -71,8 +71,8 @@ function* testFunction(action) {
     })
     .catch(function (error) {
         reduxStore.dispatch({
-            type: "FETCH_FAILED",
-            message: e.message
+            type: "OP_FAILED",
+            message: error.message
         });
     });
 }
@@ -87,8 +87,8 @@ function* getInfraComponents(action) {
     })
     .catch(function (error) {
         reduxStore.dispatch({
-            type: "FETCH_FAILED",
-            message: e.message
+            type: "OP_FAILED",
+            message: error.message
         });
     });
 }
@@ -100,8 +100,10 @@ function* createInfraComponent(action) {
         console.log('a')
     })
     .catch(function (error) {
-        console.log('Error when creating the new infrastructure component.')
-        console.log(error)
+        reduxStore.dispatch({
+            type: "OP_FAILED",
+            message: error.message
+        });
     });
 }
 
