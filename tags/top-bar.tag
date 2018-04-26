@@ -6,7 +6,7 @@
         
         <div id="currentpage">
             <router>
-                <route path="network..">Network</route>
+                <route path="network..">Network Groups</route>
                 <route path="images..">Server Images</route>
                 <route path="infrastructure..">Infrastructure</route>
                 <route path="hosts..">Hosts</route>

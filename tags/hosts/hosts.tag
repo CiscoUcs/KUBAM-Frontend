@@ -2,7 +2,6 @@
     
     <div class="svrGrpServers">
         <div>
-            <h1 class="categoryHeader">Hosts</h1>
             <fancy-dropdown inputid="actions" class="table-input">
                 <option value="none">Actions</option>
                 <option value="buildimage">Build Image</option>
@@ -14,7 +13,7 @@
         </div>
 
         
-        <table-search></table-search>
+<!--        <table-search></table-search>-->
         <div class="table">
             <div class="tr">
                 <div class="th">Select items<input type="checkbox"></div>

@@ -1,7 +1,7 @@
 <serverimages-overview>        
     <div class="osgroup" hide={this.opts.store.getState().isLoading}>
         <div class="os-container">
-            <table-search></table-search>
+<!--            <table-search></table-search>-->
             <div class="table">
                 <div class="tr">
                     <!--<div class="th"><input type="checkbox"></div>-->
