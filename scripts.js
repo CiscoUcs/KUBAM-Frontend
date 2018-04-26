@@ -82,7 +82,7 @@ function* createImgMapping(action) {
     
     post_data = {
         'iso_map': [
-            {'os': action['data'].name, 'file': action['data'].iso}]
+            {'os': action['data'].name, 'file': '/kubam/' + action['data'].iso}]
     }
     ax.post('v1/isos/map', post_data)
     .then(function (response) {
