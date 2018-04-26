@@ -8,6 +8,9 @@
         </fancy-input>
     </div>
     
+    <fancy-button onclick={createServerGroup}>Create</fancy-button>
+    <fancy-button color="gray" onclick={closeModal}>Cancel</fancy-button>
+    
     <style>
         .settings-container{
             text-align: left;
