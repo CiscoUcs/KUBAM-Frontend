@@ -1,8 +1,8 @@
 <new-serverimage>
     <form>        
-        <fancy-input tag="Name" input-id="mapping-name">
+        <fancy-input tag="Name" inputid="mapping-name">
         </fancy-input>
-        <fancy-dropdown name="ISO" tag="ISO">
+        <fancy-dropdown name="ISO" tag="ISO" inputid="mapping-iso">
             <option value="CentOS">CentOS</option>
             <option value="VMware ESXi">VMware ESXi</option>
         </fancy-dropdown><br>

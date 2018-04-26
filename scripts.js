@@ -78,6 +78,21 @@ function* getImages(action) {
     });
 }
 
+function* createImgMapping(action) {
+    console.log(action['data'])
+    ax.post('v1/isos/map', action['data'])
+    .then(function (response) {
+        console.log('a')
+    })
+    .catch(function (error) {
+        reduxStore.dispatch({
+            type: "OP_FAILED",
+            method: 'createInfraComponent',
+            message: error.message
+        });
+    });
+}
+
 function* getInfraComponents(action) {
     ax.get('v2/servers', {})
     .then(function (response) {
@@ -118,7 +133,7 @@ function* watchUserRequests() {
   yield ReduxSaga.takeEvery('OP_FAILED', logError)
     
   yield ReduxSaga.takeEvery('FETCH_IMAGES', getImages)
-  yield ReduxSaga.takeEvery('ADD_IMAGE', getImages)
+  yield ReduxSaga.takeEvery('CREATE_IMGMAPPING', createImgMapping)
     
   yield ReduxSaga.takeEvery('FETCH_INFRA', getInfraComponents)
     
