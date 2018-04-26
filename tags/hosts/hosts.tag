@@ -1,13 +1,19 @@
 <hosts>
-    <h1 class="categoryHeader">Hosts</h1>
-    
-    <fancy-dropdown inputid="actions" class="table-input">
-        <option value="none">Actions</option>
-        <option value="buildimage">Build Image</option>
-        <option value="deploy">Deploy</option>
-    </fancy-dropdown>
     
     <div class="svrGrpServers">
+        <div>
+            <h1 class="categoryHeader">Hosts</h1>
+            <fancy-dropdown inputid="actions" class="table-input">
+                <option value="none">Actions</option>
+                <option value="buildimage">Build Image</option>
+                <option value="deploy">Deploy</option>    
+            </fancy-dropdown>
+            <fancy-button>
+                Commit
+            </fancy-button>
+        </div>
+
+        
         <table-search></table-search>
         <div class="table">
             <div class="tr">
@@ -69,15 +75,26 @@
             </div>
         </div>
         
-        <fancy-button>
-            Commit
-        </fancy-button>
-        
-        <add-button onclick={addController}>
-            Add Controller
-        </add-button>
+    <add-button onclick={addHost}>Add Host</add-button>
+
     
     <script>
+        
+        addHost() {
+            var modal_title = document.getElementById('modal-title');
+            var modal_content = document.getElementById('modal-content');
+            
+            modal_title.innerHTML = 'Add a new Host'
+            
+            modal_content.innerHTML = '';
+            var tag = document.createElement("new-host");
+            modal_content.append(tag)
+            riot.mount(tag, 'new-host');
+            
+            var modal_shadow = document.getElementById('modal-shadow')
+            modal_shadow.style.display = 'table'
+        }
+        
         servers = ['a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b']
         
         let store = this.opts.store
@@ -101,6 +118,10 @@
     </script>
     
     <style>
+        
+        fancy-button{
+            margin-left: 250px;
+         }
         servergroup-view {
             padding-bottom: 20px;
         }
