@@ -82,7 +82,9 @@ function* createImgMapping(action) {
     }
     ax.post('v1/isos/map', post_data)
     .then(function (response) {
-        console.log('Mapping created')
+        reduxStore.dispatch({
+            type: 'FETCH_MAPPINGS'
+        })
     })
     .catch(function (error) {
         reduxStore.dispatch({
@@ -145,6 +147,10 @@ function* createInfraComponent(action) {
 }
 
 function* addPublicKey(action) {
+    post_data = {
+        "keys": action['data']['key']
+    }
+    
     ax.post('v1/keys', action['data']['key'])
     .then(function (response) {
         console.log('Public Key added')
