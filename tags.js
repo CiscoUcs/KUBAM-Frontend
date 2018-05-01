@@ -277,7 +277,25 @@ riot.tag2('modal', '<div> <div id="close-modal">x</div> <div id="modal-title"></
             document.getElementById('modal-shadow').style.display = 'None';
         }
 });
-riot.tag2('network', '<add-button onclick="{addNetworkGroup}"> Add Network Group </add-button> <div class="network-group"> <div class="network-container-big"> <div class="table"> <div class="tr"> <div class="th">Network Group Name</div> <div class="th">Netmask</div> <div class="th">Router</div> <div class="th">Name Server</div> <div class="th">NTP Server</div> <div class="th">Proxy Server</div> <div class="th">VLAN</div> </div> <div class="tr" each="{nw in this.opts.store.getState().network}"> <div class="td">{nw_group_name}</div> <div class="td">{netmask}</div> <div class="td">{router}</div> <div class="td">{nameserver}</div> <div class="td">{ntp_server}</div> <div class="td">{proxy_server}</div> <div class="td">{vlan}</div> </div> </div> </div> </div>', 'network .network-group,[data-is="network"] .network-group{ padding-bottom: 15px; background-color: white; padding: 20px; } network .network-container,[data-is="network"] .network-container{ background-color: white; padding: 20px; }', '', function(opts) {
+riot.tag2('network', '<add-button onclick="{addNetworkGroup}"> Add Network Group </add-button> <div class="network-group"> <div class="network-container-big"> <div class="table"> <div class="tr"> <div class="th">Network Name</div> <div class="th">Netmask</div> <div class="th">Router</div> <div class="th">Name Server</div> <div class="th">NTP Server</div> <div class="th">Proxy Server</div> <div class="th">VLAN</div> </div> <div class="tr" each="{nw in this.opts.store.getState().networks}"> <div class="td">{nw.name}</div> <div class="td">{nw.netmask}</div> <div class="td">{nw.gateway}</div> <div class="td">{nw.nameserver}</div> <div class="td">{nw.ntpserver}</div> <div class="td">{nw.proxy}</div> <div class="td">{nw.vlan}</div> </div> </div> </div> </div>', 'network .network-group,[data-is="network"] .network-group{ padding-bottom: 15px; background-color: white; padding: 20px; } network .network-container,[data-is="network"] .network-container{ background-color: white; padding: 20px; }', '', function(opts) {
+        let currentValue
+        let store = this.opts.store
+
+        store.dispatch({
+            type: 'FETCH_NETWORKGROUPS'
+        })
+
+        this.opts.store.subscribe(function(){
+            let previousValue = currentValue;
+            currentValue = store.getState()
+            currentTab = window.location.hash.substr(1);
+            if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
+                if(currentTab == 'network') {
+                    riot.update();
+                }
+            }
+        })
+
         this.addNetworkGroup = function() {
             var modal_title = document.getElementById('modal-title');
             var modal_content = document.getElementById('modal-content');

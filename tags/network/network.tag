@@ -8,7 +8,7 @@
 <!--                <table-search></table-search>-->
                 <div class="table">
                     <div class="tr">
-                        <div class="th">Network Group Name</div>
+                        <div class="th">Network Name</div>
                         <div class="th">Netmask</div>
                         <div class="th">Router</div>
                         <div class="th">Name Server</div>
@@ -16,14 +16,14 @@
                         <div class="th">Proxy Server</div>
                         <div class="th">VLAN</div>
                     </div>
-                    <div class="tr" each={nw in this.opts.store.getState().network}>
-                        <div class="td">{nw_group_name}</div>
-                        <div class="td">{netmask}</div>
-                        <div class="td">{router}</div>
-                        <div class="td">{nameserver}</div>
-                        <div class="td">{ntp_server}</div>
-                        <div class="td">{proxy_server}</div>
-                        <div class="td">{vlan}</div>
+                    <div class="tr" each={nw in this.opts.store.getState().networks}>
+                        <div class="td">{nw.name}</div>
+                        <div class="td">{nw.netmask}</div>
+                        <div class="td">{nw.gateway}</div>
+                        <div class="td">{nw.nameserver}</div>
+                        <div class="td">{nw.ntpserver}</div>
+                        <div class="td">{nw.proxy}</div>
+                        <div class="td">{nw.vlan}</div>
                     </div>
                 </div>
             </div>
@@ -43,6 +43,24 @@
     </style>
     
     <script>
+        let currentValue
+        let store = this.opts.store
+                
+        store.dispatch({
+            type: 'FETCH_NETWORKGROUPS'
+        })
+        
+        this.opts.store.subscribe(function(){
+            let previousValue = currentValue;
+            currentValue = store.getState()
+            currentTab = window.location.hash.substr(1);
+            if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
+                if(currentTab == 'network') {
+                    riot.update();
+                }
+            }
+        })
+        
         addNetworkGroup() {
             var modal_title = document.getElementById('modal-title');
             var modal_content = document.getElementById('modal-content');
