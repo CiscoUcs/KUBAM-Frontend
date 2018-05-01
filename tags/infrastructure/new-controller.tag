@@ -1,32 +1,53 @@
 <new-controller>
     <div>
-        <fancy-dropdown tag="Type"
-                        inputid="srvgroup-new-type">
-            <option value="ucsm">UCS Manager</option>
-            <option value="imc">UCS Standalone</option>
-            <option value="aci">ACI Fabric</option>
-        </fancy-dropdown>
+        <div class="form-container">
+            <fancy-dropdown tag="Type"
+                            inputid="srvgroup-new-type">
+                <option value="ucsm">UCS Manager</option>
+                <option value="imc">UCS Standalone</option>
+                <option value="aci">ACI Fabric</option>
+            </fancy-dropdown>
 
-        <fancy-input tag="Name"
-                     inputid="srvgroup-new-name">
-        </fancy-input>
-        <fancy-input tag="Description"
-                     inputid="srvgroup-new-description">
-        </fancy-input>
-        <fancy-input tag="IP Address"
-                     inputid="srvgroup-new-ip">
-        </fancy-input>
-        <fancy-input tag="Username"
-                     inputid="srvgroup-new-username">
-        </fancy-input>
-        <fancy-input tag="Password"
-                     inputid="srvgroup-new-password"
-                     settype="password">
-        </fancy-input>
+            <div class="left-column">
+                <fancy-input tag="Name"
+                             inputid="srvgroup-new-name">
+                </fancy-input>
+                <fancy-input tag="Description"
+                             inputid="srvgroup-new-description">
+                </fancy-input>
+                <fancy-input tag="IP Address"
+                             inputid="srvgroup-new-ip">
+                </fancy-input>
+                <fancy-input tag="Username"
+                             inputid="srvgroup-new-username">
+                </fancy-input>
+            </div>
+
+            <div class="right-column">
+                <fancy-input tag="Password"
+                             inputid="srvgroup-new-password"
+                             settype="password">
+                </fancy-input>
+                <fancy-input tag="Tenant (ACI)"
+                             inputid="srvgroup-new-tenant">
+                </fancy-input>
+                <fancy-input tag="VRF (ACI)"
+                             inputid="srvgroup-new-vrf">
+                </fancy-input>
+                <fancy-input tag="Bridge Domain (ACI)"
+                             inputid="srvgroup-new-bridgedomain">
+                </fancy-input>
+            </div>
+        
+        
+        </div>
+        <div>
+            <fancy-button onclick={createSrvGroup}>Create</fancy-button>
+            <fancy-button color="gray" onclick={closeModal}>Cancel</fancy-button> 
+        </div>
+
     </div>
-    <fancy-button onclick={createSrvGroup}>Create</fancy-button>
-    <fancy-button color="gray" onclick={closeModal}>Cancel</fancy-button>
-
+ 
     
     <script>
         closeModal() {
@@ -55,5 +76,13 @@
         new-controller {
             text-align: left;
         }
+        .right-column{
+            float:left;
+            margin-left: 20px;
+        }
+        .left-column{
+            float:left;
+        }
+        
     </style>
 </new-controller>
