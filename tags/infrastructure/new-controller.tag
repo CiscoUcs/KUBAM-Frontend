@@ -42,7 +42,7 @@
         
         </div>
         <div>
-            <fancy-button onclick={createSrvGroup}>Create</fancy-button>
+            <fancy-button onclick={createController}>Create</fancy-button>
             <fancy-button color="gray" onclick={closeModal}>Cancel</fancy-button> 
         </div>
 
@@ -54,9 +54,9 @@
             document.getElementById('modal-shadow').style.display = 'None';
         }
         
-        createSrvGroup() {
+        createController() {
             passStore.dispatch({
-                type: 'CREATE_SRVGROUP',
+                type: 'CREATE_CONTROLLER',
                 data: {
                     'type': document.getElementById('srvgroup-new-type').value,
                     'name': document.getElementById('srvgroup-new-name').value,
@@ -65,7 +65,12 @@
                         'user': document.getElementById('srvgroup-new-username').value,
                         'password': document.getElementById('srvgroup-new-password').value,
                         'ip': document.getElementById('srvgroup-new-ip').value
-                    }                    
+                    },
+                    'aci': {
+                        'tenant_name': document.getElementById('srvgroup-new-tenant').value,
+                        'vrf_name': document.getElementById('srvgroup-new-vrf').value,
+                        'bridge_domain': document.getElementById('srvgroup-new-bridgedomain').value
+                    },
                 }
             })
             this.closeModal()

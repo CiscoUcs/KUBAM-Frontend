@@ -244,14 +244,14 @@ riot.tag2('infra-overview', '<div class="infra-group"> <div class="infra-contain
             modal_shadow.style.display = 'table'
         }.bind(this)
 });
-riot.tag2('new-controller', '<div> <div class="form-container"> <fancy-dropdown tag="Type" inputid="srvgroup-new-type"> <option value="ucsm">UCS Manager</option> <option value="imc">UCS Standalone</option> <option value="aci">ACI Fabric</option> </fancy-dropdown> <div class="left-column"> <fancy-input tag="Name" inputid="srvgroup-new-name"> </fancy-input> <fancy-input tag="Description" inputid="srvgroup-new-description"> </fancy-input> <fancy-input tag="IP Address" inputid="srvgroup-new-ip"> </fancy-input> <fancy-input tag="Username" inputid="srvgroup-new-username"> </fancy-input> </div> <div class="right-column"> <fancy-input tag="Password" inputid="srvgroup-new-password" settype="password"> </fancy-input> <fancy-input tag="Tenant (ACI)" inputid="srvgroup-new-tenant"> </fancy-input> <fancy-input tag="VRF (ACI)" inputid="srvgroup-new-vrf"> </fancy-input> <fancy-input tag="Bridge Domain (ACI)" inputid="srvgroup-new-bridgedomain"> </fancy-input> </div> </div> <div> <fancy-button onclick="{createSrvGroup}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button> </div> </div>', 'new-controller { text-align: left; } new-controller .right-column,[data-is="new-controller"] .right-column{ float:left; margin-left: 20px; } new-controller .left-column,[data-is="new-controller"] .left-column{ float:left; }', '', function(opts) {
+riot.tag2('new-controller', '<div> <div class="form-container"> <fancy-dropdown tag="Type" inputid="srvgroup-new-type"> <option value="ucsm">UCS Manager</option> <option value="imc">UCS Standalone</option> <option value="aci">ACI Fabric</option> </fancy-dropdown> <div class="left-column"> <fancy-input tag="Name" inputid="srvgroup-new-name"> </fancy-input> <fancy-input tag="Description" inputid="srvgroup-new-description"> </fancy-input> <fancy-input tag="IP Address" inputid="srvgroup-new-ip"> </fancy-input> <fancy-input tag="Username" inputid="srvgroup-new-username"> </fancy-input> </div> <div class="right-column"> <fancy-input tag="Password" inputid="srvgroup-new-password" settype="password"> </fancy-input> <fancy-input tag="Tenant (ACI)" inputid="srvgroup-new-tenant"> </fancy-input> <fancy-input tag="VRF (ACI)" inputid="srvgroup-new-vrf"> </fancy-input> <fancy-input tag="Bridge Domain (ACI)" inputid="srvgroup-new-bridgedomain"> </fancy-input> </div> </div> <div> <fancy-button onclick="{createController}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button> </div> </div>', 'new-controller { text-align: left; } new-controller .right-column,[data-is="new-controller"] .right-column{ float:left; margin-left: 20px; } new-controller .left-column,[data-is="new-controller"] .left-column{ float:left; }', '', function(opts) {
         this.closeModal = function() {
             document.getElementById('modal-shadow').style.display = 'None';
         }.bind(this)
 
-        this.createSrvGroup = function() {
+        this.createController = function() {
             passStore.dispatch({
-                type: 'CREATE_SRVGROUP',
+                type: 'CREATE_CONTROLLER',
                 data: {
                     'type': document.getElementById('srvgroup-new-type').value,
                     'name': document.getElementById('srvgroup-new-name').value,
@@ -260,7 +260,12 @@ riot.tag2('new-controller', '<div> <div class="form-container"> <fancy-dropdown 
                         'user': document.getElementById('srvgroup-new-username').value,
                         'password': document.getElementById('srvgroup-new-password').value,
                         'ip': document.getElementById('srvgroup-new-ip').value
-                    }
+                    },
+                    'aci': {
+                        'tenant_name': document.getElementById('srvgroup-new-tenant').value,
+                        'vrf_name': document.getElementById('srvgroup-new-vrf').value,
+                        'bridge_domain': document.getElementById('srvgroup-new-bridgedomain').value
+                    },
                 }
             })
             this.closeModal()

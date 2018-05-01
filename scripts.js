@@ -91,7 +91,7 @@ function* createImgMapping(action) {
     .catch(function (error) {
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'createInfraComponent',
+            method: 'createImgMapping',
             message: error.message
         });
     });
@@ -135,17 +135,23 @@ function* getInfraComponents(action) {
 
 function* createInfraComponent(action) {
     console.log(action['data'])
-    ax.post('v2/servers', action['data'])
-    .then(function (response) {
-        console.log('Infra component created')
-    })
-    .catch(function (error) {
-        reduxStore.dispatch({
-            type: "OP_FAILED",
-            method: 'createInfraComponent',
-            message: error.message
-        });
-    });
+    
+    if (action['data']['type'] =='imc' || action['data']['type'] =='ucsm')
+        console.log('server');
+    else    
+        console.log('aci');
+    
+//    ax.post('v2/servers', action['data'])
+//    .then(function (response) {
+//        console.log('Infra component created')
+//    })
+//    .catch(function (error) {
+//        reduxStore.dispatch({
+//            type: "OP_FAILED",
+//            method: 'createInfraComponent',
+//            message: error.message
+//        });
+//    });
 }
 
 function* fetchNetworkGroups(action) {
@@ -210,7 +216,7 @@ function* watchUserRequests() {
     
   yield ReduxSaga.takeEvery('FETCH_INFRA', getInfraComponents)
     
-  yield ReduxSaga.takeEvery('CREATE_SRVGROUP', createInfraComponent)
+  yield ReduxSaga.takeEvery('CREATE_CONTROLLER', createInfraComponent)
 
   yield ReduxSaga.takeEvery('FETCH_NETWORKGROUPS', fetchNetworkGroups)
   yield ReduxSaga.takeEvery('CREATE_NETWORKGROUP', createNetworkGroup)
