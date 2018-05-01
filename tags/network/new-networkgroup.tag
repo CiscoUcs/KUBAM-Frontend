@@ -51,7 +51,7 @@
                     'gateway': document.getElementById('network-view-router').value,
                     'nameserver': document.getElementById('network-view-nameserver').value,
                     'ntpserver': document.getElementById('network-view-ntp').value,
-                    'proxy': document.getElementById('network-view-procy').value,
+                    'proxy': document.getElementById('network-view-proxy').value,
                     'vlan': document.getElementById('network-view-vlan').value
                 }
             })
