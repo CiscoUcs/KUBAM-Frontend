@@ -25,7 +25,7 @@
         </div>
     </form>
         
-    <fancy-button onclick={createServerGroup}>Create</fancy-button>
+    <fancy-button onclick={createNetworkGroup}>Create</fancy-button>
     <fancy-button color="gray" onclick={closeModal}>Cancel</fancy-button>
     
     <style>
@@ -40,6 +40,22 @@
             
         closeModal() {
             document.getElementById('modal-shadow').style.display = 'None';
+        }
+        
+        createNetworkGroup() {
+            passStore.dispatch({
+                type: 'CREATE_NETWORKGROUP',
+                data: {
+                    'name': document.getElementById('network-view-groupname').value,
+                    'netmask': document.getElementById('network-view-netmask').value,
+                    'gateway': document.getElementById('network-view-router').value,
+                    'nameserver': document.getElementById('network-view-nameserver').value,
+                    'ntpserver': document.getElementById('network-view-ntp').value,
+                    'proxy': document.getElementById('network-view-procy').value,
+                    'vlan': document.getElementById('network-view-vlan').value
+                }
+            })
+            this.closeModal()
         }
     </script>
 </new-networkgroup>

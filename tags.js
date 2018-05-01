@@ -294,10 +294,26 @@ riot.tag2('network', '<add-button onclick="{addNetworkGroup}"> Add Network Group
         }.bind(this)
 });
 
-riot.tag2('new-networkgroup', '<form> <div class="network-container"> <fancy-input tag="Network Group Name" inputid="network-view-groupname"> </fancy-input> <fancy-input tag="Netmask" inputid="network-view-netmask"> </fancy-input> <fancy-input tag="Router" inputid="network-view-router"> </fancy-input> <fancy-input tag="Name Server" inputid="network-view-nameserver"> </fancy-input> <fancy-input tag="NTP Server" inputid="network-view-ntp"> </fancy-input> <fancy-input tag="Proxy Server (optional)" inputid="network-view-proxy"> </fancy-input> <fancy-input tag="VLAN (optional)" inputid="network-view-vlan"> </fancy-input> </div> </form> <fancy-button onclick="{createServerGroup}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button>', 'new-networkgroup form,[data-is="new-networkgroup"] form{ text-align: left; align-items: left; }', '', function(opts) {
+riot.tag2('new-networkgroup', '<form> <div class="network-container"> <fancy-input tag="Network Group Name" inputid="network-view-groupname"> </fancy-input> <fancy-input tag="Netmask" inputid="network-view-netmask"> </fancy-input> <fancy-input tag="Router" inputid="network-view-router"> </fancy-input> <fancy-input tag="Name Server" inputid="network-view-nameserver"> </fancy-input> <fancy-input tag="NTP Server" inputid="network-view-ntp"> </fancy-input> <fancy-input tag="Proxy Server (optional)" inputid="network-view-proxy"> </fancy-input> <fancy-input tag="VLAN (optional)" inputid="network-view-vlan"> </fancy-input> </div> </form> <fancy-button onclick="{createNetworkGroup}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button>', 'new-networkgroup form,[data-is="new-networkgroup"] form{ text-align: left; align-items: left; }', '', function(opts) {
 
         this.closeModal = function() {
             document.getElementById('modal-shadow').style.display = 'None';
+        }.bind(this)
+
+        this.createNetworkGroup = function() {
+            passStore.dispatch({
+                type: 'CREATE_NETWORKGROUP',
+                data: {
+                    'name': document.getElementById('network-view-groupname').value,
+                    'netmask': document.getElementById('network-view-netmask').value,
+                    'gateway': document.getElementById('network-view-router').value,
+                    'nameserver': document.getElementById('network-view-nameserver').value,
+                    'ntpserver': document.getElementById('network-view-ntp').value,
+                    'proxy': document.getElementById('network-view-procy').value,
+                    'vlan': document.getElementById('network-view-vlan').value
+                }
+            })
+            this.closeModal()
         }.bind(this)
 });
 riot.tag2('new-serverimage', '<form> <fancy-input tag="Name" inputid="mapping-name"> </fancy-input> <fancy-dropdown name="ISO" tag="ISO" inputid="mapping-iso"> <option each="{img in passStore.getState().isos}" riot-value="{img}">{img.substring(0,21)}...</option> </fancy-dropdown><br> </form> <fancy-button onclick="{createImageMapping}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button>', 'new-serverimage form,[data-is="new-serverimage"] form{ text-align: left; }', '', function(opts) {

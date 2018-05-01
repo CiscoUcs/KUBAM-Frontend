@@ -146,6 +146,20 @@ function* createInfraComponent(action) {
     });
 }
 
+function* createNetworkGroup(action) {
+    ax.post('v2/networks', action['data'])
+    .then(function (response) {
+        console.log('Network Group created')
+    })
+    .catch(function (error) {
+        reduxStore.dispatch({
+            type: "OP_FAILED",
+            method: 'createNetworkGroup',
+            message: error.message
+        });
+    });
+}
+
 function* addPublicKey(action) {
     post_data = {
         "keys": action['data']['key']
@@ -178,6 +192,8 @@ function* watchUserRequests() {
   yield ReduxSaga.takeEvery('FETCH_INFRA', getInfraComponents)
     
   yield ReduxSaga.takeEvery('CREATE_SRVGROUP', createInfraComponent)
+
+  yield ReduxSaga.takeEvery('CREATE_NETWORKGROUP', createNetworkGroup)
     
   yield ReduxSaga.takeEvery('ADD_PUBLICKEY', addPublicKey)
 }
