@@ -1,7 +1,15 @@
 <new-serverimage>
-    <form>        
-        <fancy-input tag="Name" inputid="mapping-name">
-        </fancy-input>
+    <form>
+        <fancy-dropdown tag="Operating System"
+                        inputid="mapping-name">
+            <option value="centos7.3">CentOS 7.3</option>
+            <option value="centos7.4">CentOS 7.4</option>
+            <option value="esxi6.0">ESXi 6.0</option>
+            <option value="esxi6.5">ESXi 6.5</option>
+            <option value="redhat7.2">RedHat 7.2</option>
+            <option value="redhat7.3">redhat7.3</option>
+            <option value="redhat7.4">redhat7.4</option>
+        </fancy-dropdown>
         <fancy-dropdown name="ISO" tag="ISO" inputid="mapping-iso">            
             <option each={img in passStore.getState().isos} value="{img}">{img.substring(0,21)}...</option>
         </fancy-dropdown><br>

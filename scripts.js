@@ -80,6 +80,8 @@ function* createImgMapping(action) {
         'iso_map': [
             {'os': action['data'].name, 'file': '/kubam/' + action['data'].iso}]
     }
+    console.log(post_data)
+    
     ax.post('v1/isos/map', post_data)
     .then(function (response) {
         reduxStore.dispatch({

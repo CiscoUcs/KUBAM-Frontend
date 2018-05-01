@@ -9,7 +9,7 @@
                     <div class="th">ISO</div>
                     <!--<div class="th">Version</div>-->
                     <!--<div class="th">Size</div>-->
-                    <div class="th">Delete</div>
+                    <!--<div class="th">Delete</div>-->
                 </div>
                 <div class="tr" each={img in this.opts.store.getState().iso_map}> 
                     <!--<div class="td"><input type="checkbox"></div>-->
@@ -17,10 +17,10 @@
                     <div class="td">{img.file}</div>
                     <!--<div class="td">VERSION</div>-->
                     <!--<div class="td">SIZE</div>-->
-                    <div class="td">
-                        <!--<img src="./icons/edit.svg" class="table-icon">-->
+                    <!--<div class="td">
+                        <img src="./icons/edit.svg" class="table-icon">
                         <img src="./icons/delete.svg" class="table-icon">
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>
