@@ -6,8 +6,8 @@
                     <div class="tr">
                         <div class="th">Public Key</div>
                     </div>
-                    <div class="tr" each={setting in this.opts.store.getState().settings}>
-                        <div class="td">{public_key}</div>
+                    <div class="tr" each={k in this.opts.store.getState().keys}>
+                        <div class="td">{k.key}</div>
                     </div>
                 </div>
             </div>

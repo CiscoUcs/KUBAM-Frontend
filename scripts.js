@@ -139,18 +139,19 @@ function* createInfraComponent(action) {
     
     if (action['data']['type'] =='imc' || action['data']['type'] =='ucsm') {
         console.log('server');
+        delete action['data']['aci']
         console.log(action['data'])
-        //    ax.post('v2/servers', action['data'])
-        //    .then(function (response) {
-        //        console.log('Infra component created')
-        //    })
-        //    .catch(function (error) {
-        //        reduxStore.dispatch({
-        //            type: "OP_FAILED",
-        //            method: 'createInfraComponent',
-        //            message: error.message
-        //        });
-        //    });
+        ax.post('v2/servers', action['data'])
+            .then(function (response) {
+                console.log('Infra component created')
+            })
+            .catch(function (error) {
+                reduxStore.dispatch({
+                    type: "OP_FAILED",
+                    method: 'createInfraComponent',
+                    message: error.message
+                });
+        });
     }
     else {
         console.log('aci');
@@ -160,19 +161,21 @@ function* createInfraComponent(action) {
 function* deleteInfraComponent(action) {
     console.log(action['data'])
     
+    delete_id = {"id": action['data']['id']};
+    console.log(delete_id)
+    
     if (action['data']['type'] =='imc' || action['data']['type'] =='ucsm') {
-        console.log('server');
-        ax.delete('v2/servers', {'id': action['data']['id']})
+        ax.delete('v2/servers', delete_id)
             .then(function (response) {
                 console.log('Infra component deleted')
-        })
+            })
             .catch(function (error) {
                 reduxStore.dispatch({
                     type: "OP_FAILED",
                     method: 'deleteInfraComponent',
                     message: error.message
                 });
-        }); 
+            }); 
     }
     else {
         console.log('aci');

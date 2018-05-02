@@ -542,7 +542,7 @@ riot.tag2('new-setting', '<div class="settings-container"> <fancy-input tag="KUB
             this.closeModal()
         }.bind(this)
 });
-riot.tag2('settings', '<div class="settings-group"> <div class="settings-container-big"> <div class="table"> <div class="tr"> <div class="th">Public Key</div> </div> <div class="tr" each="{setting in this.opts.store.getState().settings}"> <div class="td">{public_key}</div> </div> </div> </div> </div> <add-button onclick="{addSetting}"> Add Setting </add-button>', 'settings .settings-group,[data-is="settings"] .settings-group{ padding: 15px; margin-bottom: 10px; background-color: white; } settings fancy-input,[data-is="settings"] fancy-input{ position: relative; float: left; top: -10px; } settings fancy-button,[data-is="settings"] fancy-button{ position: relative; top: 10px; }', '', function(opts) {
+riot.tag2('settings', '<div class="settings-group"> <div class="settings-container-big"> <div class="table"> <div class="tr"> <div class="th">Public Key</div> </div> <div class="tr" each="{k in this.opts.store.getState().keys}"> <div class="td">{k.key}</div> </div> </div> </div> </div> <add-button onclick="{addSetting}"> Add Setting </add-button>', 'settings .settings-group,[data-is="settings"] .settings-group{ padding: 15px; margin-bottom: 10px; background-color: white; } settings fancy-input,[data-is="settings"] fancy-input{ position: relative; float: left; top: -10px; } settings fancy-button,[data-is="settings"] fancy-button{ position: relative; top: 10px; }', '', function(opts) {
         this.addSetting = function() {
             var modal_title = document.getElementById('modal-title');
             var modal_content = document.getElementById('modal-content');
