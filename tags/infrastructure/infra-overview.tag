@@ -115,8 +115,13 @@
         
         deleteController(e) {
             ds = e.target.dataset;
-            console.log(ds.type);
-            console.log(ds.id);
+            store.dispatch({
+                type: 'DELETE_CONTROLLER',
+                data: {
+                    type: ds.type,
+                    id: ds.id
+                }
+            })
         }
     </script>
 </infra-overview>

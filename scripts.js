@@ -137,22 +137,46 @@ function* getInfraComponents(action) {
 function* createInfraComponent(action) {
     console.log(action['data'])
     
-    if (action['data']['type'] =='imc' || action['data']['type'] =='ucsm')
+    if (action['data']['type'] =='imc' || action['data']['type'] =='ucsm') {
         console.log('server');
-    else    
+        console.log(action['data'])
+        //    ax.post('v2/servers', action['data'])
+        //    .then(function (response) {
+        //        console.log('Infra component created')
+        //    })
+        //    .catch(function (error) {
+        //        reduxStore.dispatch({
+        //            type: "OP_FAILED",
+        //            method: 'createInfraComponent',
+        //            message: error.message
+        //        });
+        //    });
+    }
+    else {
         console.log('aci');
+    } 
+}
+
+function* deleteInfraComponent(action) {
+    console.log(action['data'])
     
-//    ax.post('v2/servers', action['data'])
-//    .then(function (response) {
-//        console.log('Infra component created')
-//    })
-//    .catch(function (error) {
-//        reduxStore.dispatch({
-//            type: "OP_FAILED",
-//            method: 'createInfraComponent',
-//            message: error.message
-//        });
-//    });
+    if (action['data']['type'] =='imc' || action['data']['type'] =='ucsm') {
+        console.log('server');
+        ax.delete('v2/servers', {'id': action['data']['id']})
+            .then(function (response) {
+                console.log('Infra component deleted')
+        })
+            .catch(function (error) {
+                reduxStore.dispatch({
+                    type: "OP_FAILED",
+                    method: 'deleteInfraComponent',
+                    message: error.message
+                });
+        }); 
+    }
+    else {
+        console.log('aci');
+    }   
 }
 
 function* fetchNetworkGroups(action) {
@@ -216,8 +240,8 @@ function* watchUserRequests() {
   yield ReduxSaga.takeEvery('CREATE_IMGMAPPING', createImgMapping)
     
   yield ReduxSaga.takeEvery('FETCH_INFRA', getInfraComponents)
-    
   yield ReduxSaga.takeEvery('CREATE_CONTROLLER', createInfraComponent)
+    yield ReduxSaga.takeEvery('DELETE_CONTROLLER', deleteInfraComponent)
 
   yield ReduxSaga.takeEvery('FETCH_NETWORKGROUPS', fetchNetworkGroups)
   yield ReduxSaga.takeEvery('CREATE_NETWORKGROUP', createNetworkGroup)

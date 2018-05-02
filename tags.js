@@ -246,8 +246,13 @@ riot.tag2('infra-overview', '<div class="infra-group"> <div class="infra-contain
 
         this.deleteController = function(e) {
             ds = e.target.dataset;
-            console.log(ds.type);
-            console.log(ds.id);
+            store.dispatch({
+                type: 'DELETE_CONTROLLER',
+                data: {
+                    type: ds.type,
+                    id: ds.id
+                }
+            })
         }.bind(this)
 });
 riot.tag2('new-controller', '<div> <div class="form-container"> <fancy-dropdown tag="Type" inputid="srvgroup-new-type"> <option value="ucsm">UCS Manager</option> <option value="imc">UCS Standalone</option> <option value="aci">ACI Fabric</option> </fancy-dropdown> <div class="left-column"> <fancy-input tag="Name" inputid="srvgroup-new-name"> </fancy-input> <fancy-input tag="Description" inputid="srvgroup-new-description"> </fancy-input> <fancy-input tag="IP Address" inputid="srvgroup-new-ip"> </fancy-input> <fancy-input tag="Username" inputid="srvgroup-new-username"> </fancy-input> </div> <div class="right-column"> <fancy-input tag="Password" inputid="srvgroup-new-password" settype="password"> </fancy-input> <fancy-input tag="Tenant (ACI)" inputid="srvgroup-new-tenant"> </fancy-input> <fancy-input tag="VRF (ACI)" inputid="srvgroup-new-vrf"> </fancy-input> <fancy-input tag="Bridge Domain (ACI)" inputid="srvgroup-new-bridgedomain"> </fancy-input> </div> </div> <div> <fancy-button onclick="{createController}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button> </div> </div>', 'new-controller { text-align: left; } new-controller .right-column,[data-is="new-controller"] .right-column{ float:left; margin-left: 20px; } new-controller .left-column,[data-is="new-controller"] .left-column{ float:left; }', '', function(opts) {
