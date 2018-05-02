@@ -25,6 +25,7 @@ var reducer = function(state=defaultState, action) {
             
             if(top_key =='infracomponents') {
                 servers = action.data[top_key]['servers']
+                console.log(servers)
                 var add_data = []
                 for (var s in servers) {
                     add_data.push(servers[s])

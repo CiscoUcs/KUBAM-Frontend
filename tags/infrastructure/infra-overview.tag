@@ -26,7 +26,7 @@
                         <!--<div class="td">FIRMWARE</div>-->
                         <div class="td">
                                  <!--<img src="./icons/edit.svg" class="table-icon">-->
-                                 <img src="./icons/delete.svg" class="table-icon">
+                                 <img src="./icons/delete.svg" data-type={comp.type} data-id={comp.id} onclick={deleteController} class="table-icon">
                         </div>
                     </div>
                 </div>
@@ -111,6 +111,12 @@
             
             var modal_shadow = document.getElementById('modal-shadow')
             modal_shadow.style.display = 'table'
+        }
+        
+        deleteController(e) {
+            ds = e.target.dataset;
+            console.log(ds.type);
+            console.log(ds.id);
         }
     </script>
 </infra-overview>
