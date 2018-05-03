@@ -16,7 +16,7 @@ var reducer = function(state=defaultState, action) {
     switch(action.type) {
         case 'FLUSH':
             return Object.assign({},state,{isLoading: true})
-            break;
+           break;
         case 'FETCH_IN_PROGRESS':
             return Object.assign(loadingState2)
             break
@@ -165,7 +165,7 @@ function* deleteInfraComponent(action) {
     console.log(delete_id)
     
     if (action['data']['type'] =='imc' || action['data']['type'] =='ucsm') {
-        ax.delete('v2/servers', delete_id)
+        ax.delete('v2/servers', { data: delete_id})
             .then(function (response) {
                 console.log('Infra component deleted')
             })
