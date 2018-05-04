@@ -16,7 +16,7 @@ var reducer = function(state=defaultState, action) {
     switch(action.type) {
         case 'FLUSH':
             return Object.assign({},state,{isLoading: true})
-            break;
+           break;
         case 'FETCH_IN_PROGRESS':
             return Object.assign(loadingState2)
             break
