@@ -22,21 +22,13 @@ var reducer = function(state=defaultState, action) {
             break
         case 'FETCH_SUCCEEDED':
             top_key = Object.keys(action.data)[0]
-            
-            if(top_key =='infracomponents') {
-                servers = action.data[top_key]['servers']
-                console.log(servers)
-                var add_data = []
-                for (var s in servers) {
-                    add_data.push(servers[s])
-                }
-            } else {
-                add_data = action.data[top_key]
-            }
+            add_data = action.data[top_key]
             
             x = {}
             x[top_key] = add_data
-                        
+            
+            console.log(x)
+                                    
             return Object.assign({},state,{isLoading: false},x)
             break;
         default:
@@ -122,8 +114,26 @@ function* getInfraComponents(action) {
     .then(function (response) {
         reduxStore.dispatch({
             type: "FETCH_SUCCEEDED",
-            data: {'infracomponents': response['data']}
+            data: {'servers': response['data']['servers']}
         })
+        ax.get('v2/aci', {})
+        .then(function (response) {
+            aci_response = response['data']['aci']
+            for(i=0;i<aci_response.length;i++) {
+                aci_response[i]['type'] = 'aci';
+            }
+            reduxStore.dispatch({
+                type: "FETCH_SUCCEEDED",
+                data: {'aci': aci_response}
+            })
+        })
+        .catch(function (error) {
+            reduxStore.dispatch({
+                type: "OP_FAILED",
+                method: 'getInfraComponents',
+                message: error.message
+            });
+        });
     })
     .catch(function (error) {
         reduxStore.dispatch({
@@ -138,12 +148,12 @@ function* createInfraComponent(action) {
     console.log(action['data'])
     
     if (action['data']['type'] =='imc' || action['data']['type'] =='ucsm') {
-        console.log('server');
         delete action['data']['aci']
-        console.log(action['data'])
         ax.post('v2/servers', action['data'])
             .then(function (response) {
-                console.log('Infra component created')
+                reduxStore.dispatch({
+                    type: 'FETCH_INFRA'
+                })
             })
             .catch(function (error) {
                 reduxStore.dispatch({
@@ -154,7 +164,24 @@ function* createInfraComponent(action) {
         });
     }
     else {
-        console.log('aci');
+        aci_post = {'name': action['data']['name'],
+                    'credentials': action['data']['credentials'],
+                    'tenant_name': action['data']['aci']['tenant_name'],
+                    'vrf_name': action['data']['aci']['vrf_name'],
+                    'bridge_domain': action['data']['aci']['bridge_domain']}
+        ax.post('v2/aci', aci_post)
+            .then(function (response) {
+                reduxStore.dispatch({
+                    type: 'FETCH_INFRA'
+                })
+            })
+            .catch(function (error) {
+                reduxStore.dispatch({
+                    type: "OP_FAILED",
+                    method: 'createInfraComponent',
+                    message: error.message
+                });
+        });
     } 
 }
 
@@ -165,7 +192,7 @@ function* deleteInfraComponent(action) {
     console.log(delete_id)
     
     if (action['data']['type'] =='imc' || action['data']['type'] =='ucsm') {
-        ax.delete('v2/servers', delete_id)
+        ax.delete('v2/servers', {data: delete_id})
             .then(function (response) {
                 console.log('Infra component deleted')
             })
@@ -178,7 +205,17 @@ function* deleteInfraComponent(action) {
             }); 
     }
     else {
-        console.log('aci');
+        ax.delete('v2/aci', delete_id)
+            .then(function (response) {
+                console.log('Infra component deleted')
+            })
+            .catch(function (error) {
+                reduxStore.dispatch({
+                    type: "OP_FAILED",
+                    method: 'deleteInfraComponent',
+                    message: error.message
+                });
+            });
     }   
 }
 
@@ -215,7 +252,7 @@ function* createNetworkGroup(action) {
 
 function* addPublicKey(action) {
     post_data = {
-        "keys": action['data']['key']
+        "keys": [action['data']['key']]
     }
     
     ax.post('v1/keys', action['data']['key'])

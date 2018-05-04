@@ -187,7 +187,7 @@ riot.tag2('new-host', '<form> <fancy-input tag="Hostname" input-id="servergroup-
             document.getElementById('modal-shadow').style.display = 'None';
         }.bind(this)
 });
-riot.tag2('infra-overview', '<div class="infra-group"> <div class="infra-container-big"> <div class="table"> <div class="tr"> <div class="th">Name</div> <div class="th">Description</div> <div class="th">Type</div> <div class="th">Health</div> <div class="th">Mgmt IP</div> <div class="th">Tenant</div> <div class="th">Action</div> </div> <div class="tr" each="{comp in this.opts.store.getState().infracomponents}"> <div class="td">{comp.name}</div> <div class="td">{comp.description}</div> <div class="td">{comp.type}</div> <div class="td">HEALTH</div> <div class="td">{comp.credentials.ip}</div> <div class="td">{comp.credentials.user}</div> <div class="td"> <img src="./icons/delete.svg" data-type="{comp.type}" data-id="{comp.id}" onclick="{deleteController}" class="table-icon"> </div> </div> </div> </div> </div> <add-button onclick="{addController}">Add Controller</add-button>', 'infra-overview .tablewidth,[data-is="infra-overview"] .tablewidth{ width: 720px; } infra-overview .infra-group,[data-is="infra-overview"] .infra-group{ padding-bottom: 15px; } infra-overview .infra-container,[data-is="infra-overview"] .infra-container{ background-color: white; padding: 20px; } infra-overview .infra-container-big,[data-is="infra-overview"] .infra-container-big{ background-color: white; padding: 34px 20px; }', '', function(opts) {
+riot.tag2('infra-overview', '<div class="infra-group"> <div class="infra-container-big"> <div class="table"> <div class="tr"> <div class="th">Name</div> <div class="th">Description</div> <div class="th">Type</div> <div class="th">Mgmt IP</div> <div class="th">Tenant</div> <div class="th">Action</div> </div> <div class="tr" each="{comp in this.opts.store.getState().servers}"> <div class="td">{comp.name}</div> <div class="td">{comp.description}</div> <div class="td">{comp.type}</div> <div class="td">{comp.credentials.ip}</div> <div class="td">{comp.credentials.user}</div> <div class="td"> <img src="./icons/delete.svg" data-type="{comp.type}" data-id="{comp.id}" onclick="{deleteController}" class="table-icon"> </div> </div> <div class="tr" each="{comp in this.opts.store.getState().aci}"> <div class="td">{comp.name}</div> <div class="td">{comp.description}</div> <div class="td">{comp.type}</div> <div class="td">{comp.credentials.ip}</div> <div class="td">{comp.credentials.user}</div> <div class="td"> <img src="./icons/delete.svg" data-type="{comp.type}" data-id="{comp.id}" onclick="{deleteController}" class="table-icon"> </div> </div> </div> </div> </div> <add-button onclick="{addController}">Add Controller</add-button>', 'infra-overview .tablewidth,[data-is="infra-overview"] .tablewidth{ width: 720px; } infra-overview .infra-group,[data-is="infra-overview"] .infra-group{ padding-bottom: 15px; } infra-overview .infra-container,[data-is="infra-overview"] .infra-container{ background-color: white; padding: 20px; } infra-overview .infra-container-big,[data-is="infra-overview"] .infra-container-big{ background-color: white; padding: 34px 20px; }', '', function(opts) {
 
         let currentValue
         let store = this.opts.store
@@ -206,27 +206,6 @@ riot.tag2('infra-overview', '<div class="infra-group"> <div class="infra-contain
                 }
             }
         })
-
-        this.content=[
-            {
-                'type': 'UCS Manager',
-                'health': 'UP',
-                'ip': '64.101.169.13',
-                'tenant': 'Michael M.',
-                'model': 'UCS-M.6248UP',
-                'firmware': '...',
-                'description': 'Austria'
-            },
-            {
-                'type': 'ACI',
-                'health': 'DOWN',
-                'ip': '64.101.169.13',
-                'tenant': 'Lara',
-                'model': '...',
-                'firmware': '...',
-                'description': 'Spain'
-            }
-        ]
 
         this.addController = function() {
             var modal_title = document.getElementById('modal-title');
