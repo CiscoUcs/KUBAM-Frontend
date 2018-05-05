@@ -38,6 +38,7 @@
             margin-bottom: 25px;
             margin-right: 25px;
             float: left;
+            width: calc(100% - 20px);
         }
         
         .osselect {
