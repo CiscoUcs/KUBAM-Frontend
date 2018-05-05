@@ -26,9 +26,7 @@ var reducer = function(state=defaultState, action) {
             
             x = {}
             x[top_key] = add_data
-            
-            console.log(x)
-                                    
+                                                
             return Object.assign({},state,{isLoading: false},x)
             break;
         default:
@@ -68,18 +66,32 @@ function* getIsos(action) {
     });
 }
 
-function* createImgMapping(action) {    
-    post_data = {
-        'iso_map': [
-            {'os': action['data'].name, 'file': '/kubam/' + action['data'].iso}]
-    }
-    console.log(post_data)
+function* createImgMapping(action) {
+    new_mapping = {'os': action['data'].name,
+                   'file': '/kubam/' + action['data'].iso
+                  }
     
-    ax.post('v1/isos/map', post_data)
+    ax.get('v1/isos/map', {})
     .then(function (response) {
-        reduxStore.dispatch({
-            type: 'FETCH_MAPPINGS'
+        map = response['data']['iso_map']
+        map.push(new_mapping)
+        new_post = {'iso_map': 
+            map
+        }
+        
+        ax.post('v1/isos/map', new_post)
+        .then(function (response) {
+            reduxStore.dispatch({
+                type: 'FETCH_MAPPINGS'
+            })
         })
+        .catch(function (error) {
+            reduxStore.dispatch({
+                type: "OP_FAILED",
+                method: 'createImgMapping',
+                message: error.message
+            });
+        });
     })
     .catch(function (error) {
         reduxStore.dispatch({
@@ -107,7 +119,48 @@ function* fetchMappings(action) {
     });
 }
 
-
+function* deleteImgMapping(action) {
+    remove = action['data']['os']
+    
+    ax.get('v1/isos/map', {})
+    .then(function (response) {
+        map = response['data']['iso_map']
+        
+        r_id = undefined
+        for(i=0;i<map.length;i++) {
+            if(map[i]['os'] == remove) {
+                r_id = i
+            }
+        }
+        
+        map.splice(r_id,1)
+                
+        new_post = {'iso_map': 
+            map
+        }
+        
+        ax.post('v1/isos/map', new_post)
+        .then(function (response) {
+            reduxStore.dispatch({
+                type: 'FETCH_MAPPINGS'
+            })
+        })
+        .catch(function (error) {
+            reduxStore.dispatch({
+                type: "OP_FAILED",
+                method: 'createImgMapping',
+                message: error.message
+            });
+        });
+    })
+    .catch(function (error) {
+        reduxStore.dispatch({
+            type: "OP_FAILED",
+            method: 'createImgMapping',
+            message: error.message
+        });
+    });    
+}
 
 function* getInfraComponents(action) {
     ax.get('v2/servers', {})
@@ -144,9 +197,7 @@ function* getInfraComponents(action) {
     });
 }
 
-function* createInfraComponent(action) {
-    console.log(action['data'])
-    
+function* createInfraComponent(action) {    
     if (action['data']['type'] =='imc' || action['data']['type'] =='ucsm') {
         delete action['data']['aci']
         ax.post('v2/servers', action['data'])
@@ -185,11 +236,8 @@ function* createInfraComponent(action) {
     } 
 }
 
-function* deleteInfraComponent(action) {
-    console.log(action['data'])
-    
+function* deleteInfraComponent(action) {    
     delete_id = {"id": action['data']['id']};
-    console.log(delete_id)
     
     if (action['data']['type'] =='imc' || action['data']['type'] =='ucsm') {
         ax.delete('v2/servers', {data: delete_id})
@@ -268,6 +316,39 @@ function* addPublicKey(action) {
     });
 }
 
+function* fetchIP(action) {
+    ax.get('v1/ip', {})
+    .then(function (response) {
+        reduxStore.dispatch({
+            type: "FETCH_SUCCEEDED",
+            data: response['data']
+        })
+    })
+    .catch(function (error) {
+        reduxStore.dispatch({
+            type: "OP_FAILED",
+            method: 'fetchIP',
+            message: error.message
+        });
+    });
+}
+
+function* updateIP(action) {
+    new_ip = action['data']['ip']
+    
+    ax.post('v1/ip', new_ip)
+    .then(function (response) {
+        console.log('IP updated')
+    })
+    .catch(function (error) {
+        reduxStore.dispatch({
+            type: "OP_FAILED",
+            method: 'updateIP',
+            message: error.message
+        });
+    });
+}
+
 function* logError(action) {
     console.error('ERROR in ' + action.method + ': ' + action.message)
 }
@@ -278,6 +359,10 @@ function* watchUserRequests() {
   yield ReduxSaga.takeEvery('FETCH_IMAGES', getIsos)
   yield ReduxSaga.takeEvery('FETCH_MAPPINGS', fetchMappings)
   yield ReduxSaga.takeEvery('CREATE_IMGMAPPING', createImgMapping)
+  yield ReduxSaga.takeEvery('DELETE_MAPPING', deleteImgMapping)
+    
+  yield ReduxSaga.takeEvery('FETCH_IP', fetchIP)
+  yield ReduxSaga.takeEvery('UPDATE_IP', updateIP)
     
   yield ReduxSaga.takeEvery('FETCH_INFRA', getInfraComponents)
   yield ReduxSaga.takeEvery('CREATE_CONTROLLER', createInfraComponent)

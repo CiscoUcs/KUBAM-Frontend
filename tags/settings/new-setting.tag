@@ -1,11 +1,8 @@
 <new-setting>
     <div class="settings-container">
-        <fancy-input tag="KUBAM IP Address"
-                     inputid="settings-view-ip">
-        </fancy-input>
-        <fancy-input tag="Public Key"
+        <fancy-textarea tag="Public Key"
                      inputid="settings-view-key">
-        </fancy-input>
+        </fancy-textarea>
     </div>
     
     <fancy-button onclick={addPublicKey}>Create</fancy-button>
