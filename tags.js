@@ -532,7 +532,7 @@ riot.tag2('new-setting', '<div class="settings-container"> <fancy-textarea tag="
             this.closeModal()
         }.bind(this)
 });
-riot.tag2('settings', '<div class="settings-group"> <fancy-input tag="KUBAM IP Address" inputid="settings-view-ip"> </fancy-input> <fancy-button>Update</fancy-button> <div class="settings-container-big"> <div class="table"> <div class="tr"> <div class="th">Public Key</div> </div> <div class="tr" each="{k in this.opts.store.getState().keys}"> <div class="td">{k.key}</div> </div> </div> </div> </div> <add-button onclick="{addSetting}"> Add Setting </add-button>', 'settings .settings-group,[data-is="settings"] .settings-group{ padding: 15px; margin-bottom: 10px; background-color: white; } settings fancy-input,[data-is="settings"] fancy-input{ position: relative; float: left; top: -10px; } settings fancy-button,[data-is="settings"] fancy-button{ position: relative; top: 10px; }', '', function(opts) {
+riot.tag2('settings', '<div class="settings-group"> <fancy-input tag="KUBAM IP Address" inputid="settings-view-ip"> </fancy-input> <fancy-button>Update</fancy-button> <div class="settings-container-big"> <div class="table"> <div class="tr"> <div class="th">Public Keys</div> </div> <div class="tr" each="{k in this.opts.store.getState().keys}"> <div class="td">{k.key}</div> </div> </div> </div> </div> <add-button onclick="{addSetting}"> Add Setting </add-button>', 'settings .settings-group,[data-is="settings"] .settings-group{ padding: 15px; margin-bottom: 10px; background-color: white; } settings fancy-input,[data-is="settings"] fancy-input{ position: relative; float: left; top: -10px; } settings fancy-button,[data-is="settings"] fancy-button{ position: relative; top: 10px; }', '', function(opts) {
         this.addSetting = function() {
             var modal_title = document.getElementById('modal-title');
             var modal_content = document.getElementById('modal-content');
@@ -548,6 +548,7 @@ riot.tag2('settings', '<div class="settings-group"> <fancy-input tag="KUBAM IP A
             modal_shadow.style.display = 'table'
         }.bind(this)
 });
+
 riot.tag2('side-bar', '<div each="{menu}" onclick="route(\'{route}\')" class="sidebar-item" id="{route}-selector"> <div class="colorbar" style="background-color: #363c52;"></div> <img class="sidebar-image" riot-src="{img}"> <div class="sidebar-title">{title}</div> </div>', 'side-bar{ background-color: #363c52; color: white; width: 200px; height: 100%; position: fixed; z-index: 10; top: 0; left: 0; padding-top: 50px; } side-bar .sidebar-item,[data-is="side-bar"] .sidebar-item{ float: none; font-size:0.95em; height: 42px; line-height: 32px; cursor: pointer; } side-bar .sidebar-item:hover,[data-is="side-bar"] .sidebar-item:hover{ background-color: rgba(255,255,255,0.06); } side-bar .colorbar,[data-is="side-bar"] .colorbar{ width: 4px; height: 42px; float: left; top: 0; } side-bar .sidebar-image,[data-is="side-bar"] .sidebar-image{ float: left; padding-right: 5px; width: 18px; height: 18px; padding-top: 12px; padding-left: 14px; padding-right: 14px; } side-bar .sidebar-title,[data-is="side-bar"] .sidebar-title{ padding-top: 5px; }', '', function(opts) {
         menu=[
             { title: "Hosts", img:"./icons/host.png", route:"hosts" },
