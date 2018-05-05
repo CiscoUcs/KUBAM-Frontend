@@ -8,7 +8,7 @@
                 <!--                <table-search></table-search>-->
                 <div class="table">
                     <div class="tr">
-                        <div class="th">Public Key</div>
+                        <div class="th">Public Keys</div>
                     </div>
                     <div class="tr" each={k in this.opts.store.getState().keys}>
                         <div class="td">{k.key}</div>
