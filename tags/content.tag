@@ -91,7 +91,7 @@
             position: fixed;
             top: 70px;
             right: 25px;
-            width: 290px;
+            width: 340px;
         }
     </style>
     

@@ -18,7 +18,7 @@
             padding-left: 15px;
             color: white;
             font-size: 0.85em;
-            border-radius: 15px;
+            border-radius: 8px;
             margin-bottom: 10px;
         }
         
