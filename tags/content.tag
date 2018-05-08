@@ -49,6 +49,9 @@
             </div>
         </div>
     </div>
+    
+    <div id="pop-box">
+    </div>
         
     <style>
         content {
@@ -81,6 +84,13 @@
             background-color: white;
             border-radius: 4px;
             padding: 34px;
+        }
+        
+        #pop-box {
+            position: fixed;
+            top: 70px;
+            right: 25px;
+            width: 290px;
         }
     </style>
     
