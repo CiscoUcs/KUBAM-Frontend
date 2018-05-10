@@ -20,7 +20,7 @@ var reducer = function(state=defaultState, action) {
         case 'FETCH_IN_PROGRESS':
             return Object.assign(loadingState2)
             break
-        case 'FETCH_SUCCEEDED':
+        case 'FETCH_SUCCEEDED':           
             top_key = Object.keys(action.data)[0]
             add_data = action.data[top_key]
             
@@ -81,11 +81,23 @@ function* createImgMapping(action) {
         
         ax.post('v1/isos/map', new_post)
         .then(function (response) {
+            var tag = document.createElement("alert");
+            tag.setAttribute("type", "success");
+            tag.innerHTML = 'Success: Mapping created'
+            document.getElementById('pop-box').append(tag)
+            riot.mount(tag, 'alert', reduxStore); 
+            
             reduxStore.dispatch({
                 type: 'FETCH_MAPPINGS'
             })
         })
         .catch(function (error) {
+            var tag = document.createElement("alert");
+            tag.setAttribute("type", "error");
+            tag.innerHTML = 'Error: Could not create mapping'
+            document.getElementById('pop-box').append(tag)
+            riot.mount(tag, 'alert', reduxStore); 
+            
             reduxStore.dispatch({
                 type: "OP_FAILED",
                 method: 'createImgMapping',
@@ -141,11 +153,23 @@ function* deleteImgMapping(action) {
         
         ax.post('v1/isos/map', new_post)
         .then(function (response) {
+            var tag = document.createElement("alert");
+            tag.setAttribute("type", "success");
+            tag.innerHTML = 'Success: Mapping deleted'
+            document.getElementById('pop-box').append(tag)
+            riot.mount(tag, 'alert', reduxStore); 
+            
             reduxStore.dispatch({
                 type: 'FETCH_MAPPINGS'
             })
         })
         .catch(function (error) {
+            var tag = document.createElement("alert");
+            tag.setAttribute("type", "error");
+            tag.innerHTML = 'Error: Could not delete mapping'
+            document.getElementById('pop-box').append(tag)
+            riot.mount(tag, 'alert', reduxStore); 
+            
             reduxStore.dispatch({
                 type: "OP_FAILED",
                 method: 'createImgMapping',
@@ -202,11 +226,23 @@ function* createInfraComponent(action) {
         delete action['data']['aci']
         ax.post('v2/servers', action['data'])
             .then(function (response) {
+                var tag = document.createElement("alert");
+                tag.setAttribute("type", "success");
+                tag.innerHTML = 'Success: UCS component created'
+                document.getElementById('pop-box').append(tag)
+                riot.mount(tag, 'alert', reduxStore); 
+            
                 reduxStore.dispatch({
                     type: 'FETCH_INFRA'
                 })
             })
             .catch(function (error) {
+                var tag = document.createElement("alert");
+                tag.setAttribute("type", "error");
+                tag.innerHTML = 'Error: Could not delete UCS component'
+                document.getElementById('pop-box').append(tag)
+                riot.mount(tag, 'alert', reduxStore); 
+            
                 reduxStore.dispatch({
                     type: "OP_FAILED",
                     method: 'createInfraComponent',
@@ -222,11 +258,23 @@ function* createInfraComponent(action) {
                     'bridge_domain': action['data']['aci']['bridge_domain']}
         ax.post('v2/aci', aci_post)
             .then(function (response) {
+                var tag = document.createElement("alert");
+                tag.setAttribute("type", "success");
+                tag.innerHTML = 'Success: ACI Fabric created'
+                document.getElementById('pop-box').append(tag)
+                riot.mount(tag, 'alert', reduxStore); 
+            
                 reduxStore.dispatch({
                     type: 'FETCH_INFRA'
                 })
             })
             .catch(function (error) {
+                var tag = document.createElement("alert");
+                tag.setAttribute("type", "error");
+                tag.innerHTML = 'Error: Could not create ACI Fabric'
+                document.getElementById('pop-box').append(tag)
+                riot.mount(tag, 'alert', reduxStore); 
+            
                 reduxStore.dispatch({
                     type: "OP_FAILED",
                     method: 'createInfraComponent',
@@ -242,9 +290,19 @@ function* deleteInfraComponent(action) {
     if (action['data']['type'] =='imc' || action['data']['type'] =='ucsm') {
         ax.delete('v2/servers', {data: delete_id})
             .then(function (response) {
-                console.log('Infra component deleted')
+                var tag = document.createElement("alert");
+                tag.setAttribute("type", "success");
+                tag.innerHTML = 'Success: Component deleted'
+                document.getElementById('pop-box').append(tag)
+                riot.mount(tag, 'alert', reduxStore); 
             })
             .catch(function (error) {
+                var tag = document.createElement("alert");
+                tag.setAttribute("type", "error");
+                tag.innerHTML = 'Success: Could not delete component'
+                document.getElementById('pop-box').append(tag)
+                riot.mount(tag, 'alert', reduxStore); 
+            
                 reduxStore.dispatch({
                     type: "OP_FAILED",
                     method: 'deleteInfraComponent',
@@ -255,9 +313,21 @@ function* deleteInfraComponent(action) {
     else {
         ax.delete('v2/aci', delete_id)
             .then(function (response) {
+                var tag = document.createElement("alert");
+                tag.setAttribute("type", "success");
+                tag.innerHTML = 'Success: ACI Fabric deleted'
+                document.getElementById('pop-box').append(tag)
+                riot.mount(tag, 'alert', reduxStore); 
+            
                 console.log('Infra component deleted')
             })
             .catch(function (error) {
+                var tag = document.createElement("alert");
+                tag.setAttribute("type", "error");
+                tag.innerHTML = 'Error: ACI Fabric could not be deleted'
+                document.getElementById('pop-box').append(tag)
+                riot.mount(tag, 'alert', reduxStore); 
+            
                 reduxStore.dispatch({
                     type: "OP_FAILED",
                     method: 'deleteInfraComponent',
@@ -287,9 +357,19 @@ function* fetchNetworkGroups(action) {
 function* createNetworkGroup(action) {
     ax.post('v2/networks', action['data'])
     .then(function (response) {
-        console.log('Network Group created')
+        var tag = document.createElement("alert");
+        tag.setAttribute("type", "success");
+        tag.innerHTML = 'Success: Network group created'
+        document.getElementById('pop-box').append(tag)
+        riot.mount(tag, 'alert', reduxStore); 
     })
     .catch(function (error) {
+        var tag = document.createElement("alert");
+        tag.setAttribute("type", "error");
+        tag.innerHTML = 'Error: Could not create Network group'
+        document.getElementById('pop-box').append(tag)
+        riot.mount(tag, 'alert', reduxStore); 
+        
         reduxStore.dispatch({
             type: "OP_FAILED",
             method: 'createNetworkGroup',
@@ -305,9 +385,19 @@ function* addPublicKey(action) {
     
     ax.post('v1/keys', action['data']['key'])
     .then(function (response) {
-        console.log('Public Key added')
+        var tag = document.createElement("alert");
+        tag.setAttribute("type", "success");
+        tag.innerHTML = 'Success: Public key added'
+        document.getElementById('pop-box').append(tag)
+        riot.mount(tag, 'alert', reduxStore); 
     })
     .catch(function (error) {
+        var tag = document.createElement("alert");
+        tag.setAttribute("type", "error");
+        tag.innerHTML = 'Error: Public key could not be added'
+        document.getElementById('pop-box').append(tag)
+        riot.mount(tag, 'alert', reduxStore); 
+        
         reduxStore.dispatch({
             type: "OP_FAILED",
             method: 'addPublicKey',
@@ -338,9 +428,19 @@ function* updateIP(action) {
     
     ax.post('v1/ip', new_ip)
     .then(function (response) {
-        console.log('IP updated')
+        var tag = document.createElement("alert");
+        tag.setAttribute("type", "success");
+        tag.innerHTML = 'Success: IP was updated'
+        document.getElementById('pop-box').append(tag)
+        riot.mount(tag, 'alert', reduxStore); 
     })
     .catch(function (error) {
+        var tag = document.createElement("alert");
+        tag.setAttribute("type", "error");
+        tag.innerHTML = 'Error: IP could not be updated'
+        document.getElementById('pop-box').append(tag)
+        riot.mount(tag, 'alert', reduxStore); 
+        
         reduxStore.dispatch({
             type: "OP_FAILED",
             method: 'updateIP',
