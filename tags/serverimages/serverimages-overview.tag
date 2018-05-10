@@ -13,7 +13,7 @@
 
                 <div class="table">
                     <div class="tr">
-                        <!--<div class="th"><input type="checkbox"></div>-->
+                        <div class="th"><input type="checkbox"></div>
                         <div class="th">Name</div>
                         <div class="th">ISO</div>
                         <!--<div class="th">Version</div>-->
@@ -21,7 +21,7 @@
 <!--                        <div class="th">Actions</div>-->
                     </div>
                     <div class="tr" each={img in this.opts.store.getState().iso_map}> 
-                        <!--<div class="td"><input type="checkbox"></div>-->
+                        <div class="th" style="background-color: white"><input type="checkbox"></div>
                         <div class="td">{img.os}</div>
                         <div class="td">{img.file}</div>
                         <!--<div class="td">VERSION</div>-->
