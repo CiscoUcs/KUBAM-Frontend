@@ -1,31 +1,42 @@
-<serverimages-overview>        
+<serverimages-overview> 
     <div class="osgroup" hide={this.opts.store.getState().isLoading}>
-        <div class="os-container">
-<!--            <table-search></table-search>-->
-            <div class="table">
-                <div class="tr">
-                    <!--<div class="th"><input type="checkbox"></div>-->
-                    <div class="th">Name</div>
-                    <div class="th">ISO</div>
-                    <!--<div class="th">Version</div>-->
-                    <!--<div class="th">Size</div>-->
-                    <div class="th">Actions</div>
-                </div>
-                <div class="tr" each={img in this.opts.store.getState().iso_map}> 
-                    <!--<div class="td"><input type="checkbox"></div>-->
-                    <div class="td">{img.os}</div>
-                    <div class="td">{img.file}</div>
-                    <!--<div class="td">VERSION</div>-->
-                    <!--<div class="td">SIZE</div>-->
-                    <div class="td">
-                        <!--<img src="./icons/edit.svg" class="table-icon">-->
-                        <img src="./icons/delete.svg" data-os={img.os} onclick={deleteMapping} class="table-icon">
+        <div class="actionscontainer">
+                <fancy-dropdown inputid="actions" class="table-input">
+                        <option value="none">Actions</option>
+                        <option value="Edit selected hosts">Edit selected images</option>
+                        <option value="Delete select hosts">Delete selected images</option>
+                        <option value="Delete select hosts">Deploy selected images</option>
+                </fancy-dropdown>
+        </div>
+            <div class="os-container">
+    <!--            <table-search></table-search>-->
+
+                <div class="table">
+                    <div class="tr">
+                        <!--<div class="th"><input type="checkbox"></div>-->
+                        <div class="th">Name</div>
+                        <div class="th">ISO</div>
+                        <!--<div class="th">Version</div>-->
+                        <!--<div class="th">Size</div>-->
+<!--                        <div class="th">Actions</div>-->
+                    </div>
+                    <div class="tr" each={img in this.opts.store.getState().iso_map}> 
+                        <!--<div class="td"><input type="checkbox"></div>-->
+                        <div class="td">{img.os}</div>
+                        <div class="td">{img.file}</div>
+                        <!--<div class="td">VERSION</div>-->
+                        <!--<div class="td">SIZE</div>-->
+<!--
+                        <div class="td">
+                            <img src="./icons/edit.svg" class="table-icon">
+                            <img src="./icons/delete.svg" data-os={img.os} onclick={deleteMapping} class="table-icon">
+                        </div>
+-->
                     </div>
                 </div>
             </div>
-        </div>
     </div>
-    
+
     <add-button onclick={addServerimage}>Add new Image</add-button>
     
     <style>
