@@ -383,7 +383,8 @@ function* addPublicKey(action) {
         "keys": [action['data']['key']]
     }
     
-    ax.post('v1/keys', action['data']['key'])
+    //ax.post('v1/keys', action['data']['key'])
+    ax.post('v1/keys', post_data )
     .then(function (response) {
         var tag = document.createElement("alert");
         tag.setAttribute("type", "success");
