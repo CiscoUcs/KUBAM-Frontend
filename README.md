@@ -13,6 +13,16 @@ The GUI aims to walk the user through the steps required to deploy an Operating 
 * Choose the operating system settings: lay them out, templates, etc. 
 * Deploy the system components. 
 
+## Development
+
+When updating the pages run:
+
+```
+riot tags tags.js
+```
+To set the js scripts correct. 
+
+
 ## CI/CD
 
 ```
