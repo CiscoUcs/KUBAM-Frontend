@@ -13,7 +13,7 @@
 <!--        <table-search></table-search>-->
         <div class="table">
             <div class="tr">
-                <div class="th">Select items<input type="checkbox"></div>
+                <div class="th"><input type="checkbox"></div>
                 <div class="th">Hostname</div>
                 <div class="th">IP</div>
                 <div class="th">Role</div>
