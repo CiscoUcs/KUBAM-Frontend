@@ -380,6 +380,23 @@ function* createNetworkGroup(action) {
     });
 }
 
+function* getKeys(action) {
+    ax.get('v1/keys', {})
+    .then(function (response) {
+        reduxStore.dispatch({
+            type: "FETCH_SUCCEEDED",
+            data: response['data']
+        })
+    })
+    .catch(function (error) {
+        reduxStore.dispatch({
+            type: "OP_FAILED",
+            method: 'fetchIP',
+            message: error.message
+        });
+    });
+}
+
 function* addPublicKey(action) {
     post_data = {
         "keys": [action['data']['key']]
@@ -412,7 +429,6 @@ function* addPublicKey(action) {
 function* fetchIP(action) {
     ax.get('v1/ip', {})
     .then(function (response) {
-        console.log(response)
         reduxStore.dispatch({
             type: "FETCH_SUCCEEDED",
             data: response['data']
@@ -475,6 +491,7 @@ function* watchUserRequests() {
   yield ReduxSaga.takeEvery('FETCH_NETWORKGROUPS', fetchNetworkGroups)
   yield ReduxSaga.takeEvery('CREATE_NETWORKGROUP', createNetworkGroup)
     
+  yield ReduxSaga.takeEvery('FETCH_KEYS', getKeys)
   yield ReduxSaga.takeEvery('ADD_PUBLICKEY', addPublicKey)
 }
 

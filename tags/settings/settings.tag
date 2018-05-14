@@ -7,12 +7,12 @@
             <fancy-button  onclick={updateIP}>Update</fancy-button>
             <div class="settings-container-big">
                 <!--                <table-search></table-search>-->
-                <div class="table">
+                <div class="table keywidthtablelimit">
                     <div class="tr">
                         <div class="th">Public Keys</div>
                     </div>
                     <div class="tr" each={k in this.opts.store.getState().keys}>
-                        <div class="td">{k.key}</div>
+                        <div class="td">{k}</div>
                     </div>
                 </div>
             </div>
@@ -40,6 +40,12 @@
             position: relative;
             top: 10px;
          }
+        
+        .keywidthtablelimit {
+            width: 100%;
+            table-layout: fixed;
+            word-wrap: break-word;
+        }
     </style>
     
     <script>
@@ -47,6 +53,10 @@
         
         store.dispatch({
             type: 'FETCH_IP'
+        })
+        
+        store.dispatch({
+            type: 'FETCH_KEYS'
         })
         
         let currentValue
