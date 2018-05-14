@@ -76,7 +76,7 @@
             store.dispatch({
                 type: 'UPDATE_IP',
                 data: {
-                    ip: new_ip
+                    kubam_ip: new_ip
                 }
             })
         }

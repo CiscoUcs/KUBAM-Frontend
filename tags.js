@@ -577,7 +577,7 @@ riot.tag2('settings', '<div class="settings-group"> <fancy-input tag="KUBAM IP A
             store.dispatch({
                 type: 'UPDATE_IP',
                 data: {
-                    ip: new_ip
+                    kubam_ip: new_ip
                 }
             })
         }.bind(this)
