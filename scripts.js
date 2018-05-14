@@ -400,7 +400,8 @@ function* getKeys(action) {
 function* addPublicKey(action) {
     ax.get('v1/keys', {})
     .then(function (response) {
-        response['data'].push(action['data']['key'])
+        post_data = response['data']
+        post_data['keys'].push(action['data']['key'])
 
         ax.post('v1/keys', post_data )
         .then(function (response) {
