@@ -13,7 +13,7 @@
               <option value="option2">Option 2</option>
             </fancy-dropdown><br>
             <fancy-dropdown name="Images" tag="Images" inputid="select-images">
-              <option value="image1">centos7.4</option>
+              <option value="centos7.4">centos7.4</option>
             </fancy-dropdown><br>
             <fancy-dropdown name="Network Group" tag="Network Group" inputid="select-network-group">
               <option value="networkgroup1">Network Group 1</option>
