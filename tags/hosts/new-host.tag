@@ -14,8 +14,7 @@
               <option value="option2">Option 2</option>
             </fancy-dropdown><br>
             <fancy-dropdown name="Images" tag="Images" inputid="select-images">
-              <option value="centos7.4">centos7.4</option>
-              <option value="centos7.3">centos7.3</option>
+                <option each={img in passStore.getState().isos} value="{img}">{img.substring(0,21)}...</option>
             </fancy-dropdown><br>
             <fancy-dropdown name="Network Group" tag="Network Group" inputid="select-network-group">
               <option value="networkgroup1">Network Group 1</option>
@@ -34,6 +33,10 @@
     </style>
     
     <script>
+        store.dispatch({
+            type: 'FETCH_MAPPINGS'
+        })
+
         addHost() {            
             passStore.dispatch({
                 type: 'ADD_HOST',
