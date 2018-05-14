@@ -452,7 +452,7 @@ function* fetchIP(action) {
 }
 
 function* updateIP(action) {
-    new_ip = {ip: action['data']['ip']}
+    new_ip = {kubam_ip: action['data']['kubam_ip']}
     
     ax.post('v1/ip', new_ip)
     .then(function (response) {
