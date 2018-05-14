@@ -1,14 +1,13 @@
 <serverimages-overview> 
     <div class="osgroup" hide={this.opts.store.getState().isLoading}>
-        <div class="actionscontainer">
+            <div class="os-container">
                 <fancy-dropdown inputid="actions" class="table-input">
                         <option value="none">Actions</option>
                         <option value="Edit selected hosts">Edit selected images</option>
                         <option value="Delete select hosts">Delete selected images</option>
                         <option value="Delete select hosts">Deploy selected images</option>
                 </fancy-dropdown>
-        </div>
-            <div class="os-container">
+                
     <!--            <table-search></table-search>-->
 
                 <div class="table">
