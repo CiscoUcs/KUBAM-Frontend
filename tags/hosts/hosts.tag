@@ -21,53 +21,6 @@
                 <div class="th">Images</div>
                 <div class="th">Network Group</div>
             </div>
-<!--            <div class="tr" each={servers}>
-                <div class="td">
-                    <input type="checkbox">
-                </div>
-
-                <div class="td">
-                    <fancy-input inputid="servergroup-view-table-hostname" class="table-input">
-                    </fancy-input>
-                </div>
-
-                <div class="td">
-                    <fancy-input inputid="servergroup-view-table-hostname" class="table-input">
-                    </fancy-input>
-                </div>
-
-                <div class="td">
-                    <fancy-dropdown inputid="servergroup-view-table-role" class="table-input">
-                        <option value="none">Pick a Role</option>
-                        <option value="master">Master</option>
-                        <option value="worker">Worker</option>
-                    </fancy-dropdown>
-                </div>
-
-                <div class="td">
-                    <fancy-dropdown inputid="servergroup-view-table-role" class="table-input">
-                        <option value="none">Pick a Server Group</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                    </fancy-dropdown>
-                </div>
-
-                <div class="td">
-                    <fancy-dropdown inputid="servergroup-view-table-role" class="table-input">
-                        <option value="none">Select an image</option>
-                        <option value="centos">CentOs</option>
-                        <option value="windows">Windows</option>
-                    </fancy-dropdown>
-                </div>
-
-                <div class="td">
-                    <fancy-dropdown inputid="servergroup-view-table-role" class="table-input">
-                        <option value="none">Select a Network Group</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                    </fancy-dropdown>
-                </div>
-                </div>-->
             </div>
         </div>
         
