@@ -3,6 +3,7 @@
     <input id="{this.opts.inputid}"
            name="{this.opts.inputid}"
            type="{this.opts.settype}"
+           placeholder={this.opts.placeholder}
            />
     
     <style>

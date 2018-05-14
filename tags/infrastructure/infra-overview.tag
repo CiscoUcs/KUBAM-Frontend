@@ -22,33 +22,38 @@
 <!--                        <div class="th">Action</div>-->
                     </div>
                     <div class="tr" each={comp in this.opts.store.getState().servers}>
-                        <div class="th" style="background-color: white"><input type="checkbox"></div>           <div class="td">{comp.name}</div>
-                        <div class="td">{comp.description}</div>
-                        <div class="td">{comp.type}</div>
-                        <!--<div class="td">HEALTH</div>-->
-                        <div class="td">{comp.credentials.ip}</div>
-                        <div class="td">{comp.credentials.user}</div>
-                        <!--<div class="td">FIRMWARE</div>-->
-                        <div class="td">
-                                 <!--<img src="./icons/edit.svg" class="table-icon">-->
-<!--                                 <img src="./icons/delete.svg" data-type={comp.type} data-id={comp.id} onclick={deleteController} class="table-icon">-->
+                        <div class="td" style="background-color: white">
+                            <input type="checkbox">
                         </div>
-                    </div>
-                    <div class="tr" each={comp in this.opts.store.getState().aci}>
-                        <!--<div class="td"><input type="checkbox"></div>-->
                         <div class="td">{comp.name}</div>
                         <div class="td">{comp.description}</div>
                         <div class="td">{comp.type}</div>
                         <!--<div class="td">HEALTH</div>-->
                         <div class="td">{comp.credentials.ip}</div>
                         <div class="td">{comp.credentials.user}</div>
-                                <!--<div class="td">FIRMWARE</div>-->
+                        <!--<div class="td">FIRMWARE</div>-->
+                        <!--<div class="td">
+                                 <img src="./icons/edit.svg" class="table-icon">-->
+<!--                                 <img src="./icons/delete.svg" data-type={comp.type} data-id={comp.id} onclick={deleteController} class="table-icon">
+                        </div>-->
+                    </div>
+                    <div class="tr" each={comp in this.opts.store.getState().aci}>
+                        <div class="td" style="background-color: white">
+                            <input type="checkbox">
+                        </div>
+                        <div class="td">{comp.name}</div>
+                        <div class="td">{comp.description}</div>
+                        <div class="td">{comp.type}</div>
+                        <!--<div class="td">HEALTH</div>-->
+                        <div class="td">{comp.credentials.ip}</div>
+                        <div class="td">{comp.credentials.user}</div>
+                                <!--<div class="td">FIRMWARE</div>
                                 <div class="td">
 <!--
                                          <img src="./icons/edit.svg" class="table-icon">
                                          <img src="./icons/delete.svg" data-type={comp.type} data-id={comp.id} onclick={deleteController} class="table-icon">
--->
-                                </div>
+
+                                </div>-->
                             </div>
                     </div>
             </div>

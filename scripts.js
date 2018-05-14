@@ -26,6 +26,8 @@ var reducer = function(state=defaultState, action) {
             
             x = {}
             x[top_key] = add_data
+            
+            console.log(x)
                                                 
             return Object.assign({},state,{isLoading: false},x)
             break;
@@ -410,6 +412,7 @@ function* addPublicKey(action) {
 function* fetchIP(action) {
     ax.get('v1/ip', {})
     .then(function (response) {
+        console.log(response)
         reduxStore.dispatch({
             type: "FETCH_SUCCEEDED",
             data: response['data']

@@ -1,7 +1,8 @@
 <settings>    
     <div class="settings-group">
             <fancy-input tag="KUBAM IP Address"
-                inputid="settings-view-ip">
+                inputid="settings-view-ip"
+                placeholder={this.opts.store.getState().kubam_ip}>
             </fancy-input>
             <fancy-button>Update</fancy-button>
             <div class="settings-container-big">
@@ -42,6 +43,24 @@
     </style>
     
     <script>
+        let store = this.opts.store
+        
+        store.dispatch({
+            type: 'FETCH_IP'
+        })
+        
+        let currentValue
+        this.opts.store.subscribe(function(){
+            let previousValue = currentValue;
+            currentValue = store.getState()
+            currentTab = window.location.hash.substr(1);
+            if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
+                if(currentTab == 'settings') {
+                    riot.update();
+                }
+            }
+        })
+        
         addSetting() {
             var modal_title = document.getElementById('modal-title');
             var modal_content = document.getElementById('modal-content');
