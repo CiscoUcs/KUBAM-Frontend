@@ -478,7 +478,7 @@ function* updateIP(action) {
 }
 
 function* addHost(action) {
-    ax.post('v2/hosts', action['data'])
+    ax.post('v2/hosts', [action['data']])
     .then(function(response){
         var tag = document.createElement("alert");
         tag.setAttribute("type", "success");
