@@ -398,26 +398,35 @@ function* getKeys(action) {
 }
 
 function* addPublicKey(action) {
-    post_data = {
-        "keys": [action['data']['key']]
-    }
-    
-    //ax.post('v1/keys', action['data']['key'])
-    ax.post('v1/keys', post_data )
+    ax.get('v1/keys', {})
     .then(function (response) {
-        var tag = document.createElement("alert");
-        tag.setAttribute("type", "success");
-        tag.innerHTML = 'Success: Public key added'
-        document.getElementById('pop-box').append(tag)
-        riot.mount(tag, 'alert', reduxStore); 
+        post_data = {
+            "keys": [action['data']['key']]
+        }
+
+        ax.post('v1/keys', post_data )
+        .then(function (response) {
+            var tag = document.createElement("alert");
+            tag.setAttribute("type", "success");
+            tag.innerHTML = 'Success: Public key added'
+            document.getElementById('pop-box').append(tag)
+            riot.mount(tag, 'alert', reduxStore); 
+        })
+        .catch(function (error) {
+            var tag = document.createElement("alert");
+            tag.setAttribute("type", "error");
+            tag.innerHTML = 'Error: Public key could not be added'
+            document.getElementById('pop-box').append(tag)
+            riot.mount(tag, 'alert', reduxStore); 
+
+            reduxStore.dispatch({
+                type: "OP_FAILED",
+                method: 'addPublicKey',
+                message: error.message
+            });
+        });
     })
     .catch(function (error) {
-        var tag = document.createElement("alert");
-        tag.setAttribute("type", "error");
-        tag.innerHTML = 'Error: Public key could not be added'
-        document.getElementById('pop-box').append(tag)
-        riot.mount(tag, 'alert', reduxStore); 
-        
         reduxStore.dispatch({
             type: "OP_FAILED",
             method: 'addPublicKey',
@@ -444,7 +453,7 @@ function* fetchIP(action) {
 }
 
 function* updateIP(action) {
-    new_ip = action['data']['ip']
+    new_ip = {ip: action['data']['ip']}
     
     ax.post('v1/ip', new_ip)
     .then(function (response) {
