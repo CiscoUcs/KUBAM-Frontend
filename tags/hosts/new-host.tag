@@ -33,6 +33,8 @@
     </style>
     
     <script>
+        let store = this.opts.store
+        
         store.dispatch({
             type: 'FETCH_MAPPINGS'
         })

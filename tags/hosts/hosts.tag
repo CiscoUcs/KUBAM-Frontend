@@ -43,10 +43,8 @@
             var modal_shadow = document.getElementById('modal-shadow')
             modal_shadow.style.display = 'table'
         }
-        
-        let store = this.opts.store
-        
-        store.dispatch({
+                
+        passStore.dispatch({
             type: 'FETCH_HOSTS'
         })
         
