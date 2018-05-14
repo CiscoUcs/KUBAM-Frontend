@@ -4,7 +4,7 @@
                 inputid="settings-view-ip"
                 placeholder={this.opts.store.getState().kubam_ip}>
             </fancy-input>
-            <fancy-button>Update</fancy-button>
+            <fancy-button  onclick={updateIP}>Update</fancy-button>
             <div class="settings-container-big">
                 <!--                <table-search></table-search>-->
                 <div class="table">
@@ -60,6 +60,16 @@
                 }
             }
         })
+        
+        updateIP() {
+            var new_ip = '1.1.1.1'
+            store.dispatch({
+                type: 'UPDATE_IP',
+                data: {
+                    ip: new_ip
+                }
+            })
+        }
         
         addSetting() {
             var modal_title = document.getElementById('modal-title');
