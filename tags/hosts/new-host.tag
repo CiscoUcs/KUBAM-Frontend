@@ -5,8 +5,9 @@
         <fancy-input tag="IP" inputid="servergroup-new-ip"></fancy-input>
         
             <fancy-dropdown name="Role" tag="Role" inputid="select-role">
-              <option value="Master">Master</option>
-              <option value="Worker">Worker</option>
+              <option value="generic">Generic</option>
+              <option value="master">Master</option>
+              <option value="worker">Worker</option>
             </fancy-dropdown><br>
             <fancy-dropdown name="Server Group" tag="Server Group" inputid="select-server-group">
               <option value="option1">Option 1</option>
