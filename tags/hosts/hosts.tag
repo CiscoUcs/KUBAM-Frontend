@@ -50,7 +50,6 @@
             type: 'FETCH_HOSTS'
         })
         
-        let currentValue
         this.opts.store.subscribe(function(){
             let previousValue = currentValue;
             currentValue = store.getState()

@@ -163,7 +163,6 @@ riot.tag2('hosts', '<div class="svrGrpServers"> <div class="top-actions"> <fancy
             type: 'FETCH_HOSTS'
         })
 
-        let currentValue
         this.opts.store.subscribe(function(){
             let previousValue = currentValue;
             currentValue = store.getState()
