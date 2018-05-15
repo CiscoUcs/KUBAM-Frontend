@@ -157,9 +157,7 @@ riot.tag2('hosts', '<div class="svrGrpServers"> <div class="top-actions"> <fancy
             modal_shadow.style.display = 'table'
         }.bind(this)
 
-        let store = this.opts.store
-
-        store.dispatch({
+        passStore.dispatch({
             type: 'FETCH_HOSTS'
         })
 
@@ -185,7 +183,7 @@ riot.tag2('new-host', '<form> <fancy-input tag="Hostname" inputid="servergroup-n
         let store = this.opts.store
 
         store.dispatch({
-            type: 'FETCH_MAPPINGS'
+            type: 'FETCH_HOSTS'
         })
 
         this.addHost = function() {
