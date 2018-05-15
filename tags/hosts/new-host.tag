@@ -33,12 +33,24 @@
     </style>
     
     <script>
+        let currentValue
         let store = this.opts.store
         
         store.dispatch({
             type: 'FETCH_HOSTS'
         })
 
+        this.opts.store.subscribe(function(){
+        let previousValue = currentValue;
+        currentValue = store.getState()
+        currentTab = window.location.hash.substr(1);
+        if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
+            if(currentTab == 'hosts') {
+                    riot.update();
+                }
+            }
+        })
+        
         addHost() {            
             passStore.dispatch({
                 type: 'ADD_HOST',
