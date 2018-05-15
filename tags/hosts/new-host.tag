@@ -33,8 +33,8 @@
     </style>
     
     <script>
-        let currentValue
-        let store = this.opts.store
+        //let currentValue
+        //let store = this.opts.store
         
         passStore.dispatch({
             type: 'FETCH_HOSTS'
