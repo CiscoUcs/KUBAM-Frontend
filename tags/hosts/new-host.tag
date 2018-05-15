@@ -14,7 +14,7 @@
               <option value="option2">Option 2</option>
             </fancy-dropdown><br>
             <fancy-dropdown name="Images" tag="Images" inputid="select-images">
-                <option each={img in passStore.getState().isos} value="{img}">{img.substring(0,21)}...</option>
+                <option each={img in passStore.getState().iso_map} value="{img.os}">{img.os}</option>
             </fancy-dropdown><br>
             <fancy-dropdown name="Network Group" tag="Network Group" inputid="select-network-group">
               <option value="networkgroup1">Network Group 1</option>
@@ -37,7 +37,7 @@
         //let store = this.opts.store
         
         passStore.dispatch({
-            type: 'FETCH_HOSTS'
+            type: 'FETCH_MAPPINGS'
         })
 
 //        this.opts.store.subscribe(function(){
