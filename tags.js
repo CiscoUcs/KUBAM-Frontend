@@ -188,17 +188,6 @@ riot.tag2('new-host', '<form> <fancy-input tag="Hostname" inputid="servergroup-n
             type: 'FETCH_HOSTS'
         })
 
-        this.opts.store.subscribe(function(){
-        let previousValue = currentValue;
-        currentValue = store.getState()
-        currentTab = window.location.hash.substr(1);
-        if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
-            if(currentTab == 'hosts') {
-                    riot.update();
-                }
-            }
-        })
-
         this.addHost = function() {
             passStore.dispatch({
                 type: 'ADD_HOST',
