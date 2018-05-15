@@ -184,7 +184,7 @@ riot.tag2('new-host', '<form> <fancy-input tag="Hostname" inputid="servergroup-n
         let currentValue
         let store = this.opts.store
 
-        store.dispatch({
+        passStore.dispatch({
             type: 'FETCH_HOSTS'
         })
 

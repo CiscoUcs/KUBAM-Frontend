@@ -36,7 +36,7 @@
         let currentValue
         let store = this.opts.store
         
-        store.dispatch({
+        passStore.dispatch({
             type: 'FETCH_HOSTS'
         })
 
