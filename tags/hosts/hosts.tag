@@ -27,6 +27,8 @@
     <add-button onclick={addHost}>Add Host</add-button>
     
     <script>
+        let currentValue
+        let store = this.opts.store
         
         addHost() {
             var modal_title = document.getElementById('modal-title');
