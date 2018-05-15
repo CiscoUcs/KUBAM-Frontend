@@ -33,23 +33,21 @@
     </style>
     
     <script>
-        //let currentValue
-        //let store = this.opts.store
-        
         passStore.dispatch({
             type: 'FETCH_MAPPINGS'
         })
 
-//        this.opts.store.subscribe(function(){
-//        let previousValue = currentValue;
-//        currentValue = store.getState()
-//        currentTab = window.location.hash.substr(1);
-//        if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
-//            if(currentTab == 'hosts') {
-//                    riot.update();
-//                }
-//            }
-//        })
+        let currentValue
+        passStore.subscribe(function(){
+        let previousValue = currentValue;
+        currentValue = passStore.getState()
+        currentTab = window.location.hash.substr(1);
+        if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
+            if(currentTab == 'hosts') {
+                    riot.update();
+                }
+            }
+        })
         
         addHost() {            
             passStore.dispatch({
