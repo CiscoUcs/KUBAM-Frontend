@@ -72,7 +72,7 @@
         })
         
         updateIP() {
-            var new_ip = '1.1.1.1'
+            var new_ip = document.getElementById('settings-view-ip').value
             store.dispatch({
                 type: 'UPDATE_IP',
                 data: {

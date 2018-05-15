@@ -573,7 +573,7 @@ riot.tag2('settings', '<div class="settings-group"> <fancy-input tag="KUBAM IP A
         })
 
         this.updateIP = function() {
-            var new_ip = '1.1.1.1'
+            var new_ip = document.getElementById('settings-view-ip').value
             store.dispatch({
                 type: 'UPDATE_IP',
                 data: {
