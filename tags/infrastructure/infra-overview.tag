@@ -1,64 +1,66 @@
 <infra-overview>
     <div class="infra-group"> 
         <div class="infra-container-big">
-<!--                <table-search></table-search>-->
-            <div class="containing-actions">
+            <!--<div class="containing-actions">
                 <div class="top-actions">
                     <fancy-dropdown inputid="actions" class="table-input">
                         <option value="none">Actions</option>
                         <option value="Edit selected hosts">Edit selected hosts</option>
                         <option value="Delete select hosts">Delete select hosts</option>    
                     </fancy-dropdown>
-                <div class="table">
-                    <div class="tr">
-                        <div class="th"><input type="checkbox"></div>
-                        <div class="th">Name</div>
-                        <div class="th">Description</div>
-                        <div class="th">Type</div>
-                        <!--<div class="th">Health</div>-->
-                        <div class="th">Mgmt IP</div>
-                        <div class="th">Tenant</div>
-                        <!--<div class="th">Firmware version</div>-->
-<!--                        <div class="th">Action</div>-->
+                </div>
+            </div>-->
+            
+            <h2 class="categoryHeader">UCS Servers</h2>
+            <div class="table bottomspace">
+                <div class="tr">
+                    <!--<div class="th"><input type="checkbox"></div>-->
+                    <div class="th">Name</div>
+                    <div class="th">Description</div>
+                    <div class="th">Type</div>
+                    <div class="th">Mgmt IP</div>
+                    <div class="th">User</div>
+                    <div class="th actionwidth">Actions</div>
+                </div>
+                <div class="tr" each={comp in this.opts.store.getState().servers}>
+                    <!--<div class="td" style="background-color: white">
+                            <input type="checkbox"></div>-->
+                    <div class="td">{comp.name}</div>
+                    <div class="td">{comp.description}</div>
+                    <div class="td">{comp.type}</div>
+                    <div class="td">{comp.credentials.ip}</div>
+                    <div class="td">{comp.credentials.user}</div>
+                    <div class="td  actionwidth">
+                        <!--<img src="./icons/edit.svg" class="table-icon">-->
+                        <img src="./icons/delete.svg" data-type={comp.type} data-id={comp.id} onclick={deleteController} class="table-icon">
                     </div>
-                    <div class="tr" each={comp in this.opts.store.getState().servers}>
-                        <div class="td" style="background-color: white">
-                            <input type="checkbox">
-                        </div>
-                        <div class="td">{comp.name}</div>
-                        <div class="td">{comp.description}</div>
-                        <div class="td">{comp.type}</div>
-                        <!--<div class="td">HEALTH</div>-->
-                        <div class="td">{comp.credentials.ip}</div>
-                        <div class="td">{comp.credentials.user}</div>
-                        <!--<div class="td">FIRMWARE</div>-->
-                        <!--<div class="td">
-                                 <img src="./icons/edit.svg" class="table-icon">-->
-<!--                                 <img src="./icons/delete.svg" data-type={comp.type} data-id={comp.id} onclick={deleteController} class="table-icon">
-                        </div>-->
-                    </div>
-                    <div class="tr" each={comp in this.opts.store.getState().aci}>
-                        <div class="td" style="background-color: white">
-                            <input type="checkbox">
-                        </div>
-                        <div class="td">{comp.name}</div>
-                        <div class="td">{comp.description}</div>
-                        <div class="td">{comp.type}</div>
-                        <!--<div class="td">HEALTH</div>-->
-                        <div class="td">{comp.credentials.ip}</div>
-                        <div class="td">{comp.credentials.user}</div>
-                                <!--<div class="td">FIRMWARE</div>
-                                <div class="td">
-<!--
-                                         <img src="./icons/edit.svg" class="table-icon">
-                                         <img src="./icons/delete.svg" data-type={comp.type} data-id={comp.id} onclick={deleteController} class="table-icon">
-
-                                </div>-->
-                            </div>
-                    </div>
+                </div>
             </div>
-        </div>   
-    </div>
+            
+            <h2 class="categoryHeader">ACI Fabrics</h2>
+            <div class="table">
+                <div class="tr">
+                    <!--<div class="th"><input type="checkbox"></div>-->
+                    <div class="th">Name</div>
+                    <div class="th">Description</div>
+                    <div class="th">Mgmt IP</div>
+                    <div class="th">Tenant</div>
+                    <div class="th actionwidth">Actions</div>
+                </div>
+                <div class="tr" each={comp in this.opts.store.getState().aci}>
+                    <!--<div class="td" style="background-color: white"><input type="checkbox"></div>-->
+                    <div class="td">{comp.name}</div>
+                    <div class="td">{comp.description}</div>
+                    <div class="td">{comp.credentials.ip}</div>
+                    <div class="td">{comp.credentials.user}</div>
+                    <div class="td actionwidth">
+                        <!--<img src="./icons/edit.svg" class="table-icon">-->
+                        <img src="./icons/delete.svg" data-type={comp.type} data-id={comp.id} onclick={deleteController} class="table-icon">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>   
 
     
     <add-button onclick={addController}>Add Controller</add-button>
@@ -66,6 +68,10 @@
     <style>
         .tablewidth {
             width: 720px;
+        }
+        
+        .bottomspace {
+            margin-bottom: 25px;
         }
         
         .infra-group {

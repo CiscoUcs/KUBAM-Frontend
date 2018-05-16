@@ -1,36 +1,28 @@
 <serverimages-overview> 
     <div class="osgroup" hide={this.opts.store.getState().isLoading}>
             <div class="os-container">
-                <fancy-dropdown inputid="actions" class="table-input">
+                <!--<fancy-dropdown inputid="actions" class="table-input">
                         <option value="none">Actions</option>
                         <option value="Edit selected hosts">Edit selected images</option>
                         <option value="Delete select hosts">Delete selected images</option>
                         <option value="Delete select hosts">Deploy selected images</option>
-                </fancy-dropdown>
+                </fancy-dropdown>-->
                 
-    <!--            <table-search></table-search>-->
-
                 <div class="table">
                     <div class="tr">
-                        <div class="th"><input type="checkbox"></div>
+                        <!--<div class="th"><input type="checkbox"></div>-->
                         <div class="th">Name</div>
                         <div class="th">ISO</div>
-                        <!--<div class="th">Version</div>-->
-                        <!--<div class="th">Size</div>-->
-<!--                        <div class="th">Actions</div>-->
+                        <div class="th actionwidth">Actions</div>
                     </div>
                     <div class="tr" each={img in this.opts.store.getState().iso_map}> 
-                        <div class="th" style="background-color: white"><input type="checkbox"></div>
+                        <!--<div class="th" style="background-color: white"><input type="checkbox"></div>-->
                         <div class="td">{img.os}</div>
                         <div class="td">{img.file}</div>
-                        <!--<div class="td">VERSION</div>-->
-                        <!--<div class="td">SIZE</div>-->
-<!--
-                        <div class="td">
-                            <img src="./icons/edit.svg" class="table-icon">
+                        <div class="td actionwidth">
+                            <!--<img src="./icons/edit.svg" class="table-icon">-->
                             <img src="./icons/delete.svg" data-os={img.os} onclick={deleteMapping} class="table-icon">
                         </div>
--->
                     </div>
                 </div>
             </div>

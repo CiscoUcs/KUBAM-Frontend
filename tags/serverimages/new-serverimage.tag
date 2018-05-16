@@ -11,17 +11,20 @@
             <option value="redhat7.4">redhat7.4</option>
         </fancy-dropdown>
         <fancy-dropdown name="ISO" tag="ISO" inputid="mapping-iso">            
-            <option each={img in passStore.getState().isos} value="{img}">{img.substring(0,21)}...</option>
+            <option each={img in passStore.getState().isos} value="{img}">{img.substring(0,60)}{img.length > 60 && "..."}</option>
         </fancy-dropdown><br>
     </form>
     <fancy-button onclick={createImageMapping}>Create</fancy-button>
     <fancy-button color="gray" onclick={closeModal}>Cancel</fancy-button>
     
-    <style>
+    <style>        
         form{
             text-align: left;
         }
     
+        fancy-dropdown select {
+            width: 490px;
+        }
     </style>
     
     <script>

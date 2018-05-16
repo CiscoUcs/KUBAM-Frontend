@@ -6,13 +6,17 @@
             </fancy-input>
             <fancy-button  onclick={updateIP}>Update</fancy-button>
             <div class="settings-container-big">
-                <!--                <table-search></table-search>-->
                 <div class="table keywidthtablelimit">
                     <div class="tr">
                         <div class="th">Public Keys</div>
+                        <div class="th actionwidth">Actions</div>
                     </div>
                     <div class="tr" each={k in this.opts.store.getState().keys}>
                         <div class="td">{k}</div>
+                        <div class="td">
+                            <!--<img src="./icons/edit.svg" class="table-icon">-->
+                            <img src="./icons/delete.svg" data-id={k} onclick={deleteKey} class="table-icon">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -94,6 +98,16 @@
             
             var modal_shadow = document.getElementById('modal-shadow')
             modal_shadow.style.display = 'table'
+        }
+        
+        deleteKey(e) {
+            ds = e.target.dataset;
+            store.dispatch({
+                type: 'DELETE_KEY',
+                data: {
+                    id: ds.id
+                }
+            })
         }
     </script>
     

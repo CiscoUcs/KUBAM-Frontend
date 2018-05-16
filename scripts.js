@@ -380,6 +380,36 @@ function* createNetworkGroup(action) {
     });
 }
 
+function* deleteNetworkGroup(action) {
+    remove = {"id": action['data']['id'] }
+
+    ax.delete('v2/networks', remove)
+    .then(function (response) {
+        var tag = document.createElement("alert");
+        tag.setAttribute("type", "success");
+        tag.innerHTML = 'Success: Network deleted'
+        document.getElementById('pop-box').append(tag)
+        riot.mount(tag, 'alert', reduxStore); 
+            
+        reduxStore.dispatch({
+            type: 'FETCH_NETWORKGROUPS'
+        })
+    })
+    .catch(function (error) {
+        var tag = document.createElement("alert");
+        tag.setAttribute("type", "error");
+        tag.innerHTML = 'Error: Could not delete network'
+        document.getElementById('pop-box').append(tag)
+        riot.mount(tag, 'alert', reduxStore); 
+
+        reduxStore.dispatch({
+            type: "OP_FAILED",
+            method: 'deleteKey',
+            message: error.message
+        });
+    }); 
+}
+
 function* getKeys(action) {
     ax.get('v1/keys', {})
     .then(function (response) {
@@ -432,6 +462,58 @@ function* addPublicKey(action) {
             message: error.message
         });
     });
+}
+
+function* deleteKey(action) {
+    remove = action['data']['id']
+ 
+    ax.get('v1/keys', {})
+    .then(function (response) {
+        keys = response['data']['keys']
+        
+        k_id = undefined
+        for(i=0;i<keys.length;i++) {
+            if(keys[i] == remove) {
+                k_id = i
+            }
+        }
+        
+        keys.splice(k_id,1)
+        console.log(keys)
+        
+        ax.post('v1/keys', keys)
+        .then(function (response) {
+            var tag = document.createElement("alert");
+            tag.setAttribute("type", "success");
+            tag.innerHTML = 'Success: Key deleted'
+            document.getElementById('pop-box').append(tag)
+            riot.mount(tag, 'alert', reduxStore); 
+            
+            reduxStore.dispatch({
+                type: 'FETCH_KEYS'
+            })
+        })
+        .catch(function (error) {
+            var tag = document.createElement("alert");
+            tag.setAttribute("type", "error");
+            tag.innerHTML = 'Error: Could not delete key'
+            document.getElementById('pop-box').append(tag)
+            riot.mount(tag, 'alert', reduxStore); 
+            
+            reduxStore.dispatch({
+                type: "OP_FAILED",
+                method: 'deleteKey',
+                message: error.message
+            });
+        });
+    })
+    .catch(function (error) {
+        reduxStore.dispatch({
+            type: "OP_FAILED",
+            method: 'deleteKey',
+            message: error.message
+        });
+    });    
 }
 
 function* fetchIP(action) {
@@ -525,9 +607,11 @@ function* watchUserRequests() {
 
   yield ReduxSaga.takeEvery('FETCH_NETWORKGROUPS', fetchNetworkGroups)
   yield ReduxSaga.takeEvery('CREATE_NETWORKGROUP', createNetworkGroup)
+  yield ReduxSaga.takeEvery('DELETE_NETWORK', deleteNetworkGroup)
     
   yield ReduxSaga.takeEvery('FETCH_KEYS', getKeys)
   yield ReduxSaga.takeEvery('ADD_PUBLICKEY', addPublicKey)
+  yield ReduxSaga.takeEvery('DELETE_KEY', deleteKey)
 }
 
 function* rootSaga() {
