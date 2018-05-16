@@ -613,6 +613,35 @@ function* getHost(action){
     });
 }
 
+function* deleteHost(action){
+    remove = {"name": action['data'] }
+    ax.delete('v2/hosts', remove)
+    .then(function (response) {
+        var tag = document.createElement("alert");
+        tag.setAttribute("type", "success");
+        tag.innerHTML = 'Success: Host deleted'
+        document.getElementById('pop-box').append(tag)
+        riot.mount(tag, 'alert', reduxStore); 
+            
+        reduxStore.dispatch({
+            type: "FETCH_HOSTS"
+        })
+    })
+    .catch(function(error) {
+        var tag = document.createElement("alert");
+        tag.setAttribute("type", "error");
+        tag.innerHTML = 'Error: Could not delete Host'
+        document.getElementById('pop-box').append(tag)
+        riot.mount(tag, 'alert', reduxStore); 
+
+        reduxStore.dispatch({
+            type: "OP_FAILED",
+            method: 'deleteKey',
+            message: error.message
+        });
+    }); 
+}
+
 function* logError(action) {
     console.error('ERROR in ' + action.method + ': ' + action.message)
 }
@@ -622,6 +651,7 @@ function* watchUserRequests() {
   
   yield ReduxSaga.takeEvery('ADD_HOST', addHost)
   yield ReduxSaga.takeEvery('FETCH_HOSTS', getHost)
+  yield ReduxSaga.takeEvery('DELETE_HOST', deleteHost)
     
   yield ReduxSaga.takeEvery('FETCH_IMAGES', getIsos)
   yield ReduxSaga.takeEvery('FETCH_MAPPINGS', fetchMappings)

@@ -33,7 +33,7 @@
                     <div class="td">{host.network_group}</div>
                     <div class="td  actionwidth">
                         <!--<img src="./icons/edit.svg" class="table-icon">-->
-                        <img src="./icons/delete.svg" data-ip={host.ip} onclick={deleteHost} class="table-icon">
+                        <img src="./icons/delete.svg" data-hostname={host.name} onclick={deleteHost} class="table-icon">
                     </div>
                 </div>
             </div>
@@ -76,6 +76,13 @@
             }
         })
         
+        deleteHost(e) {
+            ds = e.target.dataset;
+            store.dispatch({
+                type: 'DELETE_HOST',
+                data: ds.hostname
+            })
+        }
         closeModal() {
             document.getElementById('modal-shadow').style.display = 'None';
         }
