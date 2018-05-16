@@ -13,7 +13,9 @@
 <!--        <table-search></table-search>-->
         <div class="table">
             <div class="tr">
-                <div class="th"><input type="checkbox"></div>
+                <div class="th">
+                    <input type="checkbox" id="select_all" onclick={changeSelection}>     
+                </div>
                 <div class="th">Hostname</div>
                 <div class="th">IP</div>
                 <div class="th">Role</div>
@@ -24,7 +26,7 @@
             </div>
                 <div class="tr" each={host in this.opts.store.getState().hosts}>
                     <div class="td" style="background-color: white">
-                            <input type="checkbox"></div>
+                            <input type="checkbox" class="hostcheckboxes"></div>
                     <div class="td">{host.name}</div>
                     <div class="td">{host.ip}</div>
                     <div class="td">{host.role}</div>
@@ -87,6 +89,12 @@
             document.getElementById('modal-shadow').style.display = 'None';
         }
 
+        changeSelection() {
+            hostcheckboxes = document.getElementsByClassName('hostcheckboxes')
+            for(i=0;i<hostcheckboxes.length;i++) {
+                hostcheckboxes[i].checked = true
+            }
+        }
     </script>
     
     <style>
