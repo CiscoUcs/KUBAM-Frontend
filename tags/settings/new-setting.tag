@@ -13,6 +13,10 @@
             text-align: left;
             align-items: left;
         }
+         fancy-textarea textarea{
+            width:520px;
+            height:120px;
+        }
     </style>
     
     <script>
