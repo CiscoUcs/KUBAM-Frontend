@@ -444,7 +444,7 @@ function* addPublicKey(action) {
             riot.mount(tag, 'alert', reduxStore); 
             
             reduxStore.dispatch({
-                type: 'FETCH_IP'
+                type: 'FETCH_KEYS'
             })
         })
         .catch(function (error) {
