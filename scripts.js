@@ -5,7 +5,8 @@ if(window.location.hash.substring(1) == '') {
 }
 
 var defaultState = {
-    isLoading: false
+    isLoading: false,
+    offlineip: '10.93.234.96:8001'
 }
 
 var loadingState = {
@@ -23,7 +24,7 @@ var reducer = function(state=defaultState, action) {
         case 'FETCH_SUCCEEDED':           
             top_key = Object.keys(action.data)[0]
             add_data = action.data[top_key]
-            
+                        
             x = {}
             x[top_key] = add_data
                                                             
@@ -40,8 +41,11 @@ const reduxStore = Redux.createStore(
     Redux.applyMiddleware(sagaMiddleware)
 )
 
+ip = reduxStore.getState().offlineip
+console.log(ip)
+url = 'http://' + ip + '/api/'
 var ax = axios.create({
-    baseURL: 'http://10.93.234.96:8001/api/',
+    baseURL: url,
     timeout: 1000,
     headers: {
         'Accept': 'application/json',
@@ -438,6 +442,10 @@ function* addPublicKey(action) {
             tag.innerHTML = 'Success: Public key added'
             document.getElementById('pop-box').append(tag)
             riot.mount(tag, 'alert', reduxStore); 
+            
+            reduxStore.dispatch({
+                type: 'FETCH_IP'
+            })
         })
         .catch(function (error) {
             var tag = document.createElement("alert");
@@ -542,7 +550,11 @@ function* updateIP(action) {
         tag.setAttribute("type", "success");
         tag.innerHTML = 'Success: IP was updated'
         document.getElementById('pop-box').append(tag)
-        riot.mount(tag, 'alert', reduxStore); 
+        riot.mount(tag, 'alert', reduxStore);
+        
+        reduxStore.dispatch({
+            type: 'FETCH_IP'
+        })
     })
     .catch(function (error) {
         var tag = document.createElement("alert");
