@@ -20,7 +20,22 @@
                 <div class="th">Server Group</div>
                 <div class="th">Images</div>
                 <div class="th">Network Group</div>
+                <div class="th actionwidth">Actions</div>
             </div>
+                <div class="tr" each={host in this.opts.store.getState().hosts}>
+                    <div class="td" style="background-color: white">
+                            <input type="checkbox"></div>
+                    <div class="td">{host.name}</div>
+                    <div class="td">{host.ip}</div>
+                    <div class="td">{host.role}</div>
+                    <div class="td">{host.server_group}</div>
+                    <div class="td">{host.os}</div>
+                    <div class="td">{host.network_group}</div>
+                    <div class="td  actionwidth">
+                        <!--<img src="./icons/edit.svg" class="table-icon">-->
+                        <img src="./icons/delete.svg" data-ip={host.ip} onclick={deleteHost} class="table-icon">
+                    </div>
+                </div>
             </div>
     </div>
         
@@ -55,7 +70,7 @@
             currentValue = store.getState()
             currentTab = window.location.hash.substr(1);
             if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
-                if(currentTab == 'images') {
+                if(currentTab == 'hosts') {
                     riot.update();
                 }
             }

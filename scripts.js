@@ -562,7 +562,6 @@ function* updateIP(action) {
 }
 
 function* addHost(action) {
-    
     ax.post('v2/hosts', [action['data']])
     .then(function(response){
         var tag = document.createElement("alert");
@@ -587,6 +586,23 @@ function* addHost(action) {
 
 }
 
+function* getHost(action){
+    ax.get('v2/hosts')
+    .then(function(response) {
+        reduxStore.dispatch({
+            type: "FETCH_SUCCEEDED",
+            data: response['data']
+        })
+    })
+    .catch(function (error) {
+        reduxStore.dispatch({
+            type: "OP_FAILED",
+            method: 'deleteKey',
+            message: error.message
+        });
+    });
+}
+
 function* logError(action) {
     console.error('ERROR in ' + action.method + ': ' + action.message)
 }
@@ -595,6 +611,7 @@ function* watchUserRequests() {
   yield ReduxSaga.takeEvery('OP_FAILED', logError)
   
   yield ReduxSaga.takeEvery('ADD_HOST', addHost)
+  yield ReduxSaga.takeEvery('FETCH_HOSTS', getHost)
     
   yield ReduxSaga.takeEvery('FETCH_IMAGES', getIsos)
   yield ReduxSaga.takeEvery('FETCH_MAPPINGS', fetchMappings)
