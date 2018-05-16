@@ -187,8 +187,14 @@ riot.tag2('hosts', '<div class="svrGrpServers"> <div class="top-actions"> <fancy
 
         this.changeSelection = function() {
             hostcheckboxes = document.getElementsByClassName('hostcheckboxes')
+            topbox = document.getElementById('select_all')
             for(i=0;i<hostcheckboxes.length;i++) {
+                if(topbox.checked==true){
                 hostcheckboxes[i].checked = true
+                }
+                else{
+                    hostcheckboxes[i].checked = false
+                }
             }
         }.bind(this)
 });
