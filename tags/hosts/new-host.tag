@@ -1,27 +1,31 @@
 <new-host>
     <form>
+    
+        
+<!--
+                            <div class="tr" each={nw in this.opts.store.getState().networks}>
+                        <div class="td">{nw.name}</div>
+-->
         
         <fancy-input tag="Hostname" inputid="servergroup-new-hostname"></fancy-input>
         <fancy-input tag="IP" inputid="servergroup-new-ip"></fancy-input>
+                            
+        <fancy-dropdown name="Role" tag="Role" inputid="select-role">
+          <option value="master">Master</option>
+          <option value="worker">Worker</option>
+        </fancy-dropdown><br>
+        <fancy-dropdown name="Server Group" tag="Server Group" inputid="select-server-group">
+            <option each={comp in passStore.getState().servers} value="{comp.name}">{comp.name}</option>
+        </fancy-dropdown><br>
+        <fancy-dropdown name="Images" tag="Images" inputid="select-images">
+            <option each={img in passStore.getState().iso_map} value="{img.os}">{img.os}</option>
+        </fancy-dropdown><br>
+        <fancy-dropdown name="Network Group" tag="Network Group" inputid="select-network-group">
+          <option each={nw in passStore.getState().networks} value="{nw.name}">{nw.name}</option>
+        </fancy-dropdown><br>
         
-            <fancy-dropdown name="Role" tag="Role" inputid="select-role">
-              <option value="generic">Generic</option>
-              <option value="master">Master</option>
-              <option value="worker">Worker</option>
-            </fancy-dropdown><br>
-            <fancy-dropdown name="Server Group" tag="Server Group" inputid="select-server-group">
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-            </fancy-dropdown><br>
-            <fancy-dropdown name="Images" tag="Images" inputid="select-images">
-                <option each={img in passStore.getState().iso_map} value="{img.os}">{img.os}</option>
-            </fancy-dropdown><br>
-            <fancy-dropdown name="Network Group" tag="Network Group" inputid="select-network-group">
-              <option value="networkgroup1">Network Group 1</option>
-              <option value="networkgroup2">Network Group 2</option>
-            </fancy-dropdown><br>
-
     </form>
+    
     <fancy-button onclick={addHost}>Create</fancy-button>
     <fancy-button color="gray" onclick={closeModal}>Cancel</fancy-button>
     
@@ -34,9 +38,20 @@
     
     <script>
         passStore.dispatch({
-            type: 'FETCH_MAPPINGS'
+            type: 'FETCH_MAPPINGS',
+        })
+        
+        passStore.dispatch({
+            type: 'FETCH_IMAGES',
         })
 
+        passStore.dispatch({
+            type: 'FETCH_INFRA',
+        })
+        passStore.dispatch({
+            type: 'FETCH_NETWORKGROUPS'
+        })
+        
         let currentValue
         passStore.subscribe(function(){
         let previousValue = currentValue;

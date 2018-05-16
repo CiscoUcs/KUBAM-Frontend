@@ -4,7 +4,15 @@
                 inputid="settings-view-ip"
                 placeholder={this.opts.store.getState().kubam_ip}>
             </fancy-input>
-            <fancy-button  onclick={updateIP}>Update</fancy-button>
+            <fancy-button  onclick={updateIP}>Update</fancy-button>    
+<!--
+            <fancy-dropdown inputid="actions" class="table-input">
+                <option value="none">Actions</option>
+                <option value="Edit selected hosts">Edit selected hosts</option>
+                <option value="Delete select hosts">Delete select hosts</option>    
+            </fancy-dropdown>
+-->
+        
             <div class="settings-container-big">
                 <div class="table keywidthtablelimit">
                     <div class="tr">

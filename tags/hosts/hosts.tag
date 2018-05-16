@@ -22,7 +22,7 @@
                 <div class="th">Network Group</div>
             </div>
             </div>
-        </div>
+    </div>
         
     <add-button onclick={addHost}>Add Host</add-button>
     
