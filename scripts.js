@@ -479,9 +479,11 @@ function* deleteKey(action) {
         }
         
         keys.splice(k_id,1)
-        console.log(keys)
+        new_keys = {
+            keys: keys
+        }
         
-        ax.post('v1/keys', keys)
+        ax.post('v1/keys', new_keys)
         .then(function (response) {
             var tag = document.createElement("alert");
             tag.setAttribute("type", "success");
