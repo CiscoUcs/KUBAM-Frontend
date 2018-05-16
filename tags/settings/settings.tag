@@ -21,7 +21,7 @@
                     </div>
                     <div class="tr" each={k in this.opts.store.getState().keys}>
                         <div class="td">{k}</div>
-                        <div class="td">
+                        <div class="td actionwidth">
                             <!--<img src="./icons/edit.svg" class="table-icon">-->
                             <img src="./icons/delete.svg" data-id={k} onclick={deleteKey} class="table-icon">
                         </div>
