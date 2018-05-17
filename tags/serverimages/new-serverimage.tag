@@ -46,5 +46,7 @@
             })
             this.closeModal()
         }
+        resolveName(){
+            }
     </script>
 </new-serverimage>
