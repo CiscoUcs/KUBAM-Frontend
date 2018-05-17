@@ -1,7 +1,7 @@
 <new-setting>
     <div class="settings-container">
         <fancy-textarea tag="Public Key"
-                     inputid="settings-view-key">
+                        inputid="settings-view-key">
         </fancy-textarea>
     </div>
     

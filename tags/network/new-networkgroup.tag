@@ -2,7 +2,8 @@
     <form>
         <div class="network-container">
             <fancy-input tag="Network Group Name"
-                         inputid="network-view-groupname">
+                         inputid="network-view-groupname"
+                         tip="Custom name for this network">
             </fancy-input>
             <fancy-input tag="Netmask"
                          inputid="network-view-netmask">

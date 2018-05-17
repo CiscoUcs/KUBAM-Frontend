@@ -1,5 +1,7 @@
 <fancy-input>
-    <label for="{this.opts.inputid}">{this.opts.tag}</label>
+    <div data-tip="{this.opts.tip}">
+        <label for="{this.opts.inputid}">{this.opts.tag}</label>
+    </div>
     <input id="{this.opts.inputid}"
            name="{this.opts.inputid}"
            type="{this.opts.settype}"

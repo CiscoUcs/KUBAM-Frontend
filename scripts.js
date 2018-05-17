@@ -6,7 +6,7 @@ if(window.location.hash.substring(1) == '') {
 
 var defaultState = {
     isLoading: false,
-    offlineip: '10.93.234.96:8001'
+    offlineip: '10.93.234.96'
 }
 
 var loadingState = {
@@ -41,17 +41,19 @@ const reduxStore = Redux.createStore(
     Redux.applyMiddleware(sagaMiddleware)
 )
 
-ip = reduxStore.getState().offlineip
-console.log(ip)
-url = 'http://' + ip + '/api/'
-var ax = axios.create({
-    baseURL: url,
-    timeout: 1000,
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    }
-});
+function createAx(ip) {
+    url = 'http://' + ip + ':8001/api/'
+    return axios.create({
+        baseURL: url,
+        timeout: 1200,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+}
+
+var ax = createAx(reduxStore.getState().offlineip)
 
 function* getIsos(action) {
     ax.get('v1/isos', {})
@@ -544,6 +546,8 @@ function* fetchIP(action) {
 function* updateIP(action) {
     new_ip = {kubam_ip: action['data']['kubam_ip']}
     
+    ax = createAx(action['data']['kubam_ip'])
+    
     ax.post('v1/ip', new_ip)
     .then(function (response) {
         var tag = document.createElement("alert");
@@ -554,6 +558,10 @@ function* updateIP(action) {
         
         reduxStore.dispatch({
             type: 'FETCH_IP'
+        })
+        
+        reduxStore.dispatch({
+            type: 'FETCH_KEYS'
         })
     })
     .catch(function (error) {
@@ -663,7 +671,7 @@ function* watchUserRequests() {
     
   yield ReduxSaga.takeEvery('FETCH_INFRA', getInfraComponents)
   yield ReduxSaga.takeEvery('CREATE_CONTROLLER', createInfraComponent)
-    yield ReduxSaga.takeEvery('DELETE_CONTROLLER', deleteInfraComponent)
+  yield ReduxSaga.takeEvery('DELETE_CONTROLLER', deleteInfraComponent)
 
   yield ReduxSaga.takeEvery('FETCH_NETWORKGROUPS', fetchNetworkGroups)
   yield ReduxSaga.takeEvery('CREATE_NETWORKGROUP', createNetworkGroup)
