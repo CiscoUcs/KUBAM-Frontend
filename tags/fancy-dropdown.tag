@@ -1,5 +1,7 @@
 <fancy-dropdown>
-    <label for="{this.opts.inputid}">{this.opts.tag}</label>
+    <div data-tip="{this.opts.tip}">
+        <label for="{this.opts.inputid}">{this.opts.tag}</label>
+    </div>
     <select name="{this.opts.inputid}" id="{this.opts.inputid}">
         <yield />
     </select>
