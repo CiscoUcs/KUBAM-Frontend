@@ -418,7 +418,7 @@ riot.tag2('new-serverimage', '<form> <fancy-dropdown tag="Operating System" inpu
             this.closeModal()
         }.bind(this)
 });
-riot.tag2('serverimages-overview', '<div class="osgroup" hide="{this.opts.store.getState().isLoading}"> <div class="os-container"> <div class="table"> <div class="tr"> <div class="th">Name</div> <div class="th">ISO</div> <div class="th actionwidth">Actions</div> </div> <div class="tr" each="{img in this.opts.store.getState().iso_map}"> <div class="td">{img.os}</div> <div class="td">{img.file}</div> <div class="td actionwidth"> <img src="./icons/delete.svg" data-os="{img.os}" onclick="{deleteMapping}" class="table-icon"> </div> </div> </div> </div> </div> <add-button onclick="{addServerimage}">Add new Image</add-button>', 'serverimages-overview .os-container,[data-is="serverimages-overview"] .os-container{ background-color: white; padding: 34px 20px; } serverimages-overview .osgroup,[data-is="serverimages-overview"] .osgroup{ margin-bottom: 25px; margin-right: 25px; float: left; width: 100%; } serverimages-overview .osselect,[data-is="serverimages-overview"] .osselect{ background-color: #363c51; font-size: 0.95em; color: white; border: 1px solid #ecedf1; padding: 10px; width: 580px; } serverimages-overview .centeralign,[data-is="serverimages-overview"] .centeralign{ text-align: center; } serverimages-overview .tablewidth,[data-is="serverimages-overview"] .tablewidth{ width: 600px; }', '', function(opts) {
+riot.tag2('serverimages-overview', '<div class="osgroup" hide="{this.opts.store.getState().isLoading}"> <div class="os-container"> <div class="table"> <div class="tr"> <div class="th">Name</div> <div class="th">ISO</div> <div class="th actionwidth">Actions</div> </div> <div class="tr" each="{img in this.opts.store.getState().iso_map}"> <div class="td">{resolveName(img.os)}</div> <div class="td">{img.file}</div> <div class="td actionwidth"> <img src="./icons/delete.svg" data-os="{img.os}" onclick="{deleteMapping}" class="table-icon"> </div> </div> </div> </div> </div> <add-button onclick="{addServerimage}">Add new Image</add-button>', 'serverimages-overview .os-container,[data-is="serverimages-overview"] .os-container{ background-color: white; padding: 34px 20px; } serverimages-overview .osgroup,[data-is="serverimages-overview"] .osgroup{ margin-bottom: 25px; margin-right: 25px; float: left; width: 100%; } serverimages-overview .osselect,[data-is="serverimages-overview"] .osselect{ background-color: #363c51; font-size: 0.95em; color: white; border: 1px solid #ecedf1; padding: 10px; width: 580px; } serverimages-overview .centeralign,[data-is="serverimages-overview"] .centeralign{ text-align: center; } serverimages-overview .tablewidth,[data-is="serverimages-overview"] .tablewidth{ width: 600px; }', '', function(opts) {
         let store = this.opts.store
 
         store.dispatch({
@@ -461,6 +461,17 @@ riot.tag2('serverimages-overview', '<div class="osgroup" hide="{this.opts.store.
                     os: ds.os
                 }
             })
+        }.bind(this)
+
+        this.resolveName = function(x) {
+            switch(x) {
+                case 'esxi6.5': return 'ESXi 6.5'
+                case 'centos7.3': return 'CentOS 7.3'
+                case 'centos7.4': return 'CentOS 7.4'
+                case 'win2012': return 'Windows 2012'
+                case 'win2016': return 'Windows 2016'
+                default: return x
+            }
         }.bind(this)
 });
 
