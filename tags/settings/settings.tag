@@ -2,7 +2,8 @@
     <div class="settings-group">
             <fancy-input tag="KUBAM IP Address"
                 inputid="settings-view-ip"
-                placeholder={this.opts.store.getState().kubam_ip}>
+                placeholder={this.opts.store.getState().kubam_ip}
+                tip="This is the IP from which the servers will load the Vmedia, not the IP used by the KUBAM frontend">
             </fancy-input>
             <fancy-button  onclick={updateIP}>Update</fancy-button>    
 <!--

@@ -5,8 +5,7 @@ if(window.location.hash.substring(1) == '') {
 }
 
 var defaultState = {
-    isLoading: false,
-    offlineip: '10.93.234.96'
+    isLoading: false
 }
 
 var loadingState = {
@@ -53,7 +52,7 @@ function createAx(ip) {
     })
 }
 
-var ax = createAx(reduxStore.getState().offlineip)
+var ax = createAx(KUBAM_IP)
 
 function* getIsos(action) {
     ax.get('v1/isos', {})
@@ -545,9 +544,7 @@ function* fetchIP(action) {
 
 function* updateIP(action) {
     new_ip = {kubam_ip: action['data']['kubam_ip']}
-    
-    ax = createAx(action['data']['kubam_ip'])
-    
+        
     ax.post('v1/ip', new_ip)
     .then(function (response) {
         var tag = document.createElement("alert");
