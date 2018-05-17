@@ -98,16 +98,7 @@
             })
         }
         
-        resolveName(x) {
-            switch(x) {
-                case 'esxi6.5': return 'ESXi 6.5'
-                case 'centos7.3': return 'CentOS 7.3'
-                case 'centos7.4': return 'CentOS 7.4'
-                case 'win2012': return 'Windows 2012'
-                case 'win2016': return 'Windows 2016'
-                default: return x
-            }
-        }
+
     </script>
 </serverimages-overview>
 
