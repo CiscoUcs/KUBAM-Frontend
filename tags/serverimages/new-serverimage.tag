@@ -7,10 +7,10 @@
             <option value="esxi6.0">ESXi 6.0</option>
             <option value="esxi6.5">ESXi 6.5</option>
             <option value="redhat7.2">RedHat 7.2</option>
-            <option value="redhat7.3">redhat7.3</option>
-            <option value="redhat7.4">redhat7.4</option>
-            <option value="win2016">Windows 2016</option>
+            <option value="redhat7.3">RedHat 7.3</option>
+            <option value="redhat7.4">RedHat 7.4</option>
             <option value="win2012">Windows 2012</option>
+            <option value="win2016">Windows 2016</option>
            
         </fancy-dropdown>
         <fancy-dropdown name="ISO" tag="ISO" inputid="mapping-iso">            
