@@ -1,13 +1,6 @@
 <serverimages-overview> 
     <div class="osgroup" hide={this.opts.store.getState().isLoading}>
             <div class="os-container">
-                <!--<fancy-dropdown inputid="actions" class="table-input">
-                        <option value="none">Actions</option>
-                        <option value="Edit selected hosts">Edit selected images</option>
-                        <option value="Delete select hosts">Delete selected images</option>
-                        <option value="Delete select hosts">Deploy selected images</option>
-                </fancy-dropdown>-->
-                
                 <div class="table">
                     <div class="tr">
                         <!--<div class="th"><input type="checkbox"></div>-->
@@ -16,8 +9,7 @@
                         <div class="th actionwidth">Actions</div>
                     </div>
                     <div class="tr" each={img in this.opts.store.getState().iso_map}> 
-                        <!--<div class="th" style="background-color: white"><input type="checkbox"></div>-->
-                        <div class="td">{img.os}</div>
+                        <div class="td">{resolveName(img.os)}</div>
                         <div class="td">{img.file}</div>
                         <div class="td actionwidth">
                             <img src="./icons/edit.svg" class="table-icon">
@@ -104,6 +96,17 @@
                     os: ds.os
                 }
             })
+        }
+        
+        resolveName(x) {
+            switch(x) {
+                case 'esxi6.5': return 'ESXi 6.5'
+                case 'centos7.3': return 'CentOS 7.3'
+                case 'centos7.4': return 'CentOS 7.4'
+                case 'win2012': return 'Windows 2012'
+                case 'win2016': return 'Windows 2016'
+                default: return x
+            }
         }
     </script>
 </serverimages-overview>

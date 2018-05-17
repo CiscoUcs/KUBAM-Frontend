@@ -1,5 +1,7 @@
 <fancy-textarea>
-    <label for="{this.opts.inputid}">{this.opts.tag}</label>
+    <div data-tip="{this.opts.tip}">
+        <label for="{this.opts.inputid}">{this.opts.tag}</label>
+    </div>
     <textarea rows="4" cols="60" name="{this.opts.inputid}" id="{this.opts.inputid}"></textarea>
     
     <style>
