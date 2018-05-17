@@ -34,7 +34,7 @@
                     <div class="td">{host.os}</div>
                     <div class="td">{host.network_group}</div>
                     <div class="td  actionwidth">
-                        <!--<img src="./icons/edit.svg" class="table-icon">-->
+                        <img src="./icons/edit.svg" class="table-icon">
                         <img src="./icons/delete.svg" data-hostname={host.name} onclick={deleteHost} class="table-icon">
                     </div>
                 </div>

@@ -34,7 +34,7 @@
                         <div class="td">{nw.proxy}</div>
                         <div class="td">{nw.vlan}</div>
                         <div class="td actionwidth">
-                            <!--<img src="./icons/edit.svg" class="table-icon">-->
+                            <img src="./icons/edit.svg" class="table-icon">
                             <img src="./icons/delete.svg" data-id={nw.id} onclick={deleteNetwork} class="table-icon">
                         </div>
                     </div>

@@ -31,7 +31,7 @@
                     <div class="td">{comp.credentials.ip}</div>
                     <div class="td">{comp.credentials.user}</div>
                     <div class="td  actionwidth">
-                        <!--<img src="./icons/edit.svg" class="table-icon">-->
+                        <img src="./icons/edit.svg" class="table-icon">
                         <img src="./icons/delete.svg" data-type={comp.type} data-id={comp.id} onclick={deleteController} class="table-icon">
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                     <div class="td">{comp.credentials.ip}</div>
                     <div class="td">{comp.credentials.user}</div>
                     <div class="td actionwidth">
-                        <!--<img src="./icons/edit.svg" class="table-icon">-->
+                        <img src="./icons/edit.svg" class="table-icon">
                         <img src="./icons/delete.svg" data-type={comp.type} data-id={comp.id} onclick={deleteController} class="table-icon">
                     </div>
                 </div>

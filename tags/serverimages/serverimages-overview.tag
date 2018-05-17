@@ -20,7 +20,7 @@
                         <div class="td">{img.os}</div>
                         <div class="td">{img.file}</div>
                         <div class="td actionwidth">
-                            <!--<img src="./icons/edit.svg" class="table-icon">-->
+                            <img src="./icons/edit.svg" class="table-icon">
                             <img src="./icons/delete.svg" data-os={img.os} onclick={deleteMapping} class="table-icon">
                         </div>
                     </div>
