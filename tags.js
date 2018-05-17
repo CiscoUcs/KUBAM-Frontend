@@ -470,6 +470,9 @@ riot.tag2('serverimages-overview', '<div class="osgroup" hide="{this.opts.store.
                 case 'centos7.4': return 'CentOS 7.4'
                 case 'win2012': return 'Windows 2012'
                 case 'win2016': return 'Windows 2016'
+                case 'redhat7.2': return 'Red Hat 7.2'
+                case 'redhat7.2': return 'Red Hat 7.3'
+                case 'redhat7.2': return 'Red Hat 7.4'
                 default: return x
             }
         }.bind(this)
