@@ -26,6 +26,8 @@ var reducer = function(state=defaultState, action) {
                         
             x = {}
             x[top_key] = add_data
+            
+            console.log(x)
                                                             
             return Object.assign({},state,{isLoading: false},x)
             break;
@@ -115,6 +117,24 @@ function* createImgMapping(action) {
             type: "OP_FAILED",
             method: 'createImgMapping',
             message: error.message
+        });
+    });
+}
+
+function getCatalog(action){
+    ax.get('/v1/catalog')
+    .then(function (response) {
+        console.log(response['data'])
+        reduxStore.dispatch({
+        type: "FETCH_SUCCEEDED",
+        data: {'catalog': response['data']}
+        })
+    })
+    .catch(function (error) {
+        reduxStore.dispatch({
+        type: "OP_FAILED",
+        method: 'fetchMappings',
+        message: error.message
         });
     });
 }
@@ -659,6 +679,7 @@ function* watchUserRequests() {
   yield ReduxSaga.takeEvery('DELETE_HOST', deleteHost)
     
   yield ReduxSaga.takeEvery('FETCH_IMAGES', getIsos)
+  yield ReduxSaga.takeEvery('FETCH_CATALOG', getCatalog)
   yield ReduxSaga.takeEvery('FETCH_MAPPINGS', fetchMappings)
   yield ReduxSaga.takeEvery('CREATE_IMGMAPPING', createImgMapping)
   yield ReduxSaga.takeEvery('DELETE_MAPPING', deleteImgMapping)
