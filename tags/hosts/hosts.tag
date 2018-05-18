@@ -12,24 +12,24 @@
        <table-search></table-search>
         <div class="table">
             <div class="tr">
-                <div class="th">
+                <div class="th checkbox_width">
                     <input type="checkbox" id="select_all" onclick={changeSelection}>     
                 </div>
                 <div class="th">Server</div>
-                <div class="th">Hostname</div>
-                <div class="th">OS</div>
-                <div class="th">Network</div>
-                <div class="th">Server IP</div>
+                <div class="th hostname_width">Hostname</div>
+                <div class="th dropdown_width">Operating System</div>
+                <div class="th dropdown_width">Network</div>
+                <div class="th ip_width">Server IP</div>
             </div>
             <div class="tr" each={host in this.opts.store.getState().hosts}>
-                <div class="td-host">
+                <div class="td-host checkbox_width">
                     <input type="checkbox" class="hostcheckboxes">
                 </div>
                 <div class="td-host">Servergroup Servername</div>
-                <div class="td-host">
+                <div class="td-host hostname_width">
                     <input type="text" placeholder="{host.name}" />
                 </div>
-                <div class="td-host">
+                <div class="td-host dropdown_width">
                     <ul class="main-navigation">
                         <li><a href="#">No OS selected</a>
                             <ul>
@@ -52,7 +52,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="td-host">
+                <div class="td-host dropdown_width">
                     <ul class="main-navigation">
                         <li><a href="#">No Network selected</a>
                             <ul>
@@ -62,7 +62,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="td-host">
+                <div class="td-host ip_width">
                     <input type="text" placeholder="{host.ip}" />
                 </div>
             </div>
@@ -131,6 +131,27 @@
     </script>
     
     <style>
+        /* TABLE */
+        .checkbox_width {
+            width: 20px;
+        }
+        
+        .hostname_width {
+            width: 140px;
+        }
+        
+        .ip_width {
+            width: 120px;
+        }
+        
+        .dropdown_width {
+            width: 160px;
+        }
+        
+        
+        
+        
+        
         .top-actions {
             margin-bottom: 15px;
         }
@@ -164,7 +185,7 @@
             border: none;
             outline:0;
             height: 45px;
-            /*width: 150px;*/
+            width: 95%;
             line-height: 45px;
             padding: 0;
             padding-left: 5px;
