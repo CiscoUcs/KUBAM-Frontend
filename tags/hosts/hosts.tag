@@ -25,7 +25,13 @@
                 <div class="td-host checkbox_width">
                     <input type="checkbox" class="hostcheckboxes">
                 </div>
-                <div class="td-host">Servergroup Servername</div>
+                <div class="td-host server">
+                    <div style="float:left;">
+                        <div>Servergroup</div>
+                        <div>Servername</div>
+                    </div>
+                    <div style="background-color: limegreen; font-size: 0.8em; width: 85px; height: 22px; text-align: center; line-height: 22px; color: white; float: left; border-radius: 25px; margin-left: 10px;">DEPLOYED</div>
+                </div>
                 <div class="td-host hostname_width">
                     <input type="text" placeholder="{host.name}" />
                 </div>
@@ -140,9 +146,20 @@
             background-color: #FFF;
         }
         
-        /* TABLE WIDTHS */
+        /* TABLE COLUMNS */
         .checkbox_width {
             width: 20px;
+        }
+        
+        .td-host input[type=checkbox] {
+            position: relative;
+            left: 12px;
+        }
+        
+        .server {
+            padding: 0;
+            padding-left: 8px;
+            vertical-align: middle;
         }
         
         .hostname_width {
