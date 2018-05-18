@@ -11,6 +11,7 @@
 <!--        <table-search></table-search>-->
 
 <!--        <table-search></table-search>-->
+<!--
         <div class="table">
             <div class="tr">
                 <div class="th">
@@ -33,6 +34,32 @@
                     <div class="td">{host.server_group}</div>
                     <div class="td">{host.os}</div>
                     <div class="td">{host.network_group}</div>
+                    <div class="td  actionwidth">
+                        <img src="./icons/edit.svg" class="table-icon">
+                        <img src="./icons/delete.svg" data-hostname={host.name} onclick={deleteHost} class="table-icon">
+                    </div>
+                </div>
+            </div>
+    </div>
+-->
+        <div class="table">
+            <div class="tr">
+                <div class="th">
+                    <input type="checkbox" id="select_all" onclick={changeSelection}>     
+                </div>
+                <div class="th">Server</div>
+                <div class="th">Hostname</div>
+                <div class="th">OS</div>
+                <div class="th">Network</div>
+                <div class="th actionwidth">Actions</div>
+            </div>
+                <div class="tr" each={host in this.opts.store.getState().hosts}>
+                    <div class="td" style="background-color: white">
+                            <input type="checkbox" class="hostcheckboxes"></div>
+                    <div class="td">{host.server_group}<br />SERVERNAME</div>
+                    <div class="td"><input type="text" placeholder="{host.name}" ></div>
+                    <div class="td"><input type="text" placeholder="{host.os}"><br /><input type="text" placeholder="{host.role}"></div>
+                    <div class="td"><input type="text" placeholder="{host.network_group}"><br /><input type="text" placeholder="{host.ip}"></div>
                     <div class="td  actionwidth">
                         <img src="./icons/edit.svg" class="table-icon">
                         <img src="./icons/delete.svg" data-hostname={host.name} onclick={deleteHost} class="table-icon">
