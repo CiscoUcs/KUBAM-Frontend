@@ -8,40 +8,8 @@
                 <option value="deploy">Deploy</option>    
             </fancy-dropdown>
         </div>
-<!--        <table-search></table-search>-->
 
-<!--        <table-search></table-search>-->
-<!--
-        <div class="table">
-            <div class="tr">
-                <div class="th">
-                    <input type="checkbox" id="select_all" onclick={changeSelection}>     
-                </div>
-                <div class="th">Hostname</div>
-                <div class="th">IP</div>
-                <div class="th">Role</div>
-                <div class="th">Server Group</div>
-                <div class="th">Images</div>
-                <div class="th">Network Group</div>
-                <div class="th actionwidth">Actions</div>
-            </div>
-                <div class="tr" each={host in this.opts.store.getState().hosts}>
-                    <div class="td" style="background-color: white">
-                            <input type="checkbox" class="hostcheckboxes"></div>
-                    <div class="td">{host.name}</div>
-                    <div class="td">{host.ip}</div>
-                    <div class="td">{host.role}</div>
-                    <div class="td">{host.server_group}</div>
-                    <div class="td">{host.os}</div>
-                    <div class="td">{host.network_group}</div>
-                    <div class="td  actionwidth">
-                        <img src="./icons/edit.svg" class="table-icon">
-                        <img src="./icons/delete.svg" data-hostname={host.name} onclick={deleteHost} class="table-icon">
-                    </div>
-                </div>
-            </div>
-    </div>
--->
+       <table-search></table-search>
         <div class="table">
             <div class="tr">
                 <div class="th">
@@ -51,22 +19,54 @@
                 <div class="th">Hostname</div>
                 <div class="th">OS</div>
                 <div class="th">Network</div>
-                <div class="th actionwidth">Actions</div>
+                <div class="th">Server IP</div>
             </div>
-                <div class="tr" each={host in this.opts.store.getState().hosts}>
-                    <div class="td" style="background-color: white">
-                            <input type="checkbox" class="hostcheckboxes"></div>
-                    <div class="td">{host.server_group}<br />SERVERNAME</div>
-                    <div class="td"><input type="text" placeholder="{host.name}" ></div>
-                    <div class="td"><input type="text" placeholder="{host.os}"><br /><input type="text" placeholder="{host.role}"></div>
-                    <div class="td"><input type="text" placeholder="{host.network_group}"><br /><input type="text" placeholder="{host.ip}"></div>
-                    <div class="td  actionwidth">
-                        <img src="./icons/edit.svg" class="table-icon">
-                        <img src="./icons/delete.svg" data-hostname={host.name} onclick={deleteHost} class="table-icon">
-                    </div>
+            <div class="tr" each={host in this.opts.store.getState().hosts}>
+                <div class="td-host">
+                    <input type="checkbox" class="hostcheckboxes">
+                </div>
+                <div class="td-host">Servergroup Servername</div>
+                <div class="td-host">
+                    <input type="text" placeholder="{host.name}" />
+                </div>
+                <div class="td-host">
+                    <ul class="main-navigation">
+                        <li><a href="#">No OS selected</a>
+                            <ul>
+                                <li><a href="#">Windows 2016</a></li>
+                                <li><a href="#">RedHat</a>
+                                    <ul>
+                                        <li><a href="#">No Kubernetes</a></li>
+                                        <li><a href="#">Kubernetes Master</a></li>
+                                        <li><a href="#">Kubernetes Worker</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">CentOS</a>
+                                    <ul>
+                                        <li><a href="#">No Kubernetes</a></li>
+                                        <li><a href="#">Kubernetes Master</a></li>
+                                        <li><a href="#">Kubernetes Worker</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="td-host">
+                    <ul class="main-navigation">
+                        <li><a href="#">No Network selected</a>
+                            <ul>
+                                <li><a href="#">Network 1</a></li>
+                                <li><a href="#">Network 2</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="td-host">
+                    <input type="text" placeholder="{host.ip}" />
                 </div>
             </div>
-    </div>
+        </div>
         
     <add-button onclick={addHost}>Add Host</add-button>
     
@@ -132,24 +132,7 @@
     
     <style>
         .top-actions {
-            height: 55px;
-            margin-bottom: 5px;
-        }
-        
-        fancy-dropdown{
-            position: relative;
-            top: 7px;
-            float:left;
-         }
-        
-        fancy-button{
-            position: relative;
-            left: 7px;
-            float:left;
-         }
-        
-        servergroup-view {
-            padding-bottom: 20px;
+            margin-bottom: 15px;
         }
         
         .svrGrpSettings {
@@ -160,41 +143,107 @@
             overflow:auto;
         }
         
-        .table-input {
-            margin: 0;
-        }
-        
-        .marginright25px {
-            margin-right: 25px;
-        }
-        
         .svrGrpServers {
             background-color: white;
             padding: 20px;
-            overflow:auto;
+            overflow: hidden;
+            min-height: 400px;
         }
         
-        .filter-input {
-            background-color: white;
-            padding: 10px;
-            font-size: 0.9em;
+        .server_checkbox {
+            background-color: green;
         }
         
-        .filter-input input {
-            border-width: 0 0 1px 0;
-            border-color: gainsboro;
-            border-style: solid;
-            width: 400px;
-            margin-bottom: 5px;
+        .server_checkbox input {
+            padding: 0 !important;
+            margin: 0 !important;
         }
         
-        .filter-input input:active, .filter-input input:focus {
-            border-color: rgb(41,182,246);
+        .table input[type=text] {
+            background-color: yellow;
+            border: none;
+            outline:0;
+            height: 45px;
+            /*width: 150px;*/
+            line-height: 45px;
+            padding: 0;
+            padding-left: 5px;
+            margin: 0;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        
+        .td-host {
+            padding: 0;
+            font-size: 0.8em;
+            display: table-cell;
+            border: 1px solid #ecedf1;
+            background-color: #FFF;
         }
         
-        .filter-input input:focus {
-            outline: none;
+        
+        ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          background: #FFF;
+          color: #000;
+          width: 160px;
+          z-index: 9999;
+        }
+
+        ul li {
+          display: block;
+          position: relative;
+          float: left;
+          background: #FFF;
+          color: #000;
+          width: 160px;
+          /*background-image: url('icons/select_arrow.png');*/
+          background-repeat: no-repeat;
+          background-position: right;
         }
         
+        li ul { display: none; }
+
+        ul li a {
+          height: 45px;
+          display: block;
+          text-decoration: none;
+          white-space: nowrap;
+          color: #000;
+        }
+
+        ul li a:hover { background: rgba(74, 80, 100, 1); }
+        
+        li:hover > ul {
+          display: block;
+          position: absolute;
+        }
+
+        li:hover li { float: none; }
+
+        li:hover a {
+            background: #363c52;
+            color: white;
+        }
+
+        li:hover li a:hover { background: rgba(74, 80, 100, 1); }
+
+        .main-navigation li ul li { border-top: 0; }
+        
+        ul ul ul {
+            left: 100%;
+            top: 0;
+        }
+        
+        ul:before,
+        ul:after {
+          content: " "; /* 1 */
+          display: table; /* 2 */
+        }
+
+        ul:after { clear: both; }
     </style>
 </hosts>

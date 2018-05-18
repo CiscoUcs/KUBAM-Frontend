@@ -3,7 +3,6 @@
             <div class="os-container">
                 <div class="table">
                     <div class="tr">
-                        <!--<div class="th"><input type="checkbox"></div>-->
                         <div class="th">Name</div>
                         <div class="th">ISO</div>
                         <div class="th actionwidth">Actions</div>

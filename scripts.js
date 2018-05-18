@@ -714,14 +714,16 @@ riot.mount('*', {store:reduxStore})
 //GLOBAL FUNCTIONS
 function resolveName(x) {
     switch(x) {
+        case 'esxi6.0': return 'ESXi 6.0'
         case 'esxi6.5': return 'ESXi 6.5'
         case 'centos7.3': return 'CentOS 7.3'
         case 'centos7.4': return 'CentOS 7.4'
-        case 'win2012': return 'Windows 2012'
+        case 'win2012r2': return 'Windows 2012 R2'
         case 'win2016': return 'Windows 2016'
         case 'redhat7.2': return 'Red Hat 7.2'
-        case 'redhat7.2': return 'Red Hat 7.3'
-        case 'redhat7.2': return 'Red Hat 7.4'
+        case 'redhat7.3': return 'Red Hat 7.3'
+        case 'redhat7.4': return 'Red Hat 7.4'
+        case 'rhvh4.1': return 'RHVH 4.1'
         default: return x
     }
 }
