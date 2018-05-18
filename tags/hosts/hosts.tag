@@ -131,7 +131,16 @@
     </script>
     
     <style>
-        /* TABLE */
+        /* BASE TABLE DESIGN */
+        .td-host {
+            padding: 0;
+            font-size: 0.8em;
+            display: table-cell;
+            border: 1px solid #ecedf1;
+            background-color: #FFF;
+        }
+        
+        /* TABLE WIDTHS */
         .checkbox_width {
             width: 20px;
         }
@@ -145,8 +154,11 @@
         }
         
         .dropdown_width {
-            width: 160px;
+            width: 136px;
         }
+        
+
+
         
         
         
@@ -171,37 +183,19 @@
             min-height: 400px;
         }
         
-        .server_checkbox {
-            background-color: green;
-        }
-        
-        .server_checkbox input {
-            padding: 0 !important;
-            margin: 0 !important;
-        }
-        
         .table input[type=text] {
-            background-color: yellow;
             border: none;
             outline:0;
             height: 45px;
-            width: 95%;
+            width: 90%;
             line-height: 45px;
             padding: 0;
-            padding-left: 5px;
+            padding-left: 8px;
             margin: 0;
             font-size: 1em;
             cursor: pointer;
         }
 
-        
-        .td-host {
-            padding: 0;
-            font-size: 0.8em;
-            display: table-cell;
-            border: 1px solid #ecedf1;
-            background-color: #FFF;
-        }
         
         
         ul {
@@ -220,16 +214,18 @@
           float: left;
           background: #FFF;
           color: #000;
+          text-align: center;
           width: 160px;
-          /*background-image: url('icons/select_arrow.png');*/
+          /*background-image: url('icons/select_arrow.png');
           background-repeat: no-repeat;
-          background-position: right;
+          background-position: right;*/
         }
         
         li ul { display: none; }
 
         ul li a {
           height: 45px;
+          line-height: 45px;
           display: block;
           text-decoration: none;
           white-space: nowrap;
