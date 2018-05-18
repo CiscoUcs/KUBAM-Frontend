@@ -157,7 +157,16 @@
             width: 136px;
         }
         
-
+        /* TABLE INPUT HOVER */
+        .hostname_width input:hover, .ip_width input:hover {
+            background-image: url('icons/edit.svg');
+            background-repeat: no-repeat;
+            background-position: right;
+        }
+        
+        .hostname_width input:focus, ip_width input:focus {
+            background-image: none;
+        }
 
         
         
