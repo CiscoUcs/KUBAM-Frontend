@@ -712,7 +712,7 @@ riot.mount('*', {store:reduxStore})
 
 
 //GLOBAL FUNCTIONS
-function resolveName(x) {
+function translateOS(x) {
     switch(x) {
         case 'esxi6.0': return 'ESXi 6.0'
         case 'esxi6.5': return 'ESXi 6.5'
@@ -724,6 +724,15 @@ function resolveName(x) {
         case 'redhat7.3': return 'Red Hat 7.3'
         case 'redhat7.4': return 'Red Hat 7.4'
         case 'rhvh4.1': return 'RHVH 4.1'
+        default: return x
+    }
+}
+
+function translateRole(x) {
+    switch(x) {
+        case 'generic': return 'No Kubernetes'
+        case 'master': return 'Kubernetes Master'
+        case 'worker': return 'Kubernetes Worker'
         default: return x
     }
 }

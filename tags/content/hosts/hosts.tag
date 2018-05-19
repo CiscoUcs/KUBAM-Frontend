@@ -35,38 +35,36 @@
                 <div class="td-host hostname_width">
                     <input type="text" placeholder="{host.name}" />
                 </div>
-                <div class="td-host dropdown_width">
-                    <ul class="main-navigation">
-                        <li><a href="#">No OS selected</a>
+                <div id="os_drop" class="td-host dropdown_width">
+                    <table-dropdown default="Not selected!" top="" add="">
+                        <li>
+                            <a data-os="win2016" data-role="generic" onclick={switch_os}>Windows 2016</a>
+                        </li>
+                        <li><a onclick={switch_os}>RedHat</a>
                             <ul>
-                                <li><a href="#">Windows 2016</a></li>
-                                <li><a href="#">RedHat</a>
-                                    <ul>
-                                        <li><a href="#">No Kubernetes</a></li>
-                                        <li><a href="#">Kubernetes Master</a></li>
-                                        <li><a href="#">Kubernetes Worker</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">CentOS</a>
-                                    <ul>
-                                        <li><a href="#">No Kubernetes</a></li>
-                                        <li><a href="#">Kubernetes Master</a></li>
-                                        <li><a href="#">Kubernetes Worker</a></li>
-                                    </ul>
-                                </li>
+                                <li><a onclick={switch_os}>No Kubernetes</a></li>
+                                <li><a onclick={switch_os}>Kubernetes Master</a></li>
+                                <li><a onclick={switch_os}>Kubernetes Worker</a></li>
                             </ul>
                         </li>
-                    </ul>
+                        <li><a onclick={switch_os}>CentOS</a>
+                            <ul>
+                                <li><a onclick={switch_os}>No Kubernetes</a></li>
+                                <li><a onclick={switch_os}>Kubernetes Master</a></li>
+                                <li><a onclick={switch_os}>Kubernetes Worker</a></li>
+                            </ul>
+                        </li>
+                    </table-dropdown>
                 </div>
-                <div class="td-host dropdown_width">
-                    <ul class="main-navigation">
-                        <li><a href="#">No Network selected</a>
-                            <ul>
-                                <li><a href="#">Network 1</a></li>
-                                <li><a href="#">Network 2</a></li>
-                            </ul>
+                <div id="nw_drop" class="td-host dropdown_width">
+                    <table-dropdown default="Not selected!" top="" add="">
+                        <li>
+                            <a data-nw="Network1" onclick={switch_network}>Network1</a>
                         </li>
-                    </ul>
+                        <li>
+                            <a data-nw="Network2" onclick={switch_network}>Network2</a>
+                        </li>
+                    </table-dropdown>
                 </div>
                 <div class="td-host ip_width">
                     <input type="text" placeholder="{host.ip}" />
@@ -172,6 +170,7 @@
         
         .dropdown_width {
             width: 136px;
+            line-height: 1px;
         }
         
         /* TABLE INPUT HOVER */
@@ -221,72 +220,5 @@
             font-size: 1em;
             cursor: pointer;
         }
-
-        
-        
-        ul {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-          background: #FFF;
-          color: #000;
-          width: 160px;
-          z-index: 9999;
-        }
-
-        ul li {
-          display: block;
-          position: relative;
-          float: left;
-          background: #FFF;
-          color: #000;
-          text-align: center;
-          width: 160px;
-          /*background-image: url('icons/select_arrow.png');
-          background-repeat: no-repeat;
-          background-position: right;*/
-        }
-        
-        li ul { display: none; }
-
-        ul li a {
-          height: 45px;
-          line-height: 45px;
-          display: block;
-          text-decoration: none;
-          white-space: nowrap;
-          color: #000;
-        }
-
-        ul li a:hover { background: rgba(74, 80, 100, 1); }
-        
-        li:hover > ul {
-          display: block;
-          position: absolute;
-        }
-
-        li:hover li { float: none; }
-
-        li:hover a {
-            background: #363c52;
-            color: white;
-        }
-
-        li:hover li a:hover { background: rgba(74, 80, 100, 1); }
-
-        .main-navigation li ul li { border-top: 0; }
-        
-        ul ul ul {
-            left: 100%;
-            top: 0;
-        }
-        
-        ul:before,
-        ul:after {
-          content: " "; /* 1 */
-          display: table; /* 2 */
-        }
-
-        ul:after { clear: both; }
     </style>
 </hosts>

@@ -8,7 +8,7 @@
                         <div class="th actionwidth">Actions</div>
                     </div>
                     <div class="tr" each={img in this.opts.store.getState().iso_map}> 
-                        <div class="td">{resolveName(img.os)}</div>
+                        <div class="td">{translateOS(img.os)}</div>
                         <div class="td">{img.file}</div>
                         <div class="td actionwidth">
                             <img src="./icons/edit.svg" class="table-icon">

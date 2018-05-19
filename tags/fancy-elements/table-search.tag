@@ -13,7 +13,7 @@
             border: none;
             border-bottom: 1px solid gray;
             font-size: 14px;
-            width: 80%;
+            width: 94%;
         }
         
         input:focus {

@@ -40,7 +40,6 @@
             <h2 class="categoryHeader">ACI Fabrics</h2>
             <div class="table">
                 <div class="tr">
-                    <!--<div class="th"><input type="checkbox"></div>-->
                     <div class="th">Name</div>
                     <div class="th">Description</div>
                     <div class="th">Mgmt IP</div>
@@ -48,7 +47,6 @@
                     <div class="th actionwidth">Actions</div>
                 </div>
                 <div class="tr" each={comp in this.opts.store.getState().aci}>
-                    <!--<div class="td" style="background-color: white"><input type="checkbox"></div>-->
                     <div class="td">{comp.name}</div>
                     <div class="td">{comp.description}</div>
                     <div class="td">{comp.credentials.ip}</div>

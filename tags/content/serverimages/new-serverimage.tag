@@ -2,7 +2,7 @@
     <form> 
         <fancy-dropdown tag="Operating System"
                         inputid="mapping-name">
-            <option each={key, value in passStore.getState().catalog} value="{value}">{resolveName(value)}
+            <option each={key, value in passStore.getState().catalog} value="{value}">{translateOS(value)}
             </option>
            
         </fancy-dropdown>
