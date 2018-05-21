@@ -731,8 +731,8 @@ function translateOS(x) {
 function translateRole(x) {
     switch(x) {
         case 'generic': return 'No Kubernetes'
-        case 'master': return 'Kubernetes Master'
-        case 'worker': return 'Kubernetes Worker'
+        case 'k8s master': return 'Kubernetes Master'
+        case 'k8s node': return 'Kubernetes Worker'
         default: return x
     }
 }

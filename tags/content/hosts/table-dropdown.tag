@@ -10,7 +10,7 @@
                         </span>
                     </div>                    
                 </a>
-                <ul>
+                <ul class="test">
                     <yield />
                 </ul>
             </li>
@@ -19,18 +19,13 @@
     <script>
         switch_network(e) {
             ds = e.target.dataset;
-            console.log(ds.nw)
-            elem = document.getElementById('nw_drop').children[0]
-            elem.setAttribute("top", ds.nw)
+            this.root.setAttribute("top", ds.nw)
         }
         
         switch_os(e) {
             ds = e.target.dataset;
-            console.log(ds.os)
-            console.log(ds.role)
-            elem = document.getElementById('os_drop').children[0]
-            elem.setAttribute("top", translateOS(ds.os))
-            elem.setAttribute("add", translateRole(ds.role))
+            this.root.setAttribute("top", translateOS(ds.os))
+            this.root.setAttribute("add", translateRole(ds.role))
         }
     </script>
     
@@ -89,7 +84,9 @@
           cursor: pointer;
         }
 
-        ul li a:hover { background: rgba(74, 80, 100, 1); }
+        ul li a:hover {
+            background: rgba(74, 80, 100, 1);
+        }
         
         li:hover > ul {
           display: block;
@@ -124,6 +121,20 @@
           display: table; /* 2 */
         }
 
-        ul:after { clear: both; }
+        ul:after {
+            clear: both;
+        }
+        
+        .test li {
+            height: 32px;
+            line-height: 32px;
+            font-size: 12px
+        }
+    
+        .test li a {
+            height: 32px;
+            line-height: 32px;
+            font-size: 11px
+        }
     </style>
 </table-dropdown>

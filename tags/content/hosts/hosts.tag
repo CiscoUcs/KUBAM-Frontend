@@ -37,32 +37,17 @@
                 </div>
                 <div id="os_drop" class="td-host dropdown_width">
                     <table-dropdown default="Not selected!" top="" add="">
-                        <li>
-                            <a data-os="win2016" data-role="generic" onclick={switch_os}>Windows 2016</a>
-                        </li>
-                        <li><a onclick={switch_os}>RedHat</a>
+                        <li each={key, value in passStore.getState().catalog}><a  data-os="{value}" data-role="generic" onclick={switch_os}>{translateOS(value)}</a>
                             <ul>
-                                <li><a onclick={switch_os}>No Kubernetes</a></li>
-                                <li><a onclick={switch_os}>Kubernetes Master</a></li>
-                                <li><a onclick={switch_os}>Kubernetes Worker</a></li>
-                            </ul>
-                        </li>
-                        <li><a onclick={switch_os}>CentOS</a>
-                            <ul>
-                                <li><a onclick={switch_os}>No Kubernetes</a></li>
-                                <li><a onclick={switch_os}>Kubernetes Master</a></li>
-                                <li><a onclick={switch_os}>Kubernetes Worker</a></li>
+                                <li each={cap in key}><a data-os="{value}" data-role="{cap}" onclick={switch_os}>{translateRole(cap)}</a></li>
                             </ul>
                         </li>
                     </table-dropdown>
                 </div>
                 <div id="nw_drop" class="td-host dropdown_width">
                     <table-dropdown default="Not selected!" top="" add="">
-                        <li>
-                            <a data-nw="Network1" onclick={switch_network}>Network1</a>
-                        </li>
-                        <li>
-                            <a data-nw="Network2" onclick={switch_network}>Network2</a>
+                        <li each={nw in passStore.getState().networks}>
+                            <a data-nw="{nw.name}" onclick={switch_network}>{nw.name}</a>
                         </li>
                     </table-dropdown>
                 </div>
@@ -77,6 +62,29 @@
     <script>
         let currentValue
         let store = this.opts.store
+                
+        passStore.dispatch({
+            type: 'FETCH_HOSTS'
+        })
+        
+        passStore.dispatch({
+            type: 'FETCH_CATALOG'
+        })
+        
+        store.dispatch({
+            type: 'FETCH_NETWORKGROUPS'
+        })
+        
+        this.opts.store.subscribe(function(){
+            let previousValue = currentValue;
+            currentValue = store.getState()
+            currentTab = window.location.hash.substr(1);
+            if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
+                if(currentTab == 'hosts') {
+                    riot.update();
+                }
+            }
+        })
         
         addHost() {
             var modal_title = document.getElementById('modal-title');
@@ -93,21 +101,6 @@
             var modal_shadow = document.getElementById('modal-shadow')
             modal_shadow.style.display = 'table'
         }
-                
-        passStore.dispatch({
-            type: 'FETCH_HOSTS'
-        })
-        
-        this.opts.store.subscribe(function(){
-            let previousValue = currentValue;
-            currentValue = store.getState()
-            currentTab = window.location.hash.substr(1);
-            if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
-                if(currentTab == 'hosts') {
-                    riot.update();
-                }
-            }
-        })
         
         deleteHost(e) {
             ds = e.target.dataset;
@@ -193,6 +186,10 @@
             margin-bottom: 15px;
         }
         
+        .top-actions fancy-dropdown {
+            cursor: pointer;
+        }
+        
         .svrGrpSettings {
             background-color: white;
             padding: 25px;
@@ -205,7 +202,7 @@
             background-color: white;
             padding: 20px;
             overflow: hidden;
-            min-height: 400px;
+            min-height: 800px;
         }
         
         .table input[type=text] {

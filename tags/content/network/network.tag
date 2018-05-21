@@ -14,7 +14,6 @@
             <div class="network-container-big">
                 <div class="table networkwidthtablelimit">
                     <div class="tr">
-                        <!--<div class="th"><input type="checkbox"></div>-->
                         <div class="th">Network Name</div>
                         <div class="th">Netmask</div>
                         <div class="th">Router</div>
@@ -25,7 +24,6 @@
                         <div class="th actionwidth">Actions</div>
                     </div>
                     <div class="tr" each={nw in this.opts.store.getState().networks}>
-                        <!--<div class="th" style="background-color: white"><input type="checkbox"></div>-->
                         <div class="td">{nw.name}</div>
                         <div class="td">{nw.netmask}</div>
                         <div class="td">{nw.gateway}</div>
