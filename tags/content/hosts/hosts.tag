@@ -4,8 +4,11 @@
         <div class="top-actions">
             <fancy-dropdown inputid="actions" class="table-input">
                 <option value="none">Actions</option>
-                <option value="buildimage">Build Image</option>
-                <option value="deploy">Deploy</option>    
+                <option value="buildimage">Build server image</option>
+                <option value="deploy">Deploy ALL</option>
+                <option value="deploy">Deploy UCS</option>
+                <option value="deploy">Deploy vmedia policy</option>
+                <option value="deploy">Reset drives</option>
             </fancy-dropdown>
         </div>
 

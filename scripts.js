@@ -595,27 +595,37 @@ function* updateIP(action) {
 }
 
 function* addHost(action) {
-    ax.post('v2/hosts', [action['data']])
-    .then(function(response){
-        var tag = document.createElement("alert");
-        tag.setAttribute("type", "success");
-        tag.innerHTML = 'Success: Host was added correctly'
-        document.getElementById('pop-box').append(tag)
-        riot.mount(tag, 'alert', reduxStore); 
-        })
-    .catch(function(error){
-        var tag = document.createElement("alert");
-        tag.setAttribute("type", "error");
-        tag.innerHTML = 'Error: Host could not be added'
-        document.getElementById('pop-box').append(tag)
-        riot.mount(tag, 'alert', reduxStore); 
-        
-        reduxStore.dispatch({
-            type: "OP_FAILED",
-            method: 'addHost',
-            message: error.message
-        });
-    });
+    hosts = reduxStore.getState().hosts
+    hosts.push({ip:'',
+                name: '',
+                network_group: '',
+                os: '',
+                role: '',
+                server_group: 'xxxx'
+               })
+    console.log(hosts)
+    
+//    ax.post('v2/hosts', [action['data']])
+//    .then(function(response){
+//        var tag = document.createElement("alert");
+//        tag.setAttribute("type", "success");
+//        tag.innerHTML = 'Success: Host was added correctly'
+//        document.getElementById('pop-box').append(tag)
+//        riot.mount(tag, 'alert', reduxStore); 
+//        })
+//    .catch(function(error){
+//        var tag = document.createElement("alert");
+//        tag.setAttribute("type", "error");
+//        tag.innerHTML = 'Error: Host could not be added'
+//        document.getElementById('pop-box').append(tag)
+//        riot.mount(tag, 'alert', reduxStore); 
+//        
+//        reduxStore.dispatch({
+//            type: "OP_FAILED",
+//            method: 'addHost',
+//            message: error.message
+//        });
+//    });
 
 }
 
