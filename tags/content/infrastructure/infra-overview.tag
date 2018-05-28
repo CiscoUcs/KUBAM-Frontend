@@ -23,8 +23,6 @@
                     <div class="th actionwidth">Actions</div>
                 </div>
                 <div class="tr" each={comp in this.opts.store.getState().servers}>
-                    <!--<div class="td" style="background-color: white">
-                            <input type="checkbox"></div>-->
                     <div class="td">{comp.name}</div>
                     <div class="td">{comp.description}</div>
                     <div class="td">{comp.type}</div>
@@ -32,7 +30,7 @@
                     <div class="td">{comp.credentials.user}</div>
                     <div class="td  actionwidth">
                         <img src="./icons/edit.svg" class="table-icon">
-                        <img src="./icons/delete.svg" data-type={comp.type} data-id={comp.id} onclick={deleteController} class="table-icon">
+                        <img src="./icons/delete.svg" data-type={comp.type} data-name={comp.name} onclick={deleteController} class="table-icon">
                     </div>
                 </div>
             </div>
@@ -53,7 +51,7 @@
                     <div class="td">{comp.credentials.user}</div>
                     <div class="td actionwidth">
                         <img src="./icons/edit.svg" class="table-icon">
-                        <img src="./icons/delete.svg" data-type={comp.type} data-id={comp.id} onclick={deleteController} class="table-icon">
+                        <img src="./icons/delete.svg" data-type={comp.type} data-name={comp.name} onclick={deleteController} class="table-icon">
                     </div>
                 </div>
             </div>
@@ -129,7 +127,7 @@
                 type: 'DELETE_CONTROLLER',
                 data: {
                     type: ds.type,
-                    id: ds.id
+                    name: ds.name
                 }
             })
         }

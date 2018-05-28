@@ -310,7 +310,7 @@ function* createInfraComponent(action) {
 }
 
 function* deleteInfraComponent(action) {    
-    delete_id = {"id": action['data']['id']};
+    delete_id = {"name": action['data']['name']};
     
     if (action['data']['type'] =='imc' || action['data']['type'] =='ucsm') {
         ax.delete('v2/servers', {data: delete_id})
@@ -404,9 +404,7 @@ function* createNetworkGroup(action) {
 }
 
 function* deleteNetworkGroup(action) {
-    remove = {"id": action['data']['id'] }
-
-    ax.delete('v2/networks', remove)
+    ax.delete('v2/networks', {"name": action['data']['name'] })
     .then(function (response) {
         var tag = document.createElement("alert");
         tag.setAttribute("type", "success");

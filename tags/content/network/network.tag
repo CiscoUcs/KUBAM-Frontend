@@ -33,7 +33,7 @@
                         <div class="td">{nw.vlan}</div>
                         <div class="td actionwidth">
                             <img src="./icons/edit.svg" class="table-icon">
-                            <img src="./icons/delete.svg" data-id={nw.id} onclick={deleteNetwork} class="table-icon">
+                            <img src="./icons/delete.svg" data-name={nw.name} onclick={deleteNetwork} class="table-icon">
                         </div>
                     </div>
                 </div>
@@ -98,7 +98,7 @@
             store.dispatch({
                 type: 'DELETE_NETWORK',
                 data: {
-                    id: ds.id
+                    name: ds.name
                 }
             })
         }
