@@ -15,25 +15,21 @@
                 <div class="th checkbox_width">
                     <input type="checkbox" id="select_all" onclick={changeSelection}>     
                 </div>
-                <div class="th">Server</div>
                 <div class="th hostname_width">Hostname</div>
+                <div class="th ip_width">Server IP</div>
                 <div class="th dropdown_width">Operating System</div>
                 <div class="th dropdown_width">Network</div>
-                <div class="th ip_width">Server IP</div>
+                <div class="th">Server</div>
             </div>
             <div class="tr" each={host in this.opts.store.getState().hosts}>
                 <div class="td-host checkbox_width">
                     <input type="checkbox" class="hostcheckboxes">
                 </div>
-                <div class="td-host server">
-                    <div style="float:left;">
-                        <div>Servergroup</div>
-                        <div>Servername</div>
-                    </div>
-                    <div style="background-color: limegreen; font-size: 0.8em; width: 85px; height: 22px; text-align: center; line-height: 22px; color: white; float: left; border-radius: 25px; margin-left: 10px;">DEPLOYED</div>
-                </div>
                 <div class="td-host hostname_width">
                     <input type="text" placeholder="{host.name}" />
+                </div>
+                <div class="td-host ip_width">
+                    <input type="text" placeholder="{host.ip}" />
                 </div>
                 <div id="os_drop" class="td-host dropdown_width">
                     <table-dropdown default="Not selected!" top="" add="">
@@ -51,8 +47,12 @@
                         </li>
                     </table-dropdown>
                 </div>
-                <div class="td-host ip_width">
-                    <input type="text" placeholder="{host.ip}" />
+                <div class="td-host server">
+                    <div style="float:left;">
+                        <div>Servergroup</div>
+                        <div>Servername</div>
+                    </div>
+                    <div style="background-color: limegreen; font-size: 0.8em; width: 85px; height: 22px; text-align: center; line-height: 22px; color: white; float: left; border-radius: 25px; margin-left: 10px;">DEPLOYED</div>
                 </div>
             </div>
         </div>
