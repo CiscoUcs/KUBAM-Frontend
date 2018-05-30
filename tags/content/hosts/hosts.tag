@@ -52,13 +52,13 @@
                 </div>
                 <div class="td-host server">
                     <div style="float:left;">
-                        <div>Servergroup</div>
                         <div>Servername</div>
                     </div>
                     <div style="background-color: limegreen; font-size: 0.8em; width: 85px; height: 22px; text-align: center; line-height: 22px; color: white; float: left; border-radius: 25px; margin-left: 10px;">DEPLOYED</div>
                 </div>
             </div>
         </div>
+    </div>
         
     <add-button onclick={addHost}>Add Host</add-button>
     
@@ -90,19 +90,23 @@
         })
         
         addHost() {
-            var modal_title = document.getElementById('modal-title');
-            var modal_content = document.getElementById('modal-content');
-            
-            modal_title.innerHTML = 'Add a new Host'
-            
-            modal_content.innerHTML = '';
-            var tag = document.createElement("new-host");
-            modal_content.append(tag)
-            store = this.opts.store
-            riot.mount(tag, 'new-host', store);
-            
-            var modal_shadow = document.getElementById('modal-shadow')
-            modal_shadow.style.display = 'table'
+//            var modal_title = document.getElementById('modal-title');
+//            var modal_content = document.getElementById('modal-content');
+//            
+//            modal_title.innerHTML = 'Add a new Host'
+//            
+//            modal_content.innerHTML = '';
+//            var tag = document.createElement("new-host");
+//            modal_content.append(tag)
+//            store = this.opts.store
+//            riot.mount(tag, 'new-host', store);
+//            
+//            var modal_shadow = document.getElementById('modal-shadow')
+//            modal_shadow.style.display = 'table'
+            passStore.dispatch({
+                type: 'ADD_HOST',
+                data: {}
+            })
         }
         
         deleteHost(e) {

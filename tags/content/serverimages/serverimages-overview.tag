@@ -3,15 +3,15 @@
             <div class="os-container">
                 <div class="table">
                     <div class="tr">
-                        <div class="th">Name</div>
-                        <div class="th">ISO</div>
+                        <div class="th">Operating System</div>
+                        <div class="th">File</div>
                         <div class="th actionwidth">Actions</div>
                     </div>
                     <div class="tr" each={img in this.opts.store.getState().iso_map}> 
                         <div class="td">{translateOS(img.os)}</div>
                         <div class="td">{img.file}</div>
                         <div class="td actionwidth">
-                            <img src="./icons/edit.svg" class="table-icon">
+                            <img src="./icons/edit.svg" class="table-icon" data-os={img.os} onclick={editServerimage}>
                             <img src="./icons/delete.svg" data-os={img.os} onclick={deleteMapping} class="table-icon">
                         </div>
                     </div>
@@ -70,6 +70,23 @@
             modal_content.append(tag)
             passStore = this.opts.store
             riot.mount(tag, 'new-serverimage', passStore);
+            
+            var modal_shadow = document.getElementById('modal-shadow')
+            modal_shadow.style.display = 'table'
+        }
+        
+        editServerimage(e) {
+            var modal_title = document.getElementById('modal-title');
+            var modal_content = document.getElementById('modal-content');
+            
+            modal_title.innerHTML = 'Edit an Image'
+            
+            modal_content.innerHTML = '';
+            var tag = document.createElement("edit-serverimage");
+            modal_content.append(tag)
+            passStore = this.opts.store
+            current_os = e.target.dataset.os
+            riot.mount(tag, 'edit-serverimage', passStore, current_os);
             
             var modal_shadow = document.getElementById('modal-shadow')
             modal_shadow.style.display = 'table'

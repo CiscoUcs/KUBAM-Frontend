@@ -81,9 +81,18 @@ function* createImgMapping(action) {
     ax.get('v1/isos/map', {})
     .then(function (response) {
         map = response['data']['iso_map']
-        map.push(new_mapping)
+        new_map = []
+        for(var i=0;i<map.length;i++) {
+            console.log(map[i].os)
+            console.log(new_mapping.os)
+            if(map[i].os != new_mapping.os) {
+                new_map.push(map[i])
+            }
+        }
+                        
+        new_map.push(new_mapping)
         new_post = {'iso_map': 
-            map
+            new_map
         }
         
         ax.post('v1/isos/map', new_post)
@@ -595,9 +604,10 @@ function* updateIP(action) {
 }
 
 function* addHost(action) {
+    console.log(action['data'])
     hosts = reduxStore.getState().hosts
-    hosts.push({ip:'',
-                name: '',
+    hosts.push({ip:'1.1.1.1',
+                name: 'undefined',
                 network_group: '',
                 os: '',
                 role: '',
@@ -605,27 +615,27 @@ function* addHost(action) {
                })
     console.log(hosts)
     
-//    ax.post('v2/hosts', [action['data']])
-//    .then(function(response){
-//        var tag = document.createElement("alert");
-//        tag.setAttribute("type", "success");
-//        tag.innerHTML = 'Success: Host was added correctly'
-//        document.getElementById('pop-box').append(tag)
-//        riot.mount(tag, 'alert', reduxStore); 
-//        })
-//    .catch(function(error){
-//        var tag = document.createElement("alert");
-//        tag.setAttribute("type", "error");
-//        tag.innerHTML = 'Error: Host could not be added'
-//        document.getElementById('pop-box').append(tag)
-//        riot.mount(tag, 'alert', reduxStore); 
-//        
-//        reduxStore.dispatch({
-//            type: "OP_FAILED",
-//            method: 'addHost',
-//            message: error.message
-//        });
-//    });
+    ax.post('v2/hosts', hosts)
+    .then(function(response){
+        var tag = document.createElement("alert");
+        tag.setAttribute("type", "success");
+        tag.innerHTML = 'Success: Host was added correctly'
+        document.getElementById('pop-box').append(tag)
+        riot.mount(tag, 'alert', reduxStore); 
+        })
+    .catch(function(error){
+        var tag = document.createElement("alert");
+        tag.setAttribute("type", "error");
+        tag.innerHTML = 'Error: Host could not be added'
+        document.getElementById('pop-box').append(tag)
+        riot.mount(tag, 'alert', reduxStore); 
+        
+        reduxStore.dispatch({
+            type: "OP_FAILED",
+            method: 'addHost',
+            message: error.message
+        });
+    });
 
 }
 

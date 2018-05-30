@@ -34,7 +34,7 @@
                     </div>
                 </div>
             </div>
-            
+            <!--
             <h2 class="categoryHeader">ACI Fabrics</h2>
             <div class="table">
                 <div class="tr">
@@ -55,6 +55,7 @@
                     </div>
                 </div>
             </div>
+            -->
         </div>
     </div>   
 

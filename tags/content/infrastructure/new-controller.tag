@@ -5,7 +5,7 @@
                             inputid="srvgroup-new-type">
                 <option value="ucsm">UCS Manager</option>
                 <option value="imc">UCS Standalone</option>
-                <option value="aci">ACI Fabric</option>
+                <!--<option value="aci">ACI Fabric</option>-->
             </fancy-dropdown>
 
             <div class="left-column">
@@ -18,17 +18,17 @@
                 <fancy-input tag="IP Address"
                              inputid="srvgroup-new-ip">
                 </fancy-input>
-                <fancy-input tag="Username"
-                             inputid="srvgroup-new-username">
-                </fancy-input>
             </div>
 
             <div class="right-column">
+                <fancy-input tag="Username"
+                             inputid="srvgroup-new-username">
+                </fancy-input>
                 <fancy-input tag="Password"
                              inputid="srvgroup-new-password"
                              settype="password">
                 </fancy-input>
-                <fancy-input tag="Tenant (ACI)"
+                <!--<fancy-input tag="Tenant (ACI)"
                              inputid="srvgroup-new-tenant">
                 </fancy-input>
                 <fancy-input tag="VRF (ACI)"
@@ -36,14 +36,16 @@
                 </fancy-input>
                 <fancy-input tag="Bridge Domain (ACI)"
                              inputid="srvgroup-new-bridgedomain">
-                </fancy-input>
+                </fancy-input>-->
             </div>
         
         
         </div>
-        <div>
-            <fancy-button onclick={createController}>Create</fancy-button>
-            <fancy-button color="gray" onclick={closeModal}>Cancel</fancy-button> 
+        <div class="bottombuttons">
+            <div>
+                <fancy-button onclick={createController}>Create</fancy-button>
+                <fancy-button color="gray" onclick={closeModal}>Cancel</fancy-button>
+            </div>
         </div>
 
     </div>
@@ -89,5 +91,8 @@
             float:left;
         }
         
+        .bottombuttons {
+            margin-top: 50px;
+        }
     </style>
 </new-controller>
