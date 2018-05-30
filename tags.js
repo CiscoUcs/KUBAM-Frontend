@@ -528,6 +528,21 @@ riot.tag2('servergroup-box', '<div class="svrGrpBox"> <div class="svrGrpTitle"> 
 riot.tag2('servergroup-view', '<h1 class="categoryHeader">GROUPNAME</h1> <div class="svrGrpSettings"> <fancy-input tag="Subnet" inputid="servergroup-view-subnet" class="floatleft marginright25px"> </fancy-input> <fancy-input tag="Netmask" inputid="servergroup-view-netmask" class="floatleft marginright25px"> </fancy-input> <fancy-input tag="VLAN" inputid="servergroup-view-vlan" class="floatleft marginright25px"> </fancy-input> <fancy-input tag="Router" inputid="servergroup-view-router" class="floatleft marginright25px"> </fancy-input> <fancy-input tag="Nameserver" inputid="servergroup-view-nameserver" class="floatleft marginright25px"> </fancy-input> <fancy-input tag="NTP Server" inputid="servergroup-view-ntpserver" class="floatleft marginright25px"> </fancy-input> <fancy-input tag="Kubernetes Cluster [KUB]" inputid="servergroup-view-kubernetes" class="floatleft marginright25px"> </fancy-input> <fancy-dropdown tag="Operating System [KUB+BM]" inputid="servergroup-view-os" class="floatleft marginright25px"> <option value="volvo">Pick an OS</option> </fancy-dropdown> <fancy-dropdown tag="Hypervisor [HYP]" inputid="servergroup-view-hypervisor" class="floatleft marginright25px"> <option value="volvo">Pick a hypervisor</option> </fancy-dropdown> </div> <div class="svrGrpServers"> <table-search></table-search> <div class="table"> <div class="tr"> <div class="th"><input type="checkbox"></div> <div class="th">Hostname</div> <div class="th">IP</div> <div class="th">Role [KUB]</div> <div class="th">UCS Server</div> <div class="th">Action</div> </div> <div class="tr" each="{servers}"> <div class="td"> <input type="checkbox"> </div> <div class="td"> <fancy-input inputid="servergroup-view-table-hostname" class="table-input"> </fancy-input> </div> <div class="td"> <fancy-input inputid="servergroup-view-table-hostname" class="table-input"> </fancy-input> </div> <div class="td"> <fancy-dropdown inputid="servergroup-view-table-role" class="table-input"> <option value="none">Pick a Role</option> <option value="master">Master</option> <option value="worker">Worker</option> </fancy-dropdown> </div> <div class="td"> SERVER </div> <div class="td"> <img src="./icons/build.svg" class="table-icon"> <img src="./icons/deploy.svg" class="table-icon"> <img src="./icons/delete.svg" class="table-icon"> </div> </div> </div> <fancy-button> Commit </fancy-button> <add-button></add-button> </div>', 'servergroup-view { padding-bottom: 20px; } servergroup-view .svrGrpSettings,[data-is="servergroup-view"] .svrGrpSettings{ background-color: white; padding: 25px; margin-bottom: 20px; clear: both; overflow:auto; } servergroup-view .table-input,[data-is="servergroup-view"] .table-input{ margin: 0; } servergroup-view .marginright25px,[data-is="servergroup-view"] .marginright25px{ margin-right: 25px; } servergroup-view .svrGrpServers,[data-is="servergroup-view"] .svrGrpServers{ background-color: white; padding: 20px; overflow:auto; } servergroup-view .filter-input,[data-is="servergroup-view"] .filter-input{ background-color: white; padding: 10px; font-size: 0.9em; } servergroup-view .filter-input input,[data-is="servergroup-view"] .filter-input input{ border-width: 0 0 1px 0; border-color: gainsboro; border-style: solid; width: 400px; margin-bottom: 5px; } servergroup-view .filter-input input:active,[data-is="servergroup-view"] .filter-input input:active,servergroup-view .filter-input input:focus,[data-is="servergroup-view"] .filter-input input:focus{ border-color: rgb(41,182,246); } servergroup-view .filter-input input:focus,[data-is="servergroup-view"] .filter-input input:focus{ outline: none; }', '', function(opts) {
         servers = ['a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b','a','b']
 });
+riot.tag2('edit-setting', '<div class="settings-container"> <fancy-textarea tag="Public Key" inputid="settings-view-key"> </fancy-textarea> </div> <fancy-button onclick="{editPublicKey}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button>', 'edit-setting .settings-container,[data-is="edit-setting"] .settings-container{ text-align: left; align-items: left; } edit-setting fancy-textarea textarea,[data-is="edit-setting"] fancy-textarea textarea{ width:520px; height:120px; }', '', function(opts) {
+        this.closeModal = function() {
+            document.getElementById('modal-shadow').style.display = 'None';
+        }.bind(this)
+
+        this.editPublicKey = function() {
+            passStore.dispatch({
+                type: 'EDIT_PUBLICKEY',
+                data: {
+                    'new_key': document.getElementById('settings-view-key').value,
+                    'old_key': current_key
+            }})
+            this.closeModal()
+        }.bind(this)
+});
 riot.tag2('new-setting', '<div class="settings-container"> <fancy-textarea tag="Public Key" inputid="settings-view-key"> </fancy-textarea> </div> <fancy-button onclick="{addPublicKey}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button>', 'new-setting .settings-container,[data-is="new-setting"] .settings-container{ text-align: left; align-items: left; } new-setting fancy-textarea textarea,[data-is="new-setting"] fancy-textarea textarea{ width:520px; height:120px; }', '', function(opts) {
         this.closeModal = function() {
             document.getElementById('modal-shadow').style.display = 'None';
@@ -542,7 +557,7 @@ riot.tag2('new-setting', '<div class="settings-container"> <fancy-textarea tag="
             this.closeModal()
         }.bind(this)
 });
-riot.tag2('settings', '<div class="settings-group"> <fancy-input tag="KUBAM IP Address" inputid="settings-view-ip" placeholder="{this.opts.store.getState().kubam_ip}" tip="This is the IP from which the servers will load the Vmedia, not the IP used by the KUBAM frontend"> </fancy-input> <fancy-button onclick="{updateIP}">Update</fancy-button> <div class="settings-container-big"> <div class="table keywidthtablelimit"> <div class="tr"> <div class="th">Public Keys</div> <div class="th actionwidth">Actions</div> </div> <div class="tr" each="{k in this.opts.store.getState().keys}"> <div class="td">{k}</div> <div class="td actionwidth"> <img src="./icons/edit.svg" class="table-icon"> <img src="./icons/delete.svg" data-id="{k}" onclick="{deleteKey}" class="table-icon"> </div> </div> </div> </div> </div> <add-button onclick="{addSetting}"> Add Setting </add-button>', 'settings .settings-group,[data-is="settings"] .settings-group{ padding: 15px; margin-bottom: 10px; background-color: white; } settings fancy-input,[data-is="settings"] fancy-input{ position: relative; float: left; top: -10px; } settings fancy-button,[data-is="settings"] fancy-button{ position: relative; top: 10px; } settings .keywidthtablelimit,[data-is="settings"] .keywidthtablelimit{ width: 100%; table-layout: fixed; word-wrap: break-word; }', '', function(opts) {
+riot.tag2('settings', '<div class="settings-group"> <fancy-input tag="KUBAM IP Address" inputid="settings-view-ip" placeholder="{this.opts.store.getState().kubam_ip}" tip="This is the IP from which the servers will load the Vmedia, not the IP used by the KUBAM frontend"> </fancy-input> <fancy-button onclick="{updateIP}">Update</fancy-button> <div class="settings-container-big"> <div class="table keywidthtablelimit"> <div class="tr"> <div class="th">Public Keys</div> <div class="th actionwidth">Actions</div> </div> <div class="tr" each="{k in this.opts.store.getState().keys}"> <div class="td">{k}</div> <div class="td actionwidth"> <img src="./icons/edit.svg" class="table-icon" data-id="{k}" onclick="{editSetting}"> <img src="./icons/delete.svg" data-id="{k}" onclick="{deleteKey}" class="table-icon"> </div> </div> </div> </div> </div> <add-button onclick="{addSetting}"> Add Setting </add-button>', 'settings .settings-group,[data-is="settings"] .settings-group{ padding: 15px; margin-bottom: 10px; background-color: white; } settings fancy-input,[data-is="settings"] fancy-input{ position: relative; float: left; top: -10px; } settings fancy-button,[data-is="settings"] fancy-button{ position: relative; top: 10px; } settings .keywidthtablelimit,[data-is="settings"] .keywidthtablelimit{ width: 100%; table-layout: fixed; word-wrap: break-word; }', '', function(opts) {
         let store = this.opts.store
 
         store.dispatch({
@@ -585,6 +600,23 @@ riot.tag2('settings', '<div class="settings-group"> <fancy-input tag="KUBAM IP A
             var tag = document.createElement("new-setting");
             modal_content.append(tag)
             riot.mount(tag, 'new-setting');
+
+            var modal_shadow = document.getElementById('modal-shadow')
+            modal_shadow.style.display = 'table'
+        }.bind(this)
+
+        this.editSetting = function(e) {
+            current_key = e.target.dataset.id
+
+            var modal_title = document.getElementById('modal-title');
+            var modal_content = document.getElementById('modal-content');
+
+            modal_title.innerHTML = 'Edit a Public Key'
+
+            modal_content.innerHTML = '';
+            var tag = document.createElement("edit-setting");
+            modal_content.append(tag)
+            riot.mount(tag, 'edit-setting', passStore, current_key);
 
             var modal_shadow = document.getElementById('modal-shadow')
             modal_shadow.style.display = 'table'

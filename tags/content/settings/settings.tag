@@ -23,7 +23,7 @@
                     <div class="tr" each={k in this.opts.store.getState().keys}>
                         <div class="td">{k}</div>
                         <div class="td actionwidth">
-                            <img src="./icons/edit.svg" class="table-icon">
+                            <img src="./icons/edit.svg" class="table-icon" data-id={k} onclick={editSetting}>
                             <img src="./icons/delete.svg" data-id={k} onclick={deleteKey} class="table-icon">
                         </div>
                     </div>
@@ -104,6 +104,23 @@
             var tag = document.createElement("new-setting");
             modal_content.append(tag)
             riot.mount(tag, 'new-setting');
+            
+            var modal_shadow = document.getElementById('modal-shadow')
+            modal_shadow.style.display = 'table'
+        }
+        
+        editSetting(e) {
+            current_key = e.target.dataset.id
+            
+            var modal_title = document.getElementById('modal-title');
+            var modal_content = document.getElementById('modal-content');
+            
+            modal_title.innerHTML = 'Edit a Public Key'
+            
+            modal_content.innerHTML = '';
+            var tag = document.createElement("edit-setting");
+            modal_content.append(tag)
+            riot.mount(tag, 'edit-setting', passStore, current_key);
             
             var modal_shadow = document.getElementById('modal-shadow')
             modal_shadow.style.display = 'table'

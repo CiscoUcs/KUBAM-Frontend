@@ -26,8 +26,6 @@ var reducer = function(state=defaultState, action) {
                         
             x = {}
             x[top_key] = add_data
-            
-            console.log(x)
                                                             
             return Object.assign({},state,{isLoading: false},x)
             break;
@@ -498,6 +496,59 @@ function* addPublicKey(action) {
     });
 }
 
+function* editPublicKey(action) {
+    ax.get('v1/keys', {})
+    .then(function (response) {
+        post_data = response['data']['keys']
+        
+        replace_val = undefined
+        for(var i=0;i<post_data.length;i++) {
+            if(post_data[i] == action.data['old_key']) {
+                replace_val = i
+            }
+        }
+        
+        if(replace_val != undefined) {
+            post_data[replace_val] = action.data['new_key']
+        }
+        
+        console.log(post_data)
+
+        ax.post('v1/keys', {'keys': post_data})
+        .then(function (response) {
+            var tag = document.createElement("alert");
+            tag.setAttribute("type", "success");
+            tag.innerHTML = 'Success: Public key modified'
+            document.getElementById('pop-box').append(tag)
+            riot.mount(tag, 'alert', reduxStore); 
+            
+            reduxStore.dispatch({
+                type: 'FETCH_KEYS'
+            })
+        })
+        .catch(function (error) {
+            var tag = document.createElement("alert");
+            tag.setAttribute("type", "error");
+            tag.innerHTML = 'Error: Public key could not be modified'
+            document.getElementById('pop-box').append(tag)
+            riot.mount(tag, 'alert', reduxStore); 
+
+            reduxStore.dispatch({
+                type: "OP_FAILED",
+                method: 'addPublicKey',
+                message: error.message
+            });
+        });
+    })
+    .catch(function (error) {
+        reduxStore.dispatch({
+            type: "OP_FAILED",
+            method: 'addPublicKey',
+            message: error.message
+        });
+    });
+}
+
 function* deleteKey(action) {
     remove = action['data']['id']
  
@@ -715,6 +766,7 @@ function* watchUserRequests() {
     
   yield ReduxSaga.takeEvery('FETCH_KEYS', getKeys)
   yield ReduxSaga.takeEvery('ADD_PUBLICKEY', addPublicKey)
+  yield ReduxSaga.takeEvery('EDIT_PUBLICKEY', editPublicKey)
   yield ReduxSaga.takeEvery('DELETE_KEY', deleteKey)
 }
 
