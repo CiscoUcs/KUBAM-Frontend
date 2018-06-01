@@ -657,7 +657,7 @@ function* updateIP(action) {
 function* addHost(action) {
     console.log(action['data'])
     hosts = reduxStore.getState().hosts
-    hosts.push({ip:'1.1.1.1',
+    hosts.push({ip:'0.0.0.0',
                 name: 'undefined',
                 network_group: '',
                 os: '',

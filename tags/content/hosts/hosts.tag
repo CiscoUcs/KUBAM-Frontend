@@ -26,7 +26,7 @@
             </div>
             <div class="tr" each={host in this.opts.store.getState().hosts}>
                 <div class="td-host checkbox_width">
-                    <input type="checkbox" class="hostcheckboxes">
+                    <input type="checkbox" class="hostcheckboxes" checked={host.name.startsWith("undefined")}>
                 </div>
                 <div class="td-host hostname_width">
                     <input type="text" placeholder="{host.name}" />
