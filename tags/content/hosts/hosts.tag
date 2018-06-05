@@ -22,7 +22,8 @@
                 <div class="th ip_width">Server IP</div>
                 <div class="th dropdown_width">Operating System</div>
                 <div class="th dropdown_width">Network</div>
-                <div class="th">Server</div>
+                <!-- <div class="th">Server</div> -->
+                <div class="th actionwidth">Actions</div>
             </div>
             <div class="tr" each={host in this.opts.store.getState().hosts}>
                 <div class="td-host checkbox_width">
@@ -44,17 +45,22 @@
                     </table-dropdown>
                 </div>
                 <div id="nw_drop" class="td-host dropdown_width">
-                    <table-dropdown default="Not selected!" top="" add="">
+                    <table-dropdown default={host.network_group} top="{host.network_group}" add="">
                         <li each={nw in passStore.getState().networks}>
-                            <a data-nw="{nw.name}" onclick={switch_network}>{nw.name}</a>
+                            <a data-nw="{nw.name}" value="{nw.name}" onclick={switch_network}>{nw.name}</a>
                         </li>
                     </table-dropdown>
                 </div>
+                <!-- 
                 <div class="td-host server">
                     <div style="float:left;">
                         <div>Servername</div>
                     </div>
                     <div style="background-color: limegreen; font-size: 0.8em; width: 85px; height: 22px; text-align: center; line-height: 22px; color: white; float: left; border-radius: 25px; margin-left: 10px;">DEPLOYED</div>
+                </div>
+                -->
+                <div class="td  actionwidth">
+                    <img src="./icons/delete.svg" data-hostname={host.name} onclick={deleteHost} class="table-icon">
                 </div>
             </div>
         </div>
@@ -111,6 +117,7 @@
         
         deleteHost(e) {
             ds = e.target.dataset;
+            console.log(ds)
             store.dispatch({
                 type: 'DELETE_HOST',
                 data: ds.hostname
@@ -183,11 +190,6 @@
         .hostname_width input:focus, ip_width input:focus {
             background-image: none;
         }
-
-        
-        
-        
-        
         
         .top-actions {
             margin-bottom: 15px;

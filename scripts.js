@@ -411,7 +411,7 @@ function* createNetworkGroup(action) {
 }
 
 function* deleteNetworkGroup(action) {
-    ax.delete('v2/networks', {"name": action['data']['name'] })
+    ax.delete('v2/networks', { data: {"name": action['data']['name'] }})
     .then(function (response) {
         var tag = document.createElement("alert");
         tag.setAttribute("type", "success");
@@ -654,15 +654,41 @@ function* updateIP(action) {
     });
 }
 
+function getNextObviousName(hosts) {
+  return "kubam01";
+}
+
+function getNextObviousIP(hosts, ngs) {
+  return "10.0.0.1";
+}
+
+function getNextObviousNG(hosts, ngs) {
+  return "net01";
+}
+
+function getNextObviousOS(hosts) {
+  return "centos7.4";
+}
+
 function* addHost(action) {
     console.log(action['data'])
     hosts = reduxStore.getState().hosts
-    hosts.push({ip:'0.0.0.0',
-                name: 'undefined',
-                network_group: '',
-                os: '',
-                role: '',
-                server_group: 'xxxx'
+    ngs = reduxStore.getState().networks
+    default_name = getNextObviousName(hosts);
+    default_ip = getNextObviousIP(hosts, ngs);
+    default_ng = getNextObviousNG(hosts, ngs); 
+    default_os = getNextObviousOS(hosts);
+    /*ng = reduxStore.getState().network_groups*/
+    /*if (typeof hosts === 'object') {
+      hosts = new Array()
+    }*/
+    /* be smart: If there is no network group set, then set error and tell them to define network group first. 
+    */
+    hosts.push({ip: default_ip,
+                name: default_name,
+                network_group: default_ng,
+                os: default_os,
+                role: 'generic'
                })
     console.log(hosts)
     
@@ -680,7 +706,6 @@ function* addHost(action) {
         tag.innerHTML = 'Error: Host could not be added'
         document.getElementById('pop-box').append(tag)
         riot.mount(tag, 'alert', reduxStore); 
-        
         reduxStore.dispatch({
             type: "OP_FAILED",
             method: 'addHost',
@@ -708,8 +733,9 @@ function* getHost(action){
 }
 
 function* deleteHost(action){
-    remove = {"name": action['data'] }
-    ax.delete('v2/hosts', remove)
+    //remove = {"name": action['data'] }
+    //ax.delete('v2/hosts', remove)
+    ax.delete('v2/hosts', { data: { "name" : action['data'] }})
     .then(function (response) {
         var tag = document.createElement("alert");
         tag.setAttribute("type", "success");
@@ -722,6 +748,7 @@ function* deleteHost(action){
         })
     })
     .catch(function(error) {
+        console.log(error)
         var tag = document.createElement("alert");
         tag.setAttribute("type", "error");
         tag.innerHTML = 'Error: Could not delete Host'

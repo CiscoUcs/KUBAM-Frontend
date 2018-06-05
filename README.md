@@ -22,6 +22,16 @@ riot tags tags.js
 ```
 To set the js scripts correct. 
 
+## Running
+
+The easiest way to see the GUI is to run it as a docker container: 
+
+```
+docker run -d -p 8002:80 -e "KUBAM_API=172.28.225.135" kubam/web:v2
+```
+
+The ```KUBAM_API=``` environment variable should be set to the IP where the KUBAM API is running. 
+
 
 ## CI/CD
 
