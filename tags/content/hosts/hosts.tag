@@ -36,7 +36,7 @@
                     <input type="text" placeholder="{host.ip}" />
                 </div>
                 <div id="os_drop" class="td-host dropdown_width">
-                    <table-dropdown default="Not selected!" top="" add="">
+                    <table-dropdown default={host.os} top="{host.os}" add="">
                         <li each={key, value in passStore.getState().catalog}><a  data-os="{value}" data-role="generic" onclick={switch_os}>{translateOS(value)}</a>
                             <ul>
                                 <li each={cap in key}><a data-os="{value}" data-role="{cap}" onclick={switch_os}>{translateRole(cap)}</a></li>
@@ -117,7 +117,6 @@
         
         deleteHost(e) {
             ds = e.target.dataset;
-            console.log(ds)
             store.dispatch({
                 type: 'DELETE_HOST',
                 data: ds.hostname

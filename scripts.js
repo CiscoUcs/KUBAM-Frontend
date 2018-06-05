@@ -81,8 +81,8 @@ function* createImgMapping(action) {
         map = response['data']['iso_map']
         new_map = []
         for(var i=0;i<map.length;i++) {
-            console.log(map[i].os)
-            console.log(new_mapping.os)
+            //console.log(map[i].os)
+            //console.log(new_mapping.os)
             if(map[i].os != new_mapping.os) {
                 new_map.push(map[i])
             }
@@ -131,7 +131,7 @@ function* createImgMapping(action) {
 function getCatalog(action){
     ax.get('/v1/catalog')
     .then(function (response) {
-        console.log(response['data'])
+        //console.log(response['data'])
         reduxStore.dispatch({
         type: "FETCH_SUCCEEDED",
         data: {'catalog': response['data']}
@@ -655,23 +655,109 @@ function* updateIP(action) {
 }
 
 function getNextObviousName(hosts) {
-  return "kubam01";
+  // if no hosts yet, just call the first host kubam01. 
+  if (hosts.length < 1) {
+    return "kubam01";
+  }
+  // get last host
+  const lastHost = hosts[hosts.length - 1].name
+  const re = /\d+$/;
+  var found = lastHost.match(re)
+  // if it doesn't end in a number, then just append a -1 to the name.
+  if ( found === null ) {
+    return lastHost + "-1";
+  }
+  var startNum = found[0]
+  var nextNum = parseInt(startNum, 10) + 1
+  var nu = nextNum.toString();
+  while (nu.length < startNum.length ) nu = "0" + nu; // pad the zeros
+  var rh =  lastHost.replace(startNum, nu)
+  //TODO: Make sure rh isn't in there from some crazy ordering schema. 
+  return rh
+}
+
+// Get the range of IP addresses from the gateway and netmask
+function ipFromNet(gateway, netmask) {
+  var ipaddress = gateway.split('.');
+  var netmaskblocks = netmask.split('.').map(function(el) { return parseInt(el, 10) });
+  // invert for creating broadcast address (highest address)
+  var invertedNetmaskblocks = netmaskblocks.map(function(el) { return el ^ 255; });
+  var baseAddress = ipaddress.map(function(block, idx) { return block & netmaskblocks[idx]; });
+  // TODO: big potential bugs here.  Several cases where this will not work. 
+  if (baseAddress[3] === "0") {
+    baseAddress[3] = "1";
+  }
+  if (baseAddress.join('.') === gateway) {
+    baseAddress[3] = "2";
+  }
+  var broadcastaddress = baseAddress.map(function(block, idx) { return block | invertedNetmaskblocks[idx]; });
+  return [baseAddress.join('.'), broadcastaddress.join('.')];
+}
+
+ // given an IP address,  automatically increase the IP address by k.
+function bumpIP( ipa, k ) {
+    ipa = ipa.split(".");
+    var ipnum = 0;
+    for ( var i = 0; i <= 3; ++i )
+    {
+        ipnum = ipnum * 0x100 + 1 * ipa[i];
+    }
+    ipnum += k;
+    for ( i = 3; i >= 0; --i )
+    {
+        ipa[i] = ( ipnum & 0xFF ).toString(10);
+        ipnum = Math.floor( ipnum / 256 );
+    }
+    return ipa.join(".");
 }
 
 function getNextObviousIP(hosts, ngs) {
-  return "10.0.0.1";
+  var lastNetGroup;
+  // Get the last netgroup
+  if (hosts.length < 1) {
+    lastNetGroup = ngs[0];
+  }else {
+    lastNetGroupName = hosts[hosts.length - 1].network_group
+    for (var i = 0; i < ngs.length; i++) {
+      if (ngs[i].name === lastNetGroupName) {
+        lastNetGroup = ngs[i] 
+      }
+    }
+  }
+  gateway = lastNetGroup.gateway
+  netmask  = lastNetGroup.gateway
+  var basemax = ipFromNet(gateway, netmask)
+  var base = basemax[0];
+  // now go through hosts and make sure it doesn't conflict. 
+  for( var i = 0; i < hosts.length; i ++ ) {
+    if (base === hosts[i].ip) {
+      base = bumpIP(base, 1);  
+    }
+  }
+  // so many things wrong here that should be validated and fixed.  But will work for most envs I hopd!
+  return base;
 }
 
+// get the last netgroup of the existing server. 
 function getNextObviousNG(hosts, ngs) {
-  return "net01";
+  ng = ""
+  if (hosts.length < 1) {
+    ng =  ngs[0].name
+    return ng
+  }
+  ng = hosts[hosts.length - 1].network_group
+  return ng
 }
 
 function getNextObviousOS(hosts) {
-  return "centos7.4";
+  if (hosts.length < 1) {
+    return "centos7.4"    
+  }
+  return hosts[hosts.length - 1].os
 }
 
 function* addHost(action) {
-    console.log(action['data'])
+    //console.log(action['data'])
     hosts = reduxStore.getState().hosts
     ngs = reduxStore.getState().networks
     default_name = getNextObviousName(hosts);
