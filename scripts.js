@@ -760,16 +760,21 @@ function* addHost(action) {
     //console.log(action['data'])
     hosts = reduxStore.getState().hosts
     ngs = reduxStore.getState().networks
+    /* be smart: If there is no network group set, then set error and tell them to define network group first.  */
+    if (ngs.length < 1 ) {
+        var tag = document.createElement("alert");
+        tag.setAttribute("type", "error");
+        tag.innerHTML = 'Please create a network group before adding hosts';
+        document.getElementById('pop-box').append(tag)
+        riot.mount(tag, 'alert', reduxStore); 
+        return;
+    }
+
     default_name = getNextObviousName(hosts);
     default_ip = getNextObviousIP(hosts, ngs);
     default_ng = getNextObviousNG(hosts, ngs); 
     default_os = getNextObviousOS(hosts);
-    /*ng = reduxStore.getState().network_groups*/
-    /*if (typeof hosts === 'object') {
-      hosts = new Array()
-    }*/
-    /* be smart: If there is no network group set, then set error and tell them to define network group first. 
-    */
+
     hosts.push({ip: default_ip,
                 name: default_name,
                 network_group: default_ng,
