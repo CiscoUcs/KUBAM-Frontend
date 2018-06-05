@@ -41,7 +41,7 @@ const reduxStore = Redux.createStore(
 )
 
 function createAx(ip) {
-    url = 'http://' + ip + ':8001/api/'
+    url = 'http://' + ip + '/api/'
     return axios.create({
         baseURL: url,
         timeout: 1200,
