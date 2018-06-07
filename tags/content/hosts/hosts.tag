@@ -58,13 +58,13 @@
                         </li>
                     </table-dropdown>
                 </div>
-                <div class="td-host server">
-                
-                   <!--  <div style="float:left;">
-                        <div>Servername</div>
-                    </div>
-                    <div style="background-color: limegreen; font-size: 0.8em; width: 85px; height: 22px; text-align: center; line-height: 22px; color: white; float: left; border-radius: 25px; margin-left: 10px;">DEPLOYED</div>
-                    --> 
+                <div class="td-host">
+                    <table-dropdown default="" top="{host.server_group}" index="{iindex}" changefunc={changeHost}>
+                        <li each={server in passStore.getState().servers}>
+                            <a data-server_group="{server.name}" value="{server.name}" data-index="{this.opts.index}" 
+                            data-op="server_group" data-old="{this.opts.top}" onclick={this.opts.changefunc}>{server.name}</a>
+                        </li>
+                    </table-dropdown>
                 </div>
                 <div class="td  actionwidth">
                     <img src="./icons/delete.svg" data-hostname={host.name} onclick={deleteHost} class="table-icon">
