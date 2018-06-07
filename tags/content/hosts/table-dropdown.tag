@@ -10,23 +10,6 @@
         </li>
     </ul>
 
-    <script>
-
-        switch_network(e) {
-            ds = e.target.dataset;
-            this.root.setAttribute("top", ds.nw)
-        }
-        
-        switch_os(e) {
-            ds = e.target.dataset;
-            this.root.setAttribute("top", translateOS(ds.os))
-        }
-        switch_role(e) {
-            this.root.setAttribute("add", translateRole(ds.role))
-            this.root.setAttribute("add", translateRole(ds.role))
-        }
-    </script>
-    
     <style>
         ul {
           list-style: none;

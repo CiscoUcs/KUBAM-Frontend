@@ -43,16 +43,18 @@
                     </table-dropdown>
                 </div>
                 <div id="role_drop" class="td-host">
-                    <table-dropdown default={host.role} top="{translateRole(host.role)}" os="{host.os}">
+                    <table-dropdown default={host.role} defrole={host.role} top="{translateRole(host.role)}" os="{host.os}" index="{iindex}" changefunc={changeHost}>
                       <li each={ value in passStore.getState().catalog != null ? passStore.getState().catalog[this.opts.os] : [] }>
-                        <a data-role="{value}" onclick={switch_role}>{translateRole(value)}</a>
+                        <a data-role="{value}" value="{value}" data-index="{this.opts.index}" 
+                           data-op="role" data-old="{this.opts.defrole}" onclick={this.opts.changefunc}>{translateRole(value)}</a>
                       </li>
                     </table-dropdown>
                 </div>
                 <div id="nw_drop" class="td-host">
-                    <table-dropdown default={host.network_group} top="{host.network_group}" add="">
+                    <table-dropdown default={host.network_group} top="{host.network_group}" index="{iindex}" changefunc={changeHost}>
                         <li each={nw in passStore.getState().networks}>
-                            <a data-nw="{nw.name}" value="{nw.name}" onclick={switch_network}>{nw.name}</a>
+                            <a data-network_group="{nw.name}" value="{nw.name}" data-index="{this.opts.index}" 
+                            data-op="network_group" data-old="{this.opts.top}" onclick={this.opts.changefunc}>{nw.name}</a>
                         </li>
                     </table-dropdown>
                 </div>

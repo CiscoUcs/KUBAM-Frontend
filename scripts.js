@@ -393,6 +393,11 @@ function* createNetworkGroup(action) {
         tag.innerHTML = 'Success: Network group created'
         document.getElementById('pop-box').append(tag)
         riot.mount(tag, 'alert', reduxStore); 
+
+        // update the page with the new network group
+        reduxStore.dispatch({
+            type: 'FETCH_NETWORKGROUPS'
+        })
     })
     .catch(function (error) {
         var tag = document.createElement("alert");
@@ -838,12 +843,12 @@ function updateAllIPs(index, newVal, hosts) {
   return hosts
 }
 
-// update all the hosts from index to hosts.length with the new OS type. 
+// Generic function that updates all columns to match the one above it
+// if it was changed.  
 function updateAll(attrib, index, newVal, hosts) {
   for (var j = parseInt(index); j < hosts.length; j++) {
     hosts[j][attrib] = newVal
   }
-  console.log(hosts)
   return hosts
 }
 
@@ -860,7 +865,7 @@ function* updateHost(action) {
       hosts = updateAllNames(action.index, action.newVal, hosts)
     } else if(action.op === "ip") {
       hosts = updateAllIPs(action.index, action.newVal, hosts)
-    } else if(["os", "role", "net", "server"].includes(action.op)) {
+    } else if(["os", "role", "network_group", "server"].includes(action.op)) {
       hosts = updateAll(action.op, action.index, action.newVal, hosts)
     }
 
