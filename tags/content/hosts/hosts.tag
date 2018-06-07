@@ -21,8 +21,9 @@
                 <div class="th hostname_width">Hostname</div>
                 <div class="th ip_width">Server IP</div>
                 <div class="th dropdown_width">Operating System</div>
-                <div class="th dropdown_width">Network</div>
-                <!-- <div class="th">Server</div> -->
+                <div class="th dropdown_width">Role</div>
+                <div class="th dropdown_width">Network</div> 
+                <div class="th">Server</div>
                 <div class="th actionwidth">Actions</div>
             </div>
             <div class="tr" each={host in this.opts.store.getState().hosts}>
@@ -30,35 +31,40 @@
                     <input type="checkbox" class="hostcheckboxes" checked={host.name.startsWith("undefined")}>
                 </div>
                 <div class="td-host hostname_width">
-                    <input type="text" placeholder="{host.name}" />
+                    <input type="text" value="{host.name}" />
                 </div>
                 <div class="td-host ip_width">
-                    <input type="text" placeholder="{host.ip}" />
+                    <input type="text" value="{host.ip}" />
                 </div>
-                <div id="os_drop" class="td-host dropdown_width">
+                <div id="os_drop" class="td-host ">
                     <table-dropdown default={host.os} top="{host.os}" add="">
-                        <li each={key, value in passStore.getState().catalog}><a  data-os="{value}" data-role="generic" onclick={switch_os}>{translateOS(value)}</a>
-                            <ul>
-                                <li each={cap in key}><a data-os="{value}" data-role="{cap}" onclick={switch_os}>{translateRole(cap)}</a></li>
-                            </ul>
+                        <li each={key, value in passStore.getState().catalog}>
+                          <a data-os="{value}" onclick={switch_os}>{translateOS(value)}</a>
                         </li>
                     </table-dropdown>
                 </div>
-                <div id="nw_drop" class="td-host dropdown_width">
+                <div id="role_drop" class="td-host">
+                    <table-dropdown default={host.role} top="{translateRole(host.role)}" os="{host.os}">
+                      <li each={ value in passStore.getState().catalog != null ? passStore.getState().catalog[this.opts.os] : [] }>
+                        <a data-role="{value}" onclick={switch_role}>{translateRole(value)}</a>
+                      </li>
+                    </table-dropdown>
+                </div>
+                <div id="nw_drop" class="td-host">
                     <table-dropdown default={host.network_group} top="{host.network_group}" add="">
                         <li each={nw in passStore.getState().networks}>
                             <a data-nw="{nw.name}" value="{nw.name}" onclick={switch_network}>{nw.name}</a>
                         </li>
                     </table-dropdown>
                 </div>
-                <!-- 
                 <div class="td-host server">
-                    <div style="float:left;">
+                
+                   <!--  <div style="float:left;">
                         <div>Servername</div>
                     </div>
                     <div style="background-color: limegreen; font-size: 0.8em; width: 85px; height: 22px; text-align: center; line-height: 22px; color: white; float: left; border-radius: 25px; margin-left: 10px;">DEPLOYED</div>
+                    --> 
                 </div>
-                -->
                 <div class="td  actionwidth">
                     <img src="./icons/delete.svg" data-hostname={host.name} onclick={deleteHost} class="table-icon">
                 </div>
@@ -83,6 +89,8 @@
         store.dispatch({
             type: 'FETCH_NETWORKGROUPS'
         })
+
+        
         
         this.opts.store.subscribe(function(){
             let previousValue = currentValue;
@@ -138,6 +146,7 @@
                 }
             }
         }
+
     </script>
     
     <style>
@@ -190,9 +199,9 @@
             background-image: none;
         }
         
-        .top-actions {
+        /*.top-actions {
             margin-bottom: 15px;
-        }
+        }*/
         
         .top-actions fancy-dropdown {
             cursor: pointer;
@@ -216,9 +225,9 @@
         .table input[type=text] {
             border: none;
             outline:0;
-            height: 45px;
+            /* height: 45px; */
             width: 90%;
-            line-height: 45px;
+            /* line-height: 45px; */
             padding: 0;
             padding-left: 8px;
             margin: 0;

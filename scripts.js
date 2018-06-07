@@ -351,7 +351,6 @@ function* deleteInfraComponent(action) {
                 document.getElementById('pop-box').append(tag)
                 riot.mount(tag, 'alert', reduxStore); 
             
-                console.log('Infra component deleted')
             })
             .catch(function (error) {
                 var tag = document.createElement("alert");
@@ -512,7 +511,6 @@ function* editPublicKey(action) {
             post_data[replace_val] = action.data['new_key']
         }
         
-        console.log(post_data)
 
         ax.post('v1/keys', {'keys': post_data})
         .then(function (response) {
@@ -781,7 +779,6 @@ function* addHost(action) {
                 os: default_os,
                 role: 'generic'
                })
-    console.log(hosts)
     
     ax.post('v2/hosts', hosts)
     .then(function(response){
@@ -839,7 +836,6 @@ function* deleteHost(action){
         })
     })
     .catch(function(error) {
-        console.log(error)
         var tag = document.createElement("alert");
         tag.setAttribute("type", "error");
         tag.innerHTML = 'Error: Could not delete Host'
@@ -918,9 +914,18 @@ function translateOS(x) {
 
 function translateRole(x) {
     switch(x) {
-        case 'generic': return 'No Kubernetes'
+        case 'generic': return 'General'
         case 'k8s master': return 'Kubernetes Master'
         case 'k8s node': return 'Kubernetes Worker'
         default: return x
     }
+}
+
+function roleCatalog(cat, host) {
+  console.log(host)
+  if (typeof cat != 'undefined' && typeof host != 'undefined') {
+    return cat[host.os]
+  }
+  return []
+
 }
