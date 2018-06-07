@@ -803,6 +803,86 @@ function* addHost(action) {
 
 }
 
+function incrementHost(suffix, nextI) {
+    var nextNum = parseInt(suffix, 10) + nextI; // get the next number
+    var nu = nextNum.toString(); // convert number to a string
+    while ( nu.length < suffix.length) nu = "0" + nu;
+    return nu;
+}
+
+// given the index of the host to be updated and the list of hosts
+// update all the hosts to follow the name of this old one. 
+// e.g if we have list kube01, kube02, kube03 and we change the first one to win01
+// then the others will be updated to win02 and win03. 
+function updateAllNames(index, newVal, hosts) {
+  hosts[index].name = newVal
+  // set any hosts after this host to the same name... keep it consistent.  
+  var re = /\d+$/;
+  var found = newVal.match(re);
+  if (found != null) {
+    var startNum = found[0];
+    for(var j = parseInt(index) + 1, k = 1; j < hosts.length; j++, k++) {
+        hosts[j].name = newVal.replace(startNum, incrementHost(startNum, k))
+    }
+  }
+  return hosts
+}
+
+function updateAllIPs(index, newVal, hosts) {
+  hosts[index].ip = newVal;
+  var el = hosts[index].ip
+  for (var j = parseInt(index) + 1, k = 1; j < hosts.length; j++, k++) {
+    hosts[j].ip = bumpIP(el, k)
+  }
+  return hosts
+}
+
+
+
+function* updateHost(action) {
+    hosts = reduxStore.getState().hosts
+    if (action.newVal === action.oldVal) {
+      // no change, do nothing
+      return;
+    }
+    // set the old value to the new value.
+    if(action.op === "host") {
+      hosts = updateAllNames(action.index, action.newVal, hosts)
+    } else if(action.op === "ip") {
+      hosts = updateAllIPs(action.index, action.newVal, hosts)
+    }
+
+    ax.post('v2/hosts', hosts)
+    .then(function(response) {
+        var tag = document.createElement("alert");
+        tag.setAttribute("type", "success");
+        tag.innerHTML = 'Success: ' + action.op + 's were updated correctly'
+        document.getElementById('pop-box').append(tag)
+        riot.mount(tag, 'alert', reduxStore); 
+        reduxStore.dispatch({
+            type: "FETCH_HOSTS"
+        })
+    })
+    .catch(function(error){
+        let errorObject=JSON.parse(JSON.stringify(error));
+        var tag = document.createElement("alert");
+        tag.setAttribute("type", "error");
+        if (errorObject.response.status === 400) {
+          tag.innerHTML = errorObject.response.data.error;
+        }else {
+          tag.innerHTML = error.message
+        }
+        document.getElementById('pop-box').append(tag)
+        riot.mount(tag, 'alert', reduxStore); 
+        reduxStore.dispatch({
+            type: "FETCH_HOSTS"
+        })
+    });
+
+}
+
+
+
 function* getHost(action){
     ax.get('v2/hosts')
     .then(function(response) {
@@ -858,6 +938,7 @@ function* watchUserRequests() {
   yield ReduxSaga.takeEvery('OP_FAILED', logError)
   
   yield ReduxSaga.takeEvery('ADD_HOST', addHost)
+  yield ReduxSaga.takeEvery('UPDATE_HOST', updateHost)
   yield ReduxSaga.takeEvery('FETCH_HOSTS', getHost)
   yield ReduxSaga.takeEvery('DELETE_HOST', deleteHost)
     

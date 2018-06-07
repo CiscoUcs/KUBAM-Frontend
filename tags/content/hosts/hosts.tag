@@ -26,15 +26,15 @@
                 <div class="th">Server</div>
                 <div class="th actionwidth">Actions</div>
             </div>
-            <div class="tr" each={host in this.opts.store.getState().hosts}>
+            <div class="tr" each={host, iindex in this.opts.store.getState().hosts}>
                 <div class="td-host checkbox_width">
                     <input type="checkbox" class="hostcheckboxes" checked={host.name.startsWith("undefined")}>
                 </div>
                 <div class="td-host hostname_width">
-                    <input type="text" value="{host.name}" />
+                    <input type="text" value="{host.name}" data-op="host" data-old="{host.name}" data-index="{iindex}" onblur="{changeHost}" />
                 </div>
                 <div class="td-host ip_width">
-                    <input type="text" value="{host.ip}" />
+                    <input type="text" value="{host.ip}" data-op="ip" data-old="{host.ip}" data-index="{iindex}" onblur="{changeHost}"/>
                 </div>
                 <div id="os_drop" class="td-host ">
                     <table-dropdown default={host.os} top="{host.os}" add="">
@@ -104,19 +104,6 @@
         })
         
         addHost() {
-//            var modal_title = document.getElementById('modal-title');
-//            var modal_content = document.getElementById('modal-content');
-//            
-//            modal_title.innerHTML = 'Add a new Host'
-//            
-//            modal_content.innerHTML = '';
-//            var tag = document.createElement("new-host");
-//            modal_content.append(tag)
-//            store = this.opts.store
-//            riot.mount(tag, 'new-host', store);
-//            
-//            var modal_shadow = document.getElementById('modal-shadow')
-//            modal_shadow.style.display = 'table'
             passStore.dispatch({
                 type: 'ADD_HOST',
                 data: {}
@@ -130,6 +117,20 @@
                 data: ds.hostname
             })
         }
+
+        // Change the hostname of the host
+        changeHost(e) {
+          ds = e.target.dataset;
+          newName = e.target.value;
+          store.dispatch({
+            type: 'UPDATE_HOST',
+            index: ds.index,
+            op: ds.op,
+            oldVal: ds.old,
+            newVal: e.target.value,
+          })
+        }
+
         closeModal() {
             document.getElementById('modal-shadow').style.display = 'None';
         }
