@@ -828,6 +828,7 @@ function updateAllNames(index, newVal, hosts) {
   return hosts
 }
 
+// update the IP address from index and all the ones following it. 
 function updateAllIPs(index, newVal, hosts) {
   hosts[index].ip = newVal;
   var el = hosts[index].ip
@@ -837,8 +838,17 @@ function updateAllIPs(index, newVal, hosts) {
   return hosts
 }
 
+// update all the hosts from index to hosts.length with the new OS type. 
+function updateAll(attrib, index, newVal, hosts) {
+  for (var j = parseInt(index); j < hosts.length; j++) {
+    hosts[j][attrib] = newVal
+  }
+  console.log(hosts)
+  return hosts
+}
 
-
+// updateHosts is called whenever the hosts are updated.  We update all 
+// hosts and pass all previous hosts in to update it. 
 function* updateHost(action) {
     hosts = reduxStore.getState().hosts
     if (action.newVal === action.oldVal) {
@@ -850,13 +860,15 @@ function* updateHost(action) {
       hosts = updateAllNames(action.index, action.newVal, hosts)
     } else if(action.op === "ip") {
       hosts = updateAllIPs(action.index, action.newVal, hosts)
+    } else if(["os", "role", "net", "server"].includes(action.op)) {
+      hosts = updateAll(action.op, action.index, action.newVal, hosts)
     }
 
     ax.post('v2/hosts', hosts)
     .then(function(response) {
         var tag = document.createElement("alert");
         tag.setAttribute("type", "success");
-        tag.innerHTML = 'Success: ' + action.op + 's were updated correctly'
+        tag.innerHTML = 'Success: ' + action.op + ' updated'
         document.getElementById('pop-box').append(tag)
         riot.mount(tag, 'alert', reduxStore); 
         reduxStore.dispatch({

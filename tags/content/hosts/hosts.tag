@@ -1,5 +1,4 @@
 <hosts>
-    
     <div class="svrGrpServers">
         <div class="top-actions">
             <fancy-dropdown inputid="actions" class="table-input">
@@ -37,9 +36,9 @@
                     <input type="text" value="{host.ip}" data-op="ip" data-old="{host.ip}" data-index="{iindex}" onblur="{changeHost}"/>
                 </div>
                 <div id="os_drop" class="td-host ">
-                    <table-dropdown default={host.os} top="{host.os}" add="">
+                    <table-dropdown default={host.os} top="{host.os}" os="{host.os}" add="" index="{iindex}" changefunc={changeHost}>
                         <li each={key, value in passStore.getState().catalog}>
-                          <a data-os="{value}" onclick={switch_os}>{translateOS(value)}</a>
+                          <a data-os="{value}" value="{value}" data-index="{this.opts.index}" data-op="os" data-old="{this.opts.top}" onclick={this.opts.changefunc}>{translateOS(value)}</a>
                         </li>
                     </table-dropdown>
                 </div>
@@ -129,7 +128,9 @@
             oldVal: ds.old,
             newVal: e.target.value,
           })
+          riot.update(); // added to update the os and other dropdowns. 
         }
+
 
         closeModal() {
             document.getElementById('modal-shadow').style.display = 'None';
