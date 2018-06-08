@@ -4,6 +4,7 @@
             <fancy-dropdown tag="Type"
                             inputid="srvgroup-new-type">
                 <option value="ucsm">UCS Manager</option>
+                <option value="ucsc">UCS Central</option>
                 <option value="imc">UCS Standalone</option>
                 <!--<option value="aci">ACI Fabric</option>-->
             </fancy-dropdown>
@@ -68,11 +69,11 @@
                         'password': document.getElementById('srvgroup-new-password').value,
                         'ip': document.getElementById('srvgroup-new-ip').value
                     },
-                    'aci': {
-                        'tenant_name': document.getElementById('srvgroup-new-tenant').value,
+                    /* 'aci': {
+                       'tenant_name': document.getElementById('srvgroup-new-tenant').value,
                         'vrf_name': document.getElementById('srvgroup-new-vrf').value,
                         'bridge_domain': document.getElementById('srvgroup-new-bridgedomain').value
-                    },
+                    }, */
                 }
             })
             this.closeModal()

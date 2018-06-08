@@ -210,7 +210,7 @@ riot.tag2('infra-overview', '<div class="infra-group"> <div class="infra-contain
             })
         }.bind(this)
 });
-riot.tag2('new-controller', '<div> <div class="form-container"> <fancy-dropdown tag="Type" inputid="srvgroup-new-type"> <option value="ucsm">UCS Manager</option> <option value="imc">UCS Standalone</option> </fancy-dropdown> <div class="left-column"> <fancy-input tag="Name" inputid="srvgroup-new-name"> </fancy-input> <fancy-input tag="Description" inputid="srvgroup-new-description"> </fancy-input> <fancy-input tag="IP Address" inputid="srvgroup-new-ip"> </fancy-input> </div> <div class="right-column"> <fancy-input tag="Username" inputid="srvgroup-new-username"> </fancy-input> <fancy-input tag="Password" inputid="srvgroup-new-password" settype="password"> </fancy-input> </div> </div> <div class="bottombuttons"> <div> <fancy-button onclick="{createController}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button> </div> </div> </div>', 'new-controller { text-align: left; } new-controller .right-column,[data-is="new-controller"] .right-column{ float:left; margin-left: 20px; } new-controller .left-column,[data-is="new-controller"] .left-column{ float:left; } new-controller .bottombuttons,[data-is="new-controller"] .bottombuttons{ margin-top: 50px; }', '', function(opts) {
+riot.tag2('new-controller', '<div> <div class="form-container"> <fancy-dropdown tag="Type" inputid="srvgroup-new-type"> <option value="ucsm">UCS Manager</option> <option value="ucsc">UCS Central</option> <option value="imc">UCS Standalone</option> </fancy-dropdown> <div class="left-column"> <fancy-input tag="Name" inputid="srvgroup-new-name"> </fancy-input> <fancy-input tag="Description" inputid="srvgroup-new-description"> </fancy-input> <fancy-input tag="IP Address" inputid="srvgroup-new-ip"> </fancy-input> </div> <div class="right-column"> <fancy-input tag="Username" inputid="srvgroup-new-username"> </fancy-input> <fancy-input tag="Password" inputid="srvgroup-new-password" settype="password"> </fancy-input> </div> </div> <div class="bottombuttons"> <div> <fancy-button onclick="{createController}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button> </div> </div> </div>', 'new-controller { text-align: left; } new-controller .right-column,[data-is="new-controller"] .right-column{ float:left; margin-left: 20px; } new-controller .left-column,[data-is="new-controller"] .left-column{ float:left; } new-controller .bottombuttons,[data-is="new-controller"] .bottombuttons{ margin-top: 50px; }', '', function(opts) {
         this.closeModal = function() {
             document.getElementById('modal-shadow').style.display = 'None';
         }.bind(this)
@@ -227,16 +227,13 @@ riot.tag2('new-controller', '<div> <div class="form-container"> <fancy-dropdown 
                         'password': document.getElementById('srvgroup-new-password').value,
                         'ip': document.getElementById('srvgroup-new-ip').value
                     },
-                    'aci': {
-                        'tenant_name': document.getElementById('srvgroup-new-tenant').value,
-                        'vrf_name': document.getElementById('srvgroup-new-vrf').value,
-                        'bridge_domain': document.getElementById('srvgroup-new-bridgedomain').value
-                    },
+
                 }
             })
             this.closeModal()
         }.bind(this)
 });
+
 riot.tag2('network', '<add-button onclick="{addNetworkGroup}"> Add Network Group </add-button> <div class="network-group"> <div class="network-container-big"> <div class="table networkwidthtablelimit"> <div class="tr"> <div class="th">Network Name</div> <div class="th">Netmask</div> <div class="th">Router</div> <div class="th">Name Server</div> <div class="th">NTP Server</div> <div class="th">Proxy Server</div> <div class="th">VLAN</div> <div class="th actionwidth">Actions</div> </div> <div class="tr" each="{nw in this.opts.store.getState().networks}"> <div class="td">{nw.name}</div> <div class="td">{nw.netmask}</div> <div class="td">{nw.gateway}</div> <div class="td">{nw.nameserver}</div> <div class="td">{nw.ntpserver}</div> <div class="td">{nw.proxy}</div> <div class="td">{nw.vlan}</div> <div class="td actionwidth"> <img src="./icons/edit.svg" class="table-icon"> <img src="./icons/delete.svg" data-name="{nw.name}" onclick="{deleteNetwork}" class="table-icon"> </div> </div> </div> </div> </div>', 'network .network-group,[data-is="network"] .network-group{ padding-bottom: 15px; background-color: white; padding: 20px; } network .network-container,[data-is="network"] .network-container{ background-color: white; padding: 20px; } network .networkwidthtablelimit,[data-is="network"] .networkwidthtablelimit{ width: 100%; table-layout: fixed; word-wrap: break-word; }', '', function(opts) {
         let currentValue
         let store = this.opts.store

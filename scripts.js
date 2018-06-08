@@ -254,7 +254,7 @@ function* getInfraComponents(action) {
 }
 
 function* createInfraComponent(action) {    
-    if (action['data']['type'] =='imc' || action['data']['type'] =='ucsm') {
+    if (["imc", "ucsm", "ucsc"].includes(action['data']['type'])) {
         delete action['data']['aci']
         ax.post('v2/servers', action['data'])
             .then(function (response) {
@@ -271,15 +271,17 @@ function* createInfraComponent(action) {
             .catch(function (error) {
                 var tag = document.createElement("alert");
                 tag.setAttribute("type", "error");
-                tag.innerHTML = 'Error: Could not delete UCS component'
+
+                let errorObject=JSON.parse(JSON.stringify(error));
+                if (errorObject == null) {
+                  tag.innerHTML = error.message
+                } else if (errorObject.response.status === 400) {
+                  tag.innerHTML = errorObject.response.data.error;
+                }else {
+                  tag.innerHTML = "Error: Could not create controller"
+                }
                 document.getElementById('pop-box').append(tag)
                 riot.mount(tag, 'alert', reduxStore); 
-            
-                reduxStore.dispatch({
-                    type: "OP_FAILED",
-                    method: 'createInfraComponent',
-                    message: error.message
-                });
         });
     }
     else {
@@ -319,7 +321,7 @@ function* createInfraComponent(action) {
 function* deleteInfraComponent(action) {    
     delete_id = {"name": action['data']['name']};
     
-    if (action['data']['type'] =='imc' || action['data']['type'] =='ucsm') {
+    if (["imc", "ucsm", "ucsc"].includes(action['data']['type'])) {
         ax.delete('v2/servers', {data: delete_id})
             .then(function (response) {
                 var tag = document.createElement("alert");
