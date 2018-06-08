@@ -2,7 +2,7 @@
     <ul class="listDrop">
         <li>
           <a>
-            {this.opts.top != "" ? this.opts.top : this.opts.default }
+            {this.opts.top != null ? this.opts.top : "None" }
           </a>
           <ul class="test">
             <yield />

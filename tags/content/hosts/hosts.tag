@@ -22,7 +22,7 @@
                 <div class="th dropdown_width">Operating System</div>
                 <div class="th dropdown_width">Role</div>
                 <div class="th dropdown_width">Network</div> 
-                <div class="th">Server</div>
+                <div class="th dropdown_width">Server Group</div>
                 <div class="th actionwidth">Actions</div>
             </div>
             <div class="tr" each={host, iindex in this.opts.store.getState().hosts}>
@@ -58,9 +58,13 @@
                         </li>
                     </table-dropdown>
                 </div>
-                <div class="td-host">
-                    <table-dropdown default="" top="{host.server_group}" index="{iindex}" changefunc={changeHost}>
-                        <li each={server in passStore.getState().servers}>
+                <div id="sg_drop" class="td-host">
+                    <table-dropdown default="none" top="{host.server_group}" index="{iindex}" changefunc={changeHost}
+                        <!-- serverarray={passStore.getState().servers != null ? passStore.getState().servers.push({"name" : "None"}) : [{"name" : "None"}]} --> 
+                        serverarray={passStore.getState().servers != null ? passStore.getState().servers.concat({"name" : "None"}) : [{"name" : "None"}]}
+
+                        >
+                        <li each={server in this.opts.serverarray}>
                             <a data-server_group="{server.name}" value="{server.name}" data-index="{this.opts.index}" 
                             data-op="server_group" data-old="{this.opts.top}" onclick={this.opts.changefunc}>{server.name}</a>
                         </li>
@@ -85,6 +89,10 @@
         
         passStore.dispatch({
             type: 'FETCH_CATALOG'
+        })
+
+        passStore.dispatch({
+            type: 'FETCH_INFRA'
         })
         
         store.dispatch({

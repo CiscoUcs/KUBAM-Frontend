@@ -847,7 +847,13 @@ function updateAllIPs(index, newVal, hosts) {
 // if it was changed.  
 function updateAll(attrib, index, newVal, hosts) {
   for (var j = parseInt(index); j < hosts.length; j++) {
-    hosts[j][attrib] = newVal
+    // if they don't want one (server group, server, etc) then we delete. 
+    if (newVal === "None") {
+      hosts[j][attrib] = undefined;
+      hosts[j] = JSON.parse(JSON.stringify(hosts[j]));
+    }else {
+      hosts[j][attrib] = newVal
+    }
   }
   return hosts
 }
@@ -865,7 +871,7 @@ function* updateHost(action) {
       hosts = updateAllNames(action.index, action.newVal, hosts)
     } else if(action.op === "ip") {
       hosts = updateAllIPs(action.index, action.newVal, hosts)
-    } else if(["os", "role", "network_group", "server"].includes(action.op)) {
+    } else if(["os", "role", "network_group", "server_group"].includes(action.op)) {
       hosts = updateAll(action.op, action.index, action.newVal, hosts)
     }
 
