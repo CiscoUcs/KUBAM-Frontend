@@ -35,14 +35,14 @@
                 <div class="td-host ip_width">
                     <input type="text" value="{host.ip}" data-op="ip" data-old="{host.ip}" data-index="{iindex}" onblur="{changeHost}"/>
                 </div>
-                <div id="os_drop" class="td-host ">
+                <div id="os_drop" class="td-host  dropdown_width">
                     <table-dropdown default={host.os} top="{host.os}" os="{host.os}" add="" index="{iindex}" changefunc={changeHost}>
                         <li each={key, value in passStore.getState().catalog}>
                           <a data-os="{value}" value="{value}" data-index="{this.opts.index}" data-op="os" data-old="{this.opts.top}" onclick={this.opts.changefunc}>{translateOS(value)}</a>
                         </li>
                     </table-dropdown>
                 </div>
-                <div id="role_drop" class="td-host">
+                <div id="role_drop" class="td-host dropdown_width">
                     <table-dropdown default={host.role} defrole={host.role} top="{translateRole(host.role)}" os="{host.os}" index="{iindex}" changefunc={changeHost}>
                       <li each={ value in passStore.getState().catalog != null ? passStore.getState().catalog[this.opts.os] : [] }>
                         <a data-role="{value}" value="{value}" data-index="{this.opts.index}" 
@@ -50,7 +50,7 @@
                       </li>
                     </table-dropdown>
                 </div>
-                <div id="nw_drop" class="td-host">
+                <div id="nw_drop" class="td-host dropdown_width">
                     <table-dropdown default={host.network_group} top="{host.network_group}" index="{iindex}" changefunc={changeHost}>
                         <li each={nw in passStore.getState().networks}>
                             <a data-network_group="{nw.name}" value="{nw.name}" data-index="{this.opts.index}" 
@@ -58,9 +58,8 @@
                         </li>
                     </table-dropdown>
                 </div>
-                <div id="sg_drop" class="td-host">
+                <div id="sg_drop" class="td-host dropdown_width">
                     <table-dropdown default="none" top="{host.server_group}" index="{iindex}" changefunc={changeHost}
-                        <!-- serverarray={passStore.getState().servers != null ? passStore.getState().servers.push({"name" : "None"}) : [{"name" : "None"}]} --> 
                         serverarray={passStore.getState().servers != null ? passStore.getState().servers.concat({"name" : "None"}) : [{"name" : "None"}]}
 
                         >
