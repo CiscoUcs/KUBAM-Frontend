@@ -1,12 +1,12 @@
 <table-dropdown>
-    <ul class="listDrop">
+    <ul >
         <li>
           <a>
             {this.opts.top != null ? this.opts.top : "None" }
           </a>
-          <ul class="test">
-            <yield />
-          </ul>
+            <ul class="test">
+              <yield />
+            </ul>
         </li>
     </ul>
 
@@ -38,7 +38,6 @@
           color: #000;
           cursor: pointer;
         }
-
         li ul {
             display: none;
         }
@@ -46,19 +45,24 @@
         li:hover > ul {
           display: block;
           position: absolute;
+          
         }
 
         li:hover li {
             float: none;
         }
 
-        li:hover a {
+        li:hover a  {
             background: #363c52;
             color: white;
         }
 
         li:hover li a:hover {
             background: rgba(74, 80, 100, 1);
+        }
+
+        ul.test {
+          top: -27px;
         }
 
         .test li {
@@ -70,9 +74,9 @@
         .test li a {
             height: 32px;
             line-height: 32px;
-            font-size: 11px
+            font-size: 11px;
+            font-size: 1em;
         }
-      */
 
       /*
         .oneline {
