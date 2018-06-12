@@ -2,7 +2,7 @@
     <div data-tip="{this.opts.tip}">
         <label for="{this.opts.inputid}">{this.opts.tag}</label>
     </div>
-    <select name="{this.opts.inputid}" id="{this.opts.inputid}">
+    <select name="{this.opts.inputid}" id="{this.opts.inputid}" onchange={this.opts.changefunc}>
         <yield />
     </select>
     

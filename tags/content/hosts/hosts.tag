@@ -1,13 +1,11 @@
 <hosts>
     <div class="svrGrpServers">
         <div class="top-actions">
-            <fancy-dropdown inputid="actions" class="table-input">
+            <fancy-dropdown inputid="actions" class="table-input" changefunc={actionHandler}>
                 <option value="none">Actions</option>
-                <option value="buildimage">Build server image</option>
-                <option value="deploy">Deploy ALL</option>
-                <option value="deploy">Deploy UCS</option>
-                <option value="deploy">Deploy vmedia policy</option>
-                <option value="deploy">Reset drives</option>
+                <option value="buildimage">Build Boot Images</option>
+                <!-- <option value="deploy">Deploy UCS</option>
+                <option value="deploy">Deploy vmedia policy</option> --> 
             </fancy-dropdown>
         </div>
 
@@ -98,8 +96,6 @@
             type: 'FETCH_NETWORKGROUPS'
         })
 
-        
-        
         this.opts.store.subscribe(function(){
             let previousValue = currentValue;
             currentValue = store.getState()
@@ -141,19 +137,28 @@
         }
 
 
-        closeModal() {
-            document.getElementById('modal-shadow').style.display = 'None';
+        // to handle actions that user does. 
+        actionHandler() {
+          var elem = document.getElementById('actions')
+          if (elem.value === "buildimage") {
+            //var checkedHosts = getCheckedHosts()
+            store.dispatch({
+              type: 'MAKEBOOT_IMAGES',
+              hosts: [] // checkedHosts.map((x) => x.name)
+            })
+            elem.selectedIndex = 0;
+          }
         }
-
+    
         changeSelection() {
             hostcheckboxes = document.getElementsByClassName('hostcheckboxes')
             topbox = document.getElementById('select_all')
             for(i=0;i<hostcheckboxes.length;i++) {
                 if(topbox.checked==true){
-                hostcheckboxes[i].checked = true
+                  hostcheckboxes[i].checked = true
                 }
                 else{
-                    hostcheckboxes[i].checked = false
+                  hostcheckboxes[i].checked = false
                 }
             }
         }

@@ -225,6 +225,7 @@ function* getInfraComponents(action) {
             type: "FETCH_SUCCEEDED",
             data: {'servers': response['data']['servers']}
         })
+        /*
         ax.get('v2/aci', {})
         .then(function (response) {
             aci_response = response['data']['aci']
@@ -243,6 +244,7 @@ function* getInfraComponents(action) {
                 message: error.message
             });
         });
+        */
     })
     .catch(function (error) {
         reduxStore.dispatch({
@@ -860,6 +862,52 @@ function updateAll(attrib, index, newVal, hosts) {
   return hosts
 }
 
+// make boot images
+function* makeBootImages(action) {
+  hosts = []
+  if (action.hosts != undefined && action.hosts.length > 0) {
+    // get the hosts for action.hosts
+    hosts = action.hosts 
+  }
+  ax.post('v2/deploy/images')
+    .then(function(response) {
+          var tag = document.createElement("alert");
+          tag.setAttribute("type", "success");
+          tag.innerHTML = 'Success: Built Images'
+          document.getElementById('pop-box').append(tag)
+          riot.mount(tag, 'alert', reduxStore); 
+    })
+   .catch(function(error){
+      let errorObject=JSON.parse(JSON.stringify(error));
+      var tag = document.createElement("alert");
+      tag.setAttribute("type", "error");
+      if (errorObject.response.status === 400) {
+        tag.innerHTML = errorObject.response.data.error;
+      }else {
+        tag.innerHTML = error.message
+      }
+      document.getElementById('pop-box').append(tag)
+      riot.mount(tag, 'alert', reduxStore); 
+      reduxStore.dispatch({
+          type: "FETCH_HOSTS"
+      })
+  });
+}
+
+
+function getCheckedHosts() {
+    allHosts = passStore.getState().hosts
+    checkedHosts = []
+    hostcheckboxes = document.getElementsByClassName('hostcheckboxes')
+    for(i=0;i<hostcheckboxes.length;i++) {
+        if(hostcheckboxes[i].checked == true) {
+          checkedHosts.push(allHosts[i])
+        }
+    }
+    console.log("Checked hosts." + checkedHost);
+    return checkedHosts;
+}
+
 // updateHosts is called whenever the hosts are updated.  We update all 
 // hosts and pass all previous hosts in to update it. 
 function* updateHost(action) {
@@ -988,6 +1036,8 @@ function* watchUserRequests() {
   yield ReduxSaga.takeEvery('ADD_PUBLICKEY', addPublicKey)
   yield ReduxSaga.takeEvery('EDIT_PUBLICKEY', editPublicKey)
   yield ReduxSaga.takeEvery('DELETE_KEY', deleteKey)
+
+  yield ReduxSaga.takeEvery('MAKEBOOT_IMAGES', makeBootImages)
 }
 
 function* rootSaga() {
