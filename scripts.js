@@ -40,8 +40,9 @@ const reduxStore = Redux.createStore(
     Redux.applyMiddleware(sagaMiddleware)
 )
 
-function createAx(ip) {
-    url = 'http://' + ip + '/api/'
+function createAx() {
+    const hname = window.location.hostname
+    url = 'http://' + hname + '/api/'
     return axios.create({
         baseURL: url,
         timeout: 1200,
@@ -52,7 +53,7 @@ function createAx(ip) {
     })
 }
 
-var ax = createAx(KUBAM_IP)
+var ax = createAx()
 
 function* getIsos(action) {
     ax.get('v1/isos', {})
@@ -383,7 +384,7 @@ function* fetchNetworkGroups(action) {
     .catch(function (error) {
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'getInfraComponents',
+            method: 'Get Networks',
             message: error.message
         });
     });
@@ -440,7 +441,7 @@ function* deleteNetworkGroup(action) {
 
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'deleteKey',
+            method: 'delete Network',
             message: error.message
         });
     }); 
@@ -457,7 +458,7 @@ function* getKeys(action) {
     .catch(function (error) {
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'fetchIP',
+            method: 'Get Keys',
             message: error.message
         });
     });
@@ -881,7 +882,7 @@ function* makeBootImages(action) {
       let errorObject=JSON.parse(JSON.stringify(error));
       var tag = document.createElement("alert");
       tag.setAttribute("type", "error");
-      if (errorObject.response.status === 400) {
+      if (errorObject != null && errorObject.response.status === 400) {
         tag.innerHTML = errorObject.response.data.error;
       }else {
         tag.innerHTML = error.message
@@ -967,7 +968,7 @@ function* getHost(action){
     .catch(function (error) {
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'deleteKey',
+            method: 'Get Hosts',
             message: error.message
         });
     });
@@ -1004,7 +1005,12 @@ function* deleteHost(action){
 }
 
 function* logError(action) {
-    console.error('ERROR in ' + action.method + ': ' + action.message)
+    //console.error('ERROR in ' + action.method + ': ' + action.message)
+    var tag = document.createElement("alert");
+    tag.setAttribute("type", "error");
+    tag.innerHTML = 'Error: ' + action.method + ': ' + action.message
+    document.getElementById('pop-box').append(tag)
+    riot.mount(tag, 'alert', reduxStore); 
 }
 
 function* watchUserRequests() {
