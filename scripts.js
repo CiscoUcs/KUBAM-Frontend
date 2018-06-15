@@ -1,7 +1,7 @@
 var sagaMiddleware = ReduxSaga.default()
 
 if(window.location.hash.substring(1) == '') {
-    route('images')
+    route('hosts')
 }
 
 var defaultState = {
@@ -42,7 +42,8 @@ const reduxStore = Redux.createStore(
 
 function createAx() {
     const hname = window.location.hostname
-    url = 'http://' + hname + '/api/'
+    const port = window.location.port
+    url = 'http://' + hname + ':' + port + '/api/'
     return axios.create({
         baseURL: url,
         timeout: 1200,
@@ -66,8 +67,8 @@ function* getIsos(action) {
     .catch(function (error) {
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'getImages',
-            message: error.message
+            message: 'Could not get ISO Images from server',
+            err: error
         });
     });
 }
@@ -107,24 +108,19 @@ function* createImgMapping(action) {
             })
         })
         .catch(function (error) {
-            var tag = document.createElement("alert");
-            tag.setAttribute("type", "error");
-            tag.innerHTML = 'Error: Could not create mapping'
-            document.getElementById('pop-box').append(tag)
-            riot.mount(tag, 'alert', reduxStore); 
             
             reduxStore.dispatch({
                 type: "OP_FAILED",
-                method: 'createImgMapping',
-                message: error.message
+                message: 'Could not create image mapping',
+                err: error
             });
         });
     })
     .catch(function (error) {
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'createImgMapping',
-            message: error.message
+            message: 'Could not create image mapping',
+            err: error
         });
     });
 }
@@ -141,8 +137,8 @@ function getCatalog(action){
     .catch(function (error) {
         reduxStore.dispatch({
         type: "OP_FAILED",
-        method: 'fetchMappings',
-        message: error.message
+        message: 'Could not get Catalog from server',
+        err: error
         });
     });
 }
@@ -158,8 +154,8 @@ function* fetchMappings(action) {
     .catch(function (error) {
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'fetchMappings',
-            message: error.message
+            message: 'Could not get ISO/file mapping from server',
+            err: error
         });
     });
 }
@@ -197,24 +193,18 @@ function* deleteImgMapping(action) {
             })
         })
         .catch(function (error) {
-            var tag = document.createElement("alert");
-            tag.setAttribute("type", "error");
-            tag.innerHTML = 'Error: Could not delete mapping'
-            document.getElementById('pop-box').append(tag)
-            riot.mount(tag, 'alert', reduxStore); 
-            
             reduxStore.dispatch({
                 type: "OP_FAILED",
-                method: 'createImgMapping',
-                message: error.message
+                message: 'Could not create image mapping',
+                err: error
             });
         });
     })
     .catch(function (error) {
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'createImgMapping',
-            message: error.message
+            message: 'Could not create image mapping',
+            err: error
         });
     });    
 }
@@ -241,8 +231,8 @@ function* getInfraComponents(action) {
         .catch(function (error) {
             reduxStore.dispatch({
                 type: "OP_FAILED",
-                method: 'getInfraComponents',
-                message: error.message
+                message: 'getInfraComponents',
+                err: error.message
             });
         });
         */
@@ -250,8 +240,8 @@ function* getInfraComponents(action) {
     .catch(function (error) {
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'getInfraComponents',
-            message: error.message
+            message: 'Could not get infrastructure from server',
+            err: error
         });
     });
 }
@@ -306,16 +296,10 @@ function* createInfraComponent(action) {
                 })
             })
             .catch(function (error) {
-                var tag = document.createElement("alert");
-                tag.setAttribute("type", "error");
-                tag.innerHTML = 'Error: Could not create ACI Fabric'
-                document.getElementById('pop-box').append(tag)
-                riot.mount(tag, 'alert', reduxStore); 
-            
                 reduxStore.dispatch({
                     type: "OP_FAILED",
-                    method: 'createInfraComponent',
-                    message: error.message
+                    message: 'Could not create ACI Fabric',
+                    err: error
                 });
         });
     } 
@@ -334,16 +318,10 @@ function* deleteInfraComponent(action) {
                 riot.mount(tag, 'alert', reduxStore); 
             })
             .catch(function (error) {
-                var tag = document.createElement("alert");
-                tag.setAttribute("type", "error");
-                tag.innerHTML = 'Success: Could not delete component'
-                document.getElementById('pop-box').append(tag)
-                riot.mount(tag, 'alert', reduxStore); 
-            
                 reduxStore.dispatch({
                     type: "OP_FAILED",
-                    method: 'deleteInfraComponent',
-                    message: error.message
+                    message: 'Could not delete infrastructure component',
+                    err: error
                 });
             }); 
     }
@@ -358,16 +336,10 @@ function* deleteInfraComponent(action) {
             
             })
             .catch(function (error) {
-                var tag = document.createElement("alert");
-                tag.setAttribute("type", "error");
-                tag.innerHTML = 'Error: ACI Fabric could not be deleted'
-                document.getElementById('pop-box').append(tag)
-                riot.mount(tag, 'alert', reduxStore); 
-            
                 reduxStore.dispatch({
                     type: "OP_FAILED",
-                    method: 'deleteInfraComponent',
-                    message: error.message
+                    message: 'ACI fabric could not be deleted',
+                    err: error
                 });
             });
     }   
@@ -384,8 +356,8 @@ function* fetchNetworkGroups(action) {
     .catch(function (error) {
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'Get Networks',
-            message: error.message
+            message: 'Could not get networks from server',
+            err: error
         });
     });
 }
@@ -405,16 +377,10 @@ function* createNetworkGroup(action) {
         })
     })
     .catch(function (error) {
-        var tag = document.createElement("alert");
-        tag.setAttribute("type", "error");
-        tag.innerHTML = 'Error: Could not create Network group'
-        document.getElementById('pop-box').append(tag)
-        riot.mount(tag, 'alert', reduxStore); 
-        
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'createNetworkGroup',
-            message: error.message
+            message: "Can't create network group",
+            err: error
         });
     });
 }
@@ -433,16 +399,10 @@ function* deleteNetworkGroup(action) {
         })
     })
     .catch(function (error) {
-        var tag = document.createElement("alert");
-        tag.setAttribute("type", "error");
-        tag.innerHTML = 'Error: Could not delete network'
-        document.getElementById('pop-box').append(tag)
-        riot.mount(tag, 'alert', reduxStore); 
-
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'delete Network',
-            message: error.message
+            message: 'Could not delete network', 
+            err: error
         });
     }); 
 }
@@ -458,8 +418,8 @@ function* getKeys(action) {
     .catch(function (error) {
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'Get Keys',
-            message: error.message
+            message: 'Could not get keys from server',
+            err: error
         });
     });
 }
@@ -483,24 +443,18 @@ function* addPublicKey(action) {
             })
         })
         .catch(function (error) {
-            var tag = document.createElement("alert");
-            tag.setAttribute("type", "error");
-            tag.innerHTML = 'Error: Public key could not be added'
-            document.getElementById('pop-box').append(tag)
-            riot.mount(tag, 'alert', reduxStore); 
-
             reduxStore.dispatch({
                 type: "OP_FAILED",
-                method: 'addPublicKey',
-                message: error.message
+                message: 'Could not add public key',
+                err: error
             });
         });
     })
     .catch(function (error) {
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'addPublicKey',
-            message: error.message
+            message: 'Could not add public key',
+            err: error
         });
     });
 }
@@ -535,24 +489,18 @@ function* editPublicKey(action) {
             })
         })
         .catch(function (error) {
-            var tag = document.createElement("alert");
-            tag.setAttribute("type", "error");
-            tag.innerHTML = 'Error: Public key could not be modified'
-            document.getElementById('pop-box').append(tag)
-            riot.mount(tag, 'alert', reduxStore); 
-
             reduxStore.dispatch({
                 type: "OP_FAILED",
-                method: 'addPublicKey',
-                message: error.message
+                message: 'Could not add Public Key',
+                err: error
             });
         });
     })
     .catch(function (error) {
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'addPublicKey',
-            message: error.message
+            message: 'Could not add Public Key',
+            err: error
         });
     });
 }
@@ -589,24 +537,18 @@ function* deleteKey(action) {
             })
         })
         .catch(function (error) {
-            var tag = document.createElement("alert");
-            tag.setAttribute("type", "error");
-            tag.innerHTML = 'Error: Could not delete key'
-            document.getElementById('pop-box').append(tag)
-            riot.mount(tag, 'alert', reduxStore); 
-            
             reduxStore.dispatch({
                 type: "OP_FAILED",
-                method: 'deleteKey',
-                message: error.message
+                message: 'Could not delete key',
+                err: error
             });
         });
     })
     .catch(function (error) {
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'deleteKey',
-            message: error.message
+            message: 'Could not delete key',
+            err: error
         });
     });    
 }
@@ -622,8 +564,8 @@ function* fetchIP(action) {
     .catch(function (error) {
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'fetchIP',
-            message: error.message
+            message: 'Could not get the KUBAM IP from server',
+            err: error
         });
     });
 }
@@ -648,16 +590,10 @@ function* updateIP(action) {
         })
     })
     .catch(function (error) {
-        var tag = document.createElement("alert");
-        tag.setAttribute("type", "error");
-        tag.innerHTML = 'Error: IP could not be updated'
-        document.getElementById('pop-box').append(tag)
-        riot.mount(tag, 'alert', reduxStore); 
-        
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'updateIP',
-            message: error.message
+            message: 'Could not update KUBAM IP',
+            err: error
         });
     });
 }
@@ -799,15 +735,10 @@ function* addHost(action) {
         riot.mount(tag, 'alert', reduxStore); 
         })
     .catch(function(error){
-        var tag = document.createElement("alert");
-        tag.setAttribute("type", "error");
-        tag.innerHTML = 'Error: Host could not be added'
-        document.getElementById('pop-box').append(tag)
-        riot.mount(tag, 'alert', reduxStore); 
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'addHost',
-            message: error.message
+            message: 'Could not add host',
+            err: error
         });
     });
 
@@ -968,8 +899,8 @@ function* getHost(action){
     .catch(function (error) {
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'Get Hosts',
-            message: error.message
+            message: 'Could not get hosts from server',
+            err: error
         });
     });
 }
@@ -990,31 +921,32 @@ function* deleteHost(action){
         })
     })
     .catch(function(error) {
-        var tag = document.createElement("alert");
-        tag.setAttribute("type", "error");
-        tag.innerHTML = 'Error: Could not delete Host'
-        document.getElementById('pop-box').append(tag)
-        riot.mount(tag, 'alert', reduxStore); 
-
         reduxStore.dispatch({
             type: "OP_FAILED",
-            method: 'deleteKey',
-            message: error.message
+            message: 'Could not delete host',
+            err: error
         });
     }); 
 }
 
-function* logError(action) {
-    //console.error('ERROR in ' + action.method + ': ' + action.message)
+function* showError(action) {
+    // action has: err and message
     var tag = document.createElement("alert");
     tag.setAttribute("type", "error");
-    tag.innerHTML = 'Error: ' + action.method + ': ' + action.message
+    let errorObject=JSON.parse(JSON.stringify(action.err));
+    if(Object.keys(errorObject).length === 0 && errorObject.constructor === Object) {
+      tag.innerHTML = action.message
+    } else if (errorObject.response.status === 400) {
+      tag.innerHTML = errorObject.response.data.error;
+    }else {
+      tag.innerHTML = action.message
+    }
     document.getElementById('pop-box').append(tag)
     riot.mount(tag, 'alert', reduxStore); 
 }
 
 function* watchUserRequests() {
-  yield ReduxSaga.takeEvery('OP_FAILED', logError)
+  yield ReduxSaga.takeEvery('OP_FAILED', showError)
   
   yield ReduxSaga.takeEvery('ADD_HOST', addHost)
   yield ReduxSaga.takeEvery('UPDATE_HOST', updateHost)
