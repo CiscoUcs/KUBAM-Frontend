@@ -42,8 +42,12 @@ const reduxStore = Redux.createStore(
 
 function createAx() {
     const hname = window.location.hostname
-    const port = window.location.port
-    url = 'http://' + hname + ':' + port + '/api/'
+    var port = window.location.port
+    var url = 'http://localhost:80/api/';
+    if (hname !== '' && port !== '') {
+      url = 'http://' + hname + ':' + port + '/api/'
+    }
+    //console.log(url);
     return axios.create({
         baseURL: url,
         timeout: 1200,
@@ -1016,7 +1020,6 @@ function translateRole(x) {
 }
 
 function roleCatalog(cat, host) {
-  console.log(host)
   if (typeof cat != 'undefined' && typeof host != 'undefined') {
     return cat[host.os]
   }
