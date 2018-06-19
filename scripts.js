@@ -43,6 +43,8 @@ const reduxStore = Redux.createStore(
 function createAx() {
     const hname = window.location.hostname
     var port = window.location.port
+    console.log(port);
+    console.log(hname);
     var url = 'http://kubam/api/';
     if (port == "") {
       port = "80"
