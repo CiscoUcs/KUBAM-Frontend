@@ -45,13 +45,16 @@ function createAx() {
     var port = window.location.port
     console.log(port);
     console.log(hname);
-    var url = 'http://kubam/api/';
-    if (port == "") {
+    var url = '';
+    if (port == "5000") {
       port = "80"
+    }else if( port == "8002"){
+      port = "8001"
     }
     if (hname !== '' && port !== '') {
       url = 'http://' + hname + ':' + port + '/api/'
     }
+    console.log(url)
     //console.log(url);
     return axios.create({
         baseURL: url,
