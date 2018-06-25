@@ -43,18 +43,14 @@ const reduxStore = Redux.createStore(
 function createAx() {
     const hname = window.location.hostname
     var port = window.location.port
-    console.log(port);
-    console.log(hname);
-    var url = '';
+    var url = 'http://10.93.234.96:8001/api/';
     if (port == "5000") {
       port = "80"
-    }else if( port == "8002"){
-      port = "8001"
     }
     if (hname !== '' && port !== '') {
       url = 'http://' + hname + ':' + port + '/api/'
     }
-    console.log(url)
+    //console.log(url)
     //console.log(url);
     return axios.create({
         baseURL: url,
