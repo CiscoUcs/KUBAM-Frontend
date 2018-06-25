@@ -809,8 +809,10 @@ function* makeBootImages(action) {
     // get the hosts for action.hosts
     hosts = action.hosts 
   }
+  console.log(hosts)
   ax.post('v2/deploy/images')
     .then(function(response) {
+          console.log(response)
           var tag = document.createElement("alert");
           tag.setAttribute("type", "success");
           tag.innerHTML = 'Success: Built Images'
@@ -818,19 +820,11 @@ function* makeBootImages(action) {
           riot.mount(tag, 'alert', reduxStore); 
     })
    .catch(function(error){
-      let errorObject=JSON.parse(JSON.stringify(error));
-      var tag = document.createElement("alert");
-      tag.setAttribute("type", "error");
-      if (errorObject != null && errorObject.response.status === 400) {
-        tag.innerHTML = errorObject.response.data.error;
-      }else {
-        tag.innerHTML = error.message
-      }
-      document.getElementById('pop-box').append(tag)
-      riot.mount(tag, 'alert', reduxStore); 
       reduxStore.dispatch({
-          type: "FETCH_HOSTS"
-      })
+          type: "OP_FAILED",
+          message: 'Could not make boot images',
+          err: error
+      });
   });
 }
 
@@ -942,6 +936,7 @@ function* showError(action) {
     var tag = document.createElement("alert");
     tag.setAttribute("type", "error");
     let errorObject=JSON.parse(JSON.stringify(action.err));
+    console.log(errorObject)
     if(Object.keys(errorObject).length === 0 && errorObject.constructor === Object) {
       tag.innerHTML = action.message
     } else if (errorObject.response.status === 400) {
