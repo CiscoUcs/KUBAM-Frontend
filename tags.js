@@ -1,11 +1,15 @@
 riot.tag2('app', '<top-bar store="{this.opts.store}"></top-bar> <side-bar store="{this.opts.store}"></side-bar> <content store="{this.opts.store}"></content>', '', '', function(opts) {
 });
 
+riot.tag2('content', '<loading-spinner if="{this.opts.store.getState().isLoading}"></loading-spinner> <router> <route path="/images"> <serverimages-overview store="{passStore}"></serverimages-overview> </route> <route path="/infrastructure"> <infra-overview store="{passStore}"></infra-overview> </route> <route path="/hosts"> <hosts store="{passStore}"></hosts> </route> <route path="/hosts/..."> <hosts store="{passStore}"></hosts> </route> <route path="/network"> <network store="{passStore}"></network> </route> <route path="/settings"> <settings store="{passStore}"></settings> </route> <route path="/feedback"> <feedback store="{passStore}"></feedback> </route> <route path="/tutorial"> <tutorial store="{passStore}"></tutorial> </route> </router> <div id="modal-shadow" style="display:none;"> <div id="modal-container"> <div id="modal-box"> <modal></modal> </div> </div> </div> <div id="pop-box"> </div>', 'content { position: absolute; left: 200px; top: 50px; padding: 20px; width: calc(100% - 240px); } content #modal-shadow,[data-is="content"] #modal-shadow{ position: fixed; display: table; top: 0; left: 0; height: 100%; width: 100%; z-index: 9999; background-color: rgba(0,0,0,0.6); } content #modal-container,[data-is="content"] #modal-container{ display:table-cell; text-align:center; padding-top: 5%; } content #modal-box,[data-is="content"] #modal-box{ position: relative; display: inline-block; background-color: white; border-radius: 4px; padding: 34px; } content #pop-box,[data-is="content"] #pop-box{ position: fixed; top: 70px; right: 25px; width: 340px; }', '', function(opts) {
+        passStore = this.opts.store
+});
+
 riot.tag2('feedback', '<div class="container>"> <form> Thank you for your feedback. Your opinion is very important for us.<br> <hr> <fancy-input tag="Contact Information" inputid="feedback-contact"> </fancy-input> <fancy-textarea tag="Message" inputid="feedback-message"> </fancy-textarea> <fancy-button onclick="{send_feedback}">Send</fancy-button> </form> </div>', 'feedback form,[data-is="feedback"] form{ font-size: 14px; color:black; font-weight: 400; padding-top: 25px; padding-left: 45px; padding-right: 45px; padding-bottom: 25px; background-color: white; } feedback textarea,[data-is="feedback"] textarea{ vertical-align: top; min-width: 650px; } feedback select,[data-is="feedback"] select,feedback textarea,[data-is="feedback"] textarea{ width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; margin-top: 6px; margin-bottom: 16px; resize: vertical; } feedback fancy-button,[data-is="feedback"] fancy-button{ margin-left: -15px; }', '', function(opts) {
         this.send_feedback = function() {
             var instance = axios.create({
                 baseURL: 'https://feedback.kubam.io/',
-                timeout: 1000,
+                timeout: 5000,
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -19,16 +23,23 @@ riot.tag2('feedback', '<div class="container>"> <form> Thank you for your feedba
                 out = 'Contact: ' + user || 'Not provided'
                 out += ' \n '
                 out += 'Message: ' + message
-                console.log(out)
 
             instance.post('/v1/feedback', {
                 message: out
               })
               .then(function (response) {
-                console.log(response);
+                var tag = document.createElement("alert");
+                tag.setAttribute("type", "success");
+                tag.innerHTML = 'Success: Feedback was sent to the team'
+                document.getElementById('pop-box').append(tag)
+                riot.mount(tag, 'alert', reduxStore);
               })
               .catch(function (error) {
-                console.log(error);
+                var tag = document.createElement("alert");
+                tag.setAttribute("type", "error");
+                tag.innerHTML = 'Error: Feedback could not be sent';
+                document.getElementById('pop-box').append(tag)
+                riot.mount(tag, 'alert', reduxStore);
               });
             } else {
                 console.error('NO MESSAGE DEFINED!')
@@ -641,10 +652,6 @@ riot.tag2('settings', '<div class="settings-group"> <fancy-input tag="KUBAM IP A
 
 riot.tag2('tutorial', '<form> <h5>Welcome to KUBAM. In the following links you will find all the necessary information to get started using our project.</h5> <hr> <div> <b>Youtube Demo:</b> <fancy-button class="btn btn-success" onclick=" window.open(\'http://www.youtube.com/watch?v=7QCrml8C-QI\',\'_blank\')"> Go </fancy-button> <hr> <b>dCloud Tutorial. Lab Steps:</b> <fancy-button class="btn btn-success" onclick=" window.open(\'https://github.com/vallard/KUBAM-Tutorial/blob/master/README.md\',\'_blank\')"> Go </fancy-button> <hr> <b>dCloud: Cisco Unified Computing System 3.2 v1 - DEV:</b> <fancy-button class="btn btn-success" onclick=" window.open(\'https://dcloud2-lon.cisco.com/dashboard/sessions\',\'_blank\')"> Go </fancy-button> <hr> <h5> Please, make sure to schedule the lab properly and once it is scheduled, click on View to start it. We hope you enjoy your KUBaM experience! </h5> </div> </form>', 'tutorial-content{ padding: 10px; position: fixed; } tutorial h5,[data-is="tutorial"] h5{ font-size: 12px; color:gray; font-weight: 400; padding-top: 5px; background-color: white; padding-left: 7px; padding-right: 7px; } tutorial form,[data-is="tutorial"] form{ margin-top: 8px; text-align: left; vertical-align: left; background-color: white; padding-top: 30px; padding-left: 45px; padding-right: 45px; padding-bottom: 30px; font-size: 14px; } tutorial fancy-button,[data-is="tutorial"] fancy-button{ margin-left: 10px; }', '', function(opts) {
 });
-riot.tag2('content', '<loading-spinner if="{this.opts.store.getState().isLoading}"></loading-spinner> <router> <route path="/images"> <serverimages-overview store="{passStore}"></serverimages-overview> </route> <route path="/infrastructure"> <infra-overview store="{passStore}"></infra-overview> </route> <route path="/hosts"> <hosts store="{passStore}"></hosts> </route> <route path="/hosts/..."> <hosts store="{passStore}"></hosts> </route> <route path="/network"> <network store="{passStore}"></network> </route> <route path="/settings"> <settings store="{passStore}"></settings> </route> <route path="/feedback"> <feedback store="{passStore}"></feedback> </route> <route path="/tutorial"> <tutorial store="{passStore}"></tutorial> </route> </router> <div id="modal-shadow" style="display:none;"> <div id="modal-container"> <div id="modal-box"> <modal></modal> </div> </div> </div> <div id="pop-box"> </div>', 'content { position: absolute; left: 200px; top: 50px; padding: 20px; width: calc(100% - 240px); } content #modal-shadow,[data-is="content"] #modal-shadow{ position: fixed; display: table; top: 0; left: 0; height: 100%; width: 100%; z-index: 9999; background-color: rgba(0,0,0,0.6); } content #modal-container,[data-is="content"] #modal-container{ display:table-cell; text-align:center; padding-top: 5%; } content #modal-box,[data-is="content"] #modal-box{ position: relative; display: inline-block; background-color: white; border-radius: 4px; padding: 34px; } content #pop-box,[data-is="content"] #pop-box{ position: fixed; top: 70px; right: 25px; width: 340px; }', '', function(opts) {
-        passStore = this.opts.store
-});
-
 riot.tag2('dashboard-box', '<div class="dashGrpBox"> <div class="dashGrpTitle"> {this.opts.name} </div> <div class="dashGrpStatus"> <div class="dashGrpStatBox {green: this.opts.green>0} {group-passive: this.opts.green==0}">{this.opts.green}</div> <div class="dashGrpStatBox {yellow: this.opts.yellow>0} {group-passive: this.opts.yellow==0}">{this.opts.yellow}</div> <div class="dashGrpStatBox {red: this.opts.red>0} {group-passive: this.opts.red==0}">{this.opts.red}</div> <div class="dashGrpStatBox {gray: this.opts.gray>0} {group-passive: this.opts.gray==0}">{this.opts.gray}</div> </div> </div>', 'dashboard-box .dashGrpBox,[data-is="dashboard-box"] .dashGrpBox{ width: 400px; background-color: white; box-shadow: 0 1px 3px 0px #cecece; border-radius: 5px; cursor: pointer; margin-bottom: 10px; margin-right: 20px; border: 2px solid white; position: relative; float: left; } dashboard-box .dashGrpTitle,[data-is="dashboard-box"] .dashGrpTitle{ height: 36px; line-height: 36px; border-bottom: 1px solid #d6d6d6; padding: 0 7px; position: relative; } dashboard-box .dashGrpStatus,[data-is="dashboard-box"] .dashGrpStatus{ height: 50px; line-height: 50px; } dashboard-box .dashGrpStatBox,[data-is="dashboard-box"] .dashGrpStatBox{ color: white; width: 80px; height: 34px; line-height: 34px; text-align: center; margin-top: 8px; margin-left: 16px; background-color: black; float: left; } dashboard-box .group-passive,[data-is="dashboard-box"] .group-passive{ background-color: rgb(220,220,220); } dashboard-box .green,[data-is="dashboard-box"] .green{ background-color: rgb(131, 209, 131); } dashboard-box .yellow,[data-is="dashboard-box"] .yellow{ background-color: rgb(255, 195, 91); } dashboard-box .red,[data-is="dashboard-box"] .red{ background-color: rgb(255, 160, 160); } dashboard-box .gray,[data-is="dashboard-box"] .gray{ background-color: rgb(168, 168, 168); }', '', function(opts) {
 });  
 riot.tag2('dashboard', '<div id="server-health"> <div class="servergroup clearfloat" each="{categories}"> <h1 class="categoryHeader serverCat">{type}</h1> <servergroup-box each="{group in groups}" id="{group.id}" name="{group.name}" green="{group.green}" yellow="{group.yellow}" red="{group.red}" gray="{group.gray}"> </servergroup-box> </div> </div>', 'dashboard ucs-content,[data-is="dashboard"] ucs-content{ padding: 10px; } dashboard .server-type,[data-is="dashboard"] .server-type{ font-size: 0.7em; font-style: italic; } dashboard .add-group,[data-is="dashboard"] .add-group{ font-size: 6.5em; color: rgb(41,182,246); } dashboard .svrGrpCreationDialog,[data-is="dashboard"] .svrGrpCreationDialog{ text-align: center; background-color: white; padding: 10px 50px; margin-bottom: 20px; } dashboard .svrGrpCreationDialog span,[data-is="dashboard"] .svrGrpCreationDialog span{ margin-right: 50px; } dashboard .servergroup,[data-is="dashboard"] .servergroup{ position: relative; overflow:auto; padding-bottom: 5px; }', '', function(opts) {

@@ -17,7 +17,7 @@
         send_feedback() {            
             var instance = axios.create({
                 baseURL: 'https://feedback.kubam.io/',
-                timeout: 1000,
+                timeout: 5000,
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -31,16 +31,23 @@
                 out = 'Contact: ' + user || 'Not provided'
                 out += ' \n '
                 out += 'Message: ' + message
-                console.log(out)
             
             instance.post('/v1/feedback', {
                 message: out
               })
               .then(function (response) {
-                console.log(response);
+                var tag = document.createElement("alert");
+                tag.setAttribute("type", "success");
+                tag.innerHTML = 'Success: Feedback was sent to the team'
+                document.getElementById('pop-box').append(tag)
+                riot.mount(tag, 'alert', reduxStore); 
               })
               .catch(function (error) {
-                console.log(error);
+                var tag = document.createElement("alert");
+                tag.setAttribute("type", "error");
+                tag.innerHTML = 'Error: Feedback could not be sent';
+                document.getElementById('pop-box').append(tag)
+                riot.mount(tag, 'alert', reduxStore); 
               }); 
             } else {
                 console.error('NO MESSAGE DEFINED!')
