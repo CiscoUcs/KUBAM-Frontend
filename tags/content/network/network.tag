@@ -4,15 +4,8 @@
         </add-button>
 
         <div class="network-group"> 
-            <!--<div class="top-actions">
-                <fancy-dropdown inputid="actions" class="table-input">
-                    <option value="none">Actions</option>
-                    <option value="Edit selected hosts">Edit selected hosts</option>
-                    <option value="Delete select hosts">Delete select hosts</option>    
-                </fancy-dropdown>
-            </div>-->
             <div class="network-container-big">
-                <div class="table networkwidthtablelimit">
+                <div id="networkgroup-rows" class="table networkwidthtablelimit">
                     <div class="tr">
                         <div class="th">Network Name</div>
                         <div class="th">Netmask</div>
@@ -23,16 +16,29 @@
                         <div class="th">VLAN</div>
                         <div class="th actionwidth">Actions</div>
                     </div>
-                    <div class="tr" each={nw in this.opts.store.getState().networks}>
-                        <div class="td">{nw.name}</div>
-                        <div class="td">{nw.netmask}</div>
-                        <div class="td">{nw.gateway}</div>
-                        <div class="td">{nw.nameserver}</div>
-                        <div class="td">{nw.ntpserver}</div>
-                        <div class="td">{nw.proxy}</div>
-                        <div class="td">{nw.vlan}</div>
+                    <div class="tr" data-id="{nw.id}" each={nw in this.opts.store.getState().networks}>
+                        <div class="td">
+                            <input type="text" value="{nw.name}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
+                        </div>
+                        <div class="td">
+                            <input type="text" value="{nw.netmask}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
+                        </div>
+                        <div class="td">
+                            <input type="text" value="{nw.gateway}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
+                        </div>
+                        <div class="td">
+                            <input type="text" value="{nw.nameserver}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
+                        </div>
+                        <div class="td">
+                            <input type="text" value="{nw.ntpserver}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
+                        </div>
+                        <div class="td">                            
+                            <input type="text" value="{nw.proxy}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
+                        </div>
+                        <div class="td">
+                            <input type="text" value="{nw.vlan}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
+                        </div>
                         <div class="td actionwidth">
-                            <img src="./icons/edit.svg" class="table-icon">
                             <img src="./icons/delete.svg" data-name={nw.name} onclick={deleteNetwork} class="table-icon">
                         </div>
                     </div>
@@ -56,6 +62,25 @@
             width: 100%;
             table-layout: fixed;
             word-wrap: break-word;
+        }
+        
+        .td input[type="text"] {
+            border: none;
+            outline:0;
+            width: 95%;
+            padding: 0;
+            padding-left: 8px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            margin: 0;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        
+        .td input[type="text"]:hover {
+            background-image: url('icons/edit.svg');
+            background-repeat: no-repeat;
+            background-position: right;
         }
     </style>
     
@@ -101,6 +126,32 @@
                     name: ds.name
                 }
             })
+        }
+        
+        editNetwork(e) {
+            ds = e.target.dataset;
+            id = ds.id
+            rows = document.getElementById('networkgroup-rows')
+            for(i=1;i<rows.children.length;i++) {
+                row = rows.children[i]
+                if(row.dataset.id == id) {
+                    c = row.children
+                    updated = {
+                        "id": row.dataset.id,
+                        "name": c[0].children[0].value.trim(),
+                        "netmask": c[1].children[0].value,
+                        "gateway": c[2].children[0].value,
+                        "nameserver": c[3].children[0].value,
+                        "ntpserver": c[4].children[0].value,
+                        "proxy": c[5].children[0].value,
+                        "vlan": c[6].children[0].value
+                    }
+                    store.dispatch({
+                        type: 'UPDATE_NETWORKGROUP',
+                        data: updated
+                    })
+                }
+            }
         }
     </script>
 </network>

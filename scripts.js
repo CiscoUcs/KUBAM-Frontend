@@ -54,7 +54,7 @@ function createAx() {
     //console.log(url);
     return axios.create({
         baseURL: url,
-        timeout: 1200,
+        timeout: 4000,
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -313,6 +313,37 @@ function* createInfraComponent(action) {
     } 
 }
 
+function* updateUCS(action) {    
+    ax.put('v2/servers', action['data'])
+    .then(function (response) {
+        var tag = document.createElement("alert");
+        tag.setAttribute("type", "success");
+        tag.innerHTML = 'Success: UCS component updated'
+        document.getElementById('pop-box').append(tag)
+        riot.mount(tag, 'alert', reduxStore); 
+            
+        reduxStore.dispatch({
+            type: 'FETCH_INFRA'
+        })
+    })
+    .catch(function(error) {
+        var tag = document.createElement("alert");
+        tag.setAttribute("type", "error");
+
+        let errorObject=JSON.parse(JSON.stringify(error));
+        console.log(error)
+        if (errorObject == null) {
+            tag.innerHTML = error.message
+        } else if(errorObject.response.status === 400) {
+            tag.innerHTML = errorObject.response.data.error;
+        }else {
+            tag.innerHTML = "Error: Could not update UCS component"
+        }
+            document.getElementById('pop-box').append(tag)
+            riot.mount(tag, 'alert', reduxStore); 
+    });
+}
+
 function* deleteInfraComponent(action) {    
     delete_id = {"name": action['data']['name']};
     
@@ -388,6 +419,31 @@ function* createNetworkGroup(action) {
         reduxStore.dispatch({
             type: "OP_FAILED",
             message: "Can't create network group",
+            err: error
+        });
+    });
+}
+
+function* updateNetworkGroup(action) {
+    console.log(action)
+    ax.put('v2/networks', action['data'])
+    .then(function (response) {
+        console.log(response)
+        var tag = document.createElement("alert");
+        tag.setAttribute("type", "success");
+        tag.innerHTML = 'Success: Network group updated'
+        document.getElementById('pop-box').append(tag)
+        riot.mount(tag, 'alert', reduxStore); 
+
+        // update the page with the updated network group
+        reduxStore.dispatch({
+            type: 'FETCH_NETWORKGROUPS'
+        })
+    })
+    .catch(function (error) {
+        reduxStore.dispatch({
+            type: "OP_FAILED",
+            message: "Can't update network group",
             err: error
         });
     });
@@ -968,9 +1024,11 @@ function* watchUserRequests() {
   yield ReduxSaga.takeEvery('FETCH_INFRA', getInfraComponents)
   yield ReduxSaga.takeEvery('CREATE_CONTROLLER', createInfraComponent)
   yield ReduxSaga.takeEvery('DELETE_CONTROLLER', deleteInfraComponent)
+  yield ReduxSaga.takeEvery('UPDATE_UCS', updateUCS)
 
   yield ReduxSaga.takeEvery('FETCH_NETWORKGROUPS', fetchNetworkGroups)
   yield ReduxSaga.takeEvery('CREATE_NETWORKGROUP', createNetworkGroup)
+  yield ReduxSaga.takeEvery('UPDATE_NETWORKGROUP', updateNetworkGroup)
   yield ReduxSaga.takeEvery('DELETE_NETWORK', deleteNetworkGroup)
     
   yield ReduxSaga.takeEvery('FETCH_KEYS', getKeys)

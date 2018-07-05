@@ -246,6 +246,8 @@
             /* line-height: 45px; */
             padding: 0;
             padding-left: 8px;
+            padding-top: 2px;
+            padding-bottom: 2px;
             margin: 0;
             font-size: 1em;
             cursor: pointer;
