@@ -1,15 +1,24 @@
 <hosts>
     <div class="svrGrpServers">
         <div class="top-actions">
-            <fancy-dropdown inputid="actions" class="table-input" changefunc={actionHandler}>
-                <option value="none">Actions</option>
-                <option value="buildimage">Build Boot Images</option>
-                <!-- <option value="deploy">Deploy UCS</option>
-                <option value="deploy">Deploy vmedia policy</option> --> 
-            </fancy-dropdown>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="hostActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Actions
+            </button>
+            <div class="dropdown-menu" aria-labelledby="hostActions">
+              <a class="dropdown-item dropdown-disabled" data-action="buildBootImages" onclick={actionSelect}>Build Boot Images</a>
+              <a class="dropdown-item dropdown-disabled" data-action="deleteHosts" onclick={actionSelect}>Delete</a>
+              <a class="dropdown-item dropdown-disabled" onclick={actionSelect}>Deploy Service Profile</a>
+              <a class="dropdown-item dropdown-disabled" onclick={actionSelect}>Deploy VMedia Policy</a>
+              <hr/>
+              <a class="dropdown-item dropdown-disabled" onclick={actionSelect}>Power Off</a>
+              <a class="dropdown-item dropdown-disabled" onclick={actionSelect}>Power On</a>
+              <a class="dropdown-item dropdown-disabled" onclick={actionSelect}>Power Cycle (hard)</a>
+              <a class="dropdown-item dropdown-disabled" onclick={actionSelect}>Power Cycle (soft)</a>
+            </div>
+          </div>
         </div>
 
-       <table-search></table-search>
         <div class="table">
             <div class="tr">
                 <div class="th checkbox_width">
@@ -25,7 +34,7 @@
             </div>
             <div class="tr" each={host, iindex in this.opts.store.getState().hosts}>
                 <div class="td-host checkbox_width">
-                    <input type="checkbox" class="hostcheckboxes" checked={host.name.startsWith("undefined")}>
+                    <input type="checkbox" class="hostcheckboxes" data-hostname={host.name} onclick={toggleCheck} checked="{host.selected}">
                 </div>
                 <div class="td-host hostname_width">
                     <input type="text" value="{host.name}" data-op="host" data-old="{host.name}" data-index="{iindex}" onblur="{changeHost}" />
@@ -135,34 +144,6 @@
           })
           riot.update(); // added to update the os and other dropdowns. 
         }
-
-
-        // to handle actions that user does. 
-        actionHandler() {
-          var elem = document.getElementById('actions')
-          if (elem.value === "buildimage") {
-            //var checkedHosts = getCheckedHosts()
-            store.dispatch({
-              type: 'MAKEBOOT_IMAGES',
-              hosts: [] // checkedHosts.map((x) => x.name)
-            })
-            elem.selectedIndex = 0;
-          }
-        }
-    
-        changeSelection() {
-            hostcheckboxes = document.getElementsByClassName('hostcheckboxes')
-            topbox = document.getElementById('select_all')
-            for(i=0;i<hostcheckboxes.length;i++) {
-                if(topbox.checked==true){
-                  hostcheckboxes[i].checked = true
-                }
-                else{
-                  hostcheckboxes[i].checked = false
-                }
-            }
-        }
-
     </script>
     
     <style>
@@ -215,13 +196,6 @@
             background-image: none;
         }
         
-        /*.top-actions {
-            margin-bottom: 15px;
-        }*/
-        
-        .top-actions fancy-dropdown {
-            cursor: pointer;
-        }
         
         .svrGrpSettings {
             background-color: white;

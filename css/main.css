@@ -223,3 +223,51 @@ body {
 [data-tip]:hover:after {
 	display:block;
 }
+
+.top-actions {
+  margin-bottom: 15px;
+}
+
+
+/* make the dropdown box look integrated. */
+.btn-secondary {
+  background-color: #363c51;
+  border-color: #363c51;
+}
+
+.btn-secondary:hover {
+  background-color: #363c51;
+  border-color: #363c51;
+}
+
+.btn-secondary:not(:disabled):not(.disabled).active:focus, .btn-secondary:not(:disabled):not(.disabled):active:focus, .show > .btn-secondary.dropdown-toggle:focus {
+    box-shadow: none;
+}
+
+.btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show > .btn-secondary.dropdown-toggle {
+  background-color: #363c51;
+  border-color: #363c51;
+}
+
+/* make so menu items are grayed out if there is no link to them. */
+.dropdown-disabled {
+  color: #ddd !important;
+  cursor: default;
+}
+
+.dropdown-disabled:hover {
+  color: #eee;
+  cursor: default;
+}
+
+/* for long clicks on the disabled */
+.dropdown-disabled:active {
+  color: #eee;
+  cursor: default;
+  background: transparent;
+}
+
+
+.dropdown-item {
+  cursor: pointer
+}

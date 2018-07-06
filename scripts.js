@@ -12,6 +12,28 @@ var loadingState = {
     isLoading: true
 }
 
+/*
+ *  Make sure that when we get data from the server we ignore the selected field. 
+ *  Then see if we already have selected (in the state) and make sure the new data 
+ *  we get back matches.  This way we can switch tabs and still have data selected.
+ */
+function reconcileChecks(state, newData){
+  // make it so they are always undefined. 
+  if (state['hosts'] === undefined) {
+    for (i in newData) {
+      newData[i].selected = false
+    } 
+    return newData
+  }else {
+    for(i in newData) {
+      if (i < state['hosts'].length) {
+        state['hosts'][i].selected ? newData[i].selected = true : newData[i].selected = false
+      }
+    }
+  }
+  return newData
+}
+
 var reducer = function(state=defaultState, action) {
     switch(action.type) {
         case 'FLUSH':
@@ -23,12 +45,29 @@ var reducer = function(state=defaultState, action) {
         case 'FETCH_SUCCEEDED':           
             top_key = Object.keys(action.data)[0]
             add_data = action.data[top_key]
-                        
             x = {}
+            if (top_key === "hosts") {
+              add_data = reconcileChecks(state, add_data);
+            }
             x[top_key] = add_data
-                                                            
             return Object.assign({},state,{isLoading: false},x)
             break;
+        case 'TOGGLE_HOST':
+            for (i = 0; i < state['hosts'].length; i++){
+              obj = state['hosts'][i]
+              if (obj.name === action.data) {
+                obj.selected ? obj.selected = false : obj.selected = true
+              }
+            }
+            return Object.assign({},state,{isLoading: false},state['hosts'])
+            break
+        case 'TOGGLE_ALL':
+            for (i = 0; i < state['hosts'].length; i++){
+              action.data ? state['hosts'][i].selected = true : state['hosts'][i].selected = false
+            }
+            return Object.assign({},state,{isLoading: false},state['hosts'])
+            break
+            
         default:
             return state
     }
@@ -331,7 +370,6 @@ function* updateUCS(action) {
         tag.setAttribute("type", "error");
 
         let errorObject=JSON.parse(JSON.stringify(error));
-        console.log(error)
         if (errorObject == null) {
             tag.innerHTML = error.message
         } else if(errorObject.response.status === 400) {
@@ -425,10 +463,8 @@ function* createNetworkGroup(action) {
 }
 
 function* updateNetworkGroup(action) {
-    console.log(action)
     ax.put('v2/networks', action['data'])
     .then(function (response) {
-        console.log(response)
         var tag = document.createElement("alert");
         tag.setAttribute("type", "success");
         tag.innerHTML = 'Success: Network group updated'
@@ -765,7 +801,6 @@ function getNextObviousOS(hosts) {
 }
 
 function* addHost(action) {
-    //console.log(action['data'])
     hosts = reduxStore.getState().hosts
     ngs = reduxStore.getState().networks
     /* be smart: If there is no network group set, then set error and tell them to define network group first.  */
@@ -865,10 +900,8 @@ function* makeBootImages(action) {
     // get the hosts for action.hosts
     hosts = action.hosts 
   }
-  console.log(hosts)
   ax.post('v2/deploy/images')
     .then(function(response) {
-          console.log(response)
           var tag = document.createElement("alert");
           tag.setAttribute("type", "success");
           tag.innerHTML = 'Success: Built Images'
@@ -894,7 +927,6 @@ function getCheckedHosts() {
           checkedHosts.push(allHosts[i])
         }
     }
-    console.log("Checked hosts." + checkedHost);
     return checkedHosts;
 }
 
@@ -992,7 +1024,6 @@ function* showError(action) {
     var tag = document.createElement("alert");
     tag.setAttribute("type", "error");
     let errorObject=JSON.parse(JSON.stringify(action.err));
-    console.log(errorObject)
     if(Object.keys(errorObject).length === 0 && errorObject.constructor === Object) {
       tag.innerHTML = action.message
     } else if (errorObject.response.status === 400) {
@@ -1083,3 +1114,102 @@ function roleCatalog(cat, host) {
   return []
 
 }
+
+
+function changeSelection() {
+    hostcheckboxes = document.getElementsByClassName('hostcheckboxes')
+    topbox = document.getElementById('select_all')
+    reduxStore.dispatch({
+      type: 'TOGGLE_ALL', 
+      data: topbox.checked
+    })
+    h = hostsSelected()
+    if (h){
+      // enable all the non selected
+      toggleActions(true)
+    }else {
+      toggleActions(false)
+    }
+}
+
+
+// add disabled or not to the actions menu
+function toggleActions(enabled) {
+  actions = document.getElementsByClassName('dropdown-item')
+  if (enabled) {
+    for (i = 0; i < actions.length; i++) {
+      actions[i].classList.remove("dropdown-disabled")
+    }
+  }else {
+    for (i = 0; i < actions.length; i++) {
+      actions[i].classList.add("dropdown-disabled")
+    }
+  }
+}
+
+
+// when checkbox is clicked.
+function toggleCheck(e) {
+  ds = e.target.dataset;
+  reduxStore.dispatch({
+    type: 'TOGGLE_HOST',
+    data: ds.hostname
+  })
+  h = hostsSelected()
+  if (h){
+    // enable all the non selected
+    toggleActions(true)
+  }else {
+    toggleActions(false)
+  }
+}
+
+// returns true if at least one host is selected from check boxes
+function hostsSelected() {
+  for (i in reduxStore.getState().hosts) {
+    if ( reduxStore.getState().hosts[i].selected ) {
+      return true
+    }
+  }
+  return false
+}
+
+// returns the hosts that are selected. 
+function getCheckedHosts() {
+  var selectedHosts = [];
+  for (i in reduxStore.getState().hosts) {
+    if (reduxStore.getState().hosts[i].selected) {
+      selectedHosts.push(reduxStore.getState().hosts[i])
+    }
+  }
+  return selectedHosts
+}
+
+
+// called when menu item is selected.  It may be active or not. 
+function actionSelect(e) {
+  if (e.target.classList.contains('dropdown-disabled')) {
+    // do nothing cause there is nothing on the menu.
+    e.stopPropagation();
+  }
+  ds = e.target.dataset;
+  checkedHosts = getCheckedHosts()
+  switch(ds.action) {
+    case 'buildBootImages': 
+      reduxStore.dispatch({
+        type: 'MAKEBOOT_IMAGES', 
+        hosts: checkedHosts.map((x) => x.name)
+      })
+      break;
+    case 'deleteHosts': 
+      reduxStore.dispatch({
+        type: 'DELETE_HOST', 
+        data: checkedHosts.map((x) => x.name)
+      })
+      break;
+    default: 
+      console.log("function not implemented.")
+  }
+}
+
+
