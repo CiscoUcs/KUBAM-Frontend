@@ -249,6 +249,7 @@ body {
   border-color: #363c51;
 }
 
+
 /* make so menu items are grayed out if there is no link to them. */
 .dropdown-disabled {
   color: #ddd !important;
@@ -270,4 +271,8 @@ body {
 
 .dropdown-item {
   cursor: pointer
+}
+
+ul.test li a {
+  color: #fff !important;
 }

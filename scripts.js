@@ -1202,10 +1202,12 @@ function actionSelect(e) {
       })
       break;
     case 'deleteHosts': 
-      reduxStore.dispatch({
-        type: 'DELETE_HOST', 
-        data: checkedHosts.map((x) => x.name)
-      })
+      for(i = 0; i < checkedHosts.length; i++){
+        reduxStore.dispatch({
+          type: 'DELETE_HOST', 
+          data: checkedHosts[i].name
+        })
+      }
       break;
     default: 
       console.log("function not implemented.")
