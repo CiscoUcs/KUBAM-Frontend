@@ -18,7 +18,7 @@ pipeline:
     script: 
       - docker rm -f kubam-web || true
       - docker pull kubam/web:v2
-      - sudo docker run -p 8002:80 -d -e "KUBAM_API=10.93.234.96:8001" --name kubam-web kubam/web:v2
+      - sudo docker run -p 5000:80 -d -e "KUBAM_API=10.93.234.95" --name kubam-web kubam/web:v2
 
   # use Cisco Spark to notify that build was successful. 
   notify:

@@ -772,11 +772,10 @@ function getNextObviousIP(hosts, ngs) {
   netmask  = lastNetGroup.gateway
   var basemax = ipFromNet(gateway, netmask)
   var base = basemax[0];
-  // now go through hosts and make sure it doesn't conflict. 
+  // now go through hosts and get the latest one. 
   for( var i = 0; i < hosts.length; i ++ ) {
-    if (base === hosts[i].ip) {
-      base = bumpIP(base, 1);  
-    }
+    lastIP = hosts[i].ip;
+    base = bumpIP(lastIP, 1);
   }
   // so many things wrong here that should be validated and fixed.  But will work for most envs I hopd!
   return base;
@@ -791,6 +790,13 @@ function getNextObviousNG(hosts, ngs) {
   }
   ng = hosts[hosts.length - 1].network_group
   return ng
+}
+
+function getNextObviousRole(hosts) {
+  if (hosts.length < 1 ) {
+    return "generic"
+  }
+  return hosts[hosts.length - 1].role
 }
 
 function getNextObviousOS(hosts) {
@@ -817,12 +823,13 @@ function* addHost(action) {
     default_ip = getNextObviousIP(hosts, ngs);
     default_ng = getNextObviousNG(hosts, ngs); 
     default_os = getNextObviousOS(hosts);
+    default_role = getNextObviousRole(hosts);
 
     hosts.push({ip: default_ip,
                 name: default_name,
                 network_group: default_ng,
                 os: default_os,
-                role: 'generic'
+                role: default_role
                })
     
     ax.post('v2/hosts', hosts)
@@ -1212,6 +1219,8 @@ function actionSelect(e) {
     default: 
       console.log("function not implemented.")
   }
+  // when done should we uncheck all hosts? 
+  
 }
 
 
