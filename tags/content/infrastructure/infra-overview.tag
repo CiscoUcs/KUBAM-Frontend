@@ -24,16 +24,16 @@
                 </div>
                 <div data-id={comp.id} class="tr" each={comp in this.opts.store.getState().servers}>
                     <div class="td">
-                        <input type="text" value="{comp.name}" data-name="{comp.name}" data-id="{comp.id}" onblur="{editUCS}" />
+                        <a href="#infrastructure/{comp.name}">{comp.name}</a>
                     </div>
                     <div class="td">
-                        <input type="text" value="{comp.description}" data-description="{comp.description}" data-id="{comp.id}" onblur="{editUCS}" />
+                        {comp.description}
                     </div>
                     <div class="td">{comp.type}</div>
                     <div class="td">
-                        <input type="text" value="{comp.credentials.ip}" data-ip="{comp.credentials.ip}" data-id="{comp.id}" onblur="{editUCS}" />
+                      {comp.credentials.ip}
                     </div>
-                    <div class="td" data-pw="{comp.credentials.password}">
+                    <div class="td">
                         {comp.credentials.user}
                     </div>
                     <div class="td  actionwidth">

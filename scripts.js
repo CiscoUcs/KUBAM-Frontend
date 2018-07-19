@@ -82,7 +82,7 @@ const reduxStore = Redux.createStore(
 function createAx() {
     const hname = window.location.hostname
     var port = window.location.port
-    var url = 'http://10.93.234.96:8001/api/';
+    var url = 'http://10.93.234.95/api/';
     if (port == "5000") {
       port = "80"
     }

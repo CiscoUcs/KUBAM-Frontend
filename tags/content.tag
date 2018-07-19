@@ -11,15 +11,15 @@
         <route path="/infrastructure">
             <infra-overview store={passStore}></infra-overview>
         </route>
+
+        <route path="/infrastructure/*">
+            <infra-detail store={passStore}></infra-detail>
+        </route>
         
         <!-- **** Hosts **** -->
         <route path="/hosts">
             <hosts store={passStore}></hosts>
         </route>
-        
-        <route path="/hosts/...">
-            <hosts store={passStore}></hosts>
-        </route>        
         
         <!-- **** Network **** -->
         <route path="/network">

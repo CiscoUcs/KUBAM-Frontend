@@ -1,3 +1,4 @@
+
 <top-bar>
     <div id="top-bar">
         <div id="logo">
@@ -8,7 +9,8 @@
             <router>
                 <route path="network..">Network Groups</route>
                 <route path="images..">Server Images</route>
-                <route path="infrastructure..">Infrastructure</route>
+                <route path="infrastructure">Infrastructure</route>
+                <route path="infrastructure/*"><inner-tag /></route>
                 <route path="hosts..">Hosts</route>
                 <route path="settings..">Settings</route>
                 <route path="tutorial..">Tutorial</route>
@@ -82,3 +84,10 @@
         }
     </style>
 </top-bar>
+
+<inner-tag>
+  <p class="topb"><a href="#infrastructure" onclick="route('infrastructure')">Infrastructure</a> | { name }</p>
+  <script>
+    this.on('route', name => this.name = name)
+  </script>
+</inner-tag>

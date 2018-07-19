@@ -10,11 +10,12 @@
               <a class="dropdown-item dropdown-disabled" data-action="deleteHosts" onclick={actionSelect}>Delete</a>
               <a class="dropdown-item dropdown-disabled" onclick={actionSelect}>Deploy Service Profile</a>
               <a class="dropdown-item dropdown-disabled" onclick={actionSelect}>Deploy VMedia Policy</a>
-              <hr/>
+              <!-- <hr/>
               <a class="dropdown-item dropdown-disabled" onclick={actionSelect}>Power Off</a>
               <a class="dropdown-item dropdown-disabled" onclick={actionSelect}>Power On</a>
               <a class="dropdown-item dropdown-disabled" onclick={actionSelect}>Power Cycle (hard)</a>
               <a class="dropdown-item dropdown-disabled" onclick={actionSelect}>Power Cycle (soft)</a>
+              --> 
             </div>
           </div>
         </div>

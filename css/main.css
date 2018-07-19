@@ -276,3 +276,9 @@ body {
 ul.test li a {
   color: #fff !important;
 }
+
+/* hack so that the top bar links stay white */
+.topb a {
+  text-decoration: underline;
+  color: #fff;
+}
