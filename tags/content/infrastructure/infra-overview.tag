@@ -24,7 +24,8 @@
                 </div>
                 <div data-id={comp.id} class="tr" each={comp in this.opts.store.getState().servers}>
                     <div class="td">
-                        <a href="#infrastructure/{comp.name}">{comp.name}</a>
+                        <a if={comp.type === "imc"}>{comp.name}</a>
+                        <a if={comp.type !== "imc"} href="#infrastructure/{comp.name}">{comp.name}</a>
                     </div>
                     <div class="td">
                         {comp.description}

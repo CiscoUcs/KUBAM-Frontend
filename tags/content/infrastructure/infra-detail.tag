@@ -1,78 +1,65 @@
 <infra-detail>
     <h2 class="categoryHeader">{ name }</h2>
+    <p>Select Servers to be used by KUBAM then save the changes</p>
+    <div class="top-actions">
+      <button type="button" class="btn btn-secondary" data-infra={name} onclick={saveComputeSelection}>Save Selections</button>
+    </div>
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col"><input type="checkbox" 
+                                id="selectAllCompute"
+                                onclick={changeComputeSelection}/></th>
+          <th scope="col">Server</th>
+          <th scope="col">Server Type</th>
+          <th scope="col">Model</th>
+          <th scope="col">Service Profile</th>
+          <th scope="col">Power</th>
+          <th scope="col">CPU (count/cores)</th>
+          <th scope="col">Memory (count/speed)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="{ 'table-primary' : comp.selected === true }" 
+            each={comp in this.opts.store.getState().compute}>
+          <td><input  type="checkbox" 
+                      data-dn={comp.dn}
+                      class="computeCheckBoxes"
+                      checked={comp.selected}
+                      onclick={toggleCheckCompute}/></td>
+          <td if={ comp.type === 'blade'}> {comp.chassis_id} / {comp.slot}</td>
+          <td if={ comp.type === 'rack'}> {comp.rack_id } </td>
+          <td>{comp.type}</td>
+          <td>{comp.model}</td>
+          <td if={ comp.association === 'none'}> Unassociated</td>
+          <td if={ comp.association !== 'none'}> {comp.service_profile} </td>
+          <td>{comp.oper_power} </td>
+          <td>{comp.num_cpus}  / {comp.num_cores}</td>
+          <td>{comp.ram}  / {comp.ram_speed}</td>
+        </tr>
+      </tbody>
+    </table>
     <script>        
-      this.on('route', name => this.name = name)
-        let currentValue
-        let store = this.opts.store
-                
-        store.dispatch({
-            type: 'FETCH_INFRA'
-        })
-                
-        this.opts.store.subscribe(function(){
-            let previousValue = currentValue;
-            currentValue = store.getState()
-            currentTab = window.location.hash.substr(1);
-            if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
-                if(currentTab == 'infrastructure') {
-                    riot.update();
-                }
-            }
-        })
-        
-        addController() {
-            var modal_title = document.getElementById('modal-title');
-            var modal_content = document.getElementById('modal-content');
-            
-            modal_title.innerHTML = 'Add a new Controller';
-            
-            modal_content.innerHTML = '';
-            var tag = document.createElement("new-controller");
-            modal_content.append(tag)
-            passStore = this.opts.store
-            riot.mount(tag, 'new-controller', passStore);
-            
-            var modal_shadow = document.getElementById('modal-shadow')
-            modal_shadow.style.display = 'table'
-        }
-        
-        deleteController(e) {
-            ds = e.target.dataset;
-            store.dispatch({
-                type: 'DELETE_CONTROLLER',
-                data: {
-                    type: ds.type,
-                    name: ds.name
-                }
-            })
-        }
-        
-        editUCS(e) {
-            ds = e.target.dataset;
-            id = ds.id
-            rows = document.getElementById('ucs-rows')
-            for(i=1;i<rows.children.length;i++) {
-                row = rows.children[i]
-                if(row.dataset.id == id) {
-                    c = row.children
-                    updated = {
-                        "id": row.dataset.id,
-                        "name": c[0].children[0].value.trim(),
-                        "description": c[1].children[0].value,
-                        "type": c[2].innerHTML.trim(),
-                        "credentials": {
-                            "ip" : c[3].children[0].value,
-                            "user" : c[4].innerHTML.trim(),
-                            "password" : c[4].dataset.pw
-                        }
-                    }
+      let currentValue
+      let store = this.opts.store
 
-                    store.dispatch({
-                        type: 'UPDATE_UCS',
-                        data: updated
-                    })
-                }
+      this.on('route', name => {
+        this.name = name
+        store.dispatch({
+            type: 'FETCH_COMPUTE',
+            server: this.name
+        })
+      })
+                
+      this.opts.store.subscribe(function(){
+        let previousValue = currentValue;
+        currentValue = store.getState()
+        currentTab = window.location.hash.substr(1);
+        if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
+            if(currentTab.startsWith('infrastructure')) {
+                riot.update();
             }
         }
+      })
     </script>
 </infra-detail>

@@ -52,6 +52,23 @@ var reducer = function(state=defaultState, action) {
             x[top_key] = add_data
             return Object.assign({},state,{isLoading: false},x)
             break;
+        case 'TOGGLE_COMPUTE':
+            for (i = 0; i < state['compute'].length; i++){
+              obj = state['compute'][i]
+              if (obj.dn === action.data) {
+                obj.selected ? obj.selected = false : obj.selected = true
+              }
+            }
+            return Object.assign({},state,{isLoading: false},state['compute'])
+            break
+
+        case 'TOGGLE_ALL_COMPUTE':
+            for (i = 0; i < state['compute'].length; i++){
+              action.data ? state['compute'][i].selected = true : state['compute'][i].selected = false
+            }
+            return Object.assign({},state,{isLoading: false},state['compute'])
+            break
+        
         case 'TOGGLE_HOST':
             for (i = 0; i < state['hosts'].length; i++){
               obj = state['hosts'][i]
@@ -61,7 +78,7 @@ var reducer = function(state=defaultState, action) {
             }
             return Object.assign({},state,{isLoading: false},state['hosts'])
             break
-        case 'TOGGLE_ALL':
+        case 'TOGGLE_ALL_HOSTS':
             for (i = 0; i < state['hosts'].length; i++){
               action.data ? state['hosts'][i].selected = true : state['hosts'][i].selected = false
             }
@@ -82,7 +99,8 @@ const reduxStore = Redux.createStore(
 function createAx() {
     const hname = window.location.hostname
     var port = window.location.port
-    var url = 'http://10.93.234.95/api/';
+    //var url = 'http://10.93.234.95/api/';
+    var url = 'http://localhost/api/';
     if (port == "5000") {
       port = "80"
     }
@@ -256,6 +274,26 @@ function* deleteImgMapping(action) {
     });    
 }
 
+
+// get UCS server group informaiton
+function* getInfraCompute(action) {
+  ax.get('v2/servers/'+action.server+'/servers', {})
+  .then(function (response) {
+    reduxStore.dispatch({
+      type: "FETCH_SUCCEEDED",
+      data: {'compute': response['data']['servers'] }
+    })
+  })
+  .catch(function (error) {
+    reduxStore.dispatch({
+      type: "OP_FAILED",
+      message: 'Could not get infrastructure from server',
+      err: error
+    });
+  });
+}
+
+
 function* getInfraComponents(action) {
     ax.get('v2/servers', {})
     .then(function (response) {
@@ -263,26 +301,6 @@ function* getInfraComponents(action) {
             type: "FETCH_SUCCEEDED",
             data: {'servers': response['data']['servers']}
         })
-        /*
-        ax.get('v2/aci', {})
-        .then(function (response) {
-            aci_response = response['data']['aci']
-            for(i=0;i<aci_response.length;i++) {
-                aci_response[i]['type'] = 'aci';
-            }
-            reduxStore.dispatch({
-                type: "FETCH_SUCCEEDED",
-                data: {'aci': aci_response}
-            })
-        })
-        .catch(function (error) {
-            reduxStore.dispatch({
-                type: "OP_FAILED",
-                message: 'getInfraComponents',
-                err: error.message
-            });
-        });
-        */
     })
     .catch(function (error) {
         reduxStore.dispatch({
@@ -292,6 +310,8 @@ function* getInfraComponents(action) {
         });
     });
 }
+
+
 
 function* createInfraComponent(action) {    
     if (["imc", "ucsm", "ucsc"].includes(action['data']['type'])) {
@@ -924,18 +944,17 @@ function* makeBootImages(action) {
   });
 }
 
-
+// returns the hosts that are selected. 
 function getCheckedHosts() {
-    allHosts = passStore.getState().hosts
-    checkedHosts = []
-    hostcheckboxes = document.getElementsByClassName('hostcheckboxes')
-    for(i=0;i<hostcheckboxes.length;i++) {
-        if(hostcheckboxes[i].checked == true) {
-          checkedHosts.push(allHosts[i])
-        }
+  var selectedHosts = [];
+  for (i in reduxStore.getState().hosts) {
+    if (reduxStore.getState().hosts[i].selected) {
+      selectedHosts.push(reduxStore.getState().hosts[i])
     }
-    return checkedHosts;
+  }
+  return selectedHosts
 }
+
 
 // updateHosts is called whenever the hosts are updated.  We update all 
 // hosts and pass all previous hosts in to update it. 
@@ -1064,6 +1083,9 @@ function* watchUserRequests() {
   yield ReduxSaga.takeEvery('DELETE_CONTROLLER', deleteInfraComponent)
   yield ReduxSaga.takeEvery('UPDATE_UCS', updateUCS)
 
+  yield ReduxSaga.takeEvery('FETCH_COMPUTE', getInfraCompute)
+  yield ReduxSaga.takeEvery('UPDATE_COMPUTE', updateInfraCompute)
+
   yield ReduxSaga.takeEvery('FETCH_NETWORKGROUPS', fetchNetworkGroups)
   yield ReduxSaga.takeEvery('CREATE_NETWORKGROUP', createNetworkGroup)
   yield ReduxSaga.takeEvery('UPDATE_NETWORKGROUP', updateNetworkGroup)
@@ -1123,11 +1145,11 @@ function roleCatalog(cat, host) {
 }
 
 
-function changeSelection() {
-    hostcheckboxes = document.getElementsByClassName('hostcheckboxes')
+function changeHostsSelection() {
+    hostcheckboxes = document.getElementsByClassName('hostCheckBoxes')
     topbox = document.getElementById('select_all')
     reduxStore.dispatch({
-      type: 'TOGGLE_ALL', 
+      type: 'TOGGLE_ALL_HOSTS', 
       data: topbox.checked
     })
     h = hostsSelected()
@@ -1139,6 +1161,14 @@ function changeSelection() {
     }
 }
 
+function changeComputeSelection() {
+    hostcheckboxes = document.getElementsByClassName('computeCheckBoxes')
+    topbox = document.getElementById('selectAllCompute')
+    reduxStore.dispatch({
+      type: 'TOGGLE_ALL_COMPUTE', 
+      data: topbox.checked
+    })
+}
 
 // add disabled or not to the actions menu
 function toggleActions(enabled) {
@@ -1171,6 +1201,15 @@ function toggleCheck(e) {
   }
 }
 
+/* dn is for the distinguished name */
+function toggleCheckCompute(e) {
+  ds = e.target.dataset;
+  reduxStore.dispatch({
+    type: 'TOGGLE_COMPUTE',
+    data: ds.dn,
+  })
+}
+
 // returns true if at least one host is selected from check boxes
 function hostsSelected() {
   for (i in reduxStore.getState().hosts) {
@@ -1181,15 +1220,47 @@ function hostsSelected() {
   return false
 }
 
-// returns the hosts that are selected. 
-function getCheckedHosts() {
-  var selectedHosts = [];
-  for (i in reduxStore.getState().hosts) {
-    if (reduxStore.getState().hosts[i].selected) {
-      selectedHosts.push(reduxStore.getState().hosts[i])
+
+function computeSelected(){
+  for (i in reduxStore.getState().compute) {
+    if ( reduxStore.getState().compute[i].selected ) {
+      return true
     }
   }
-  return selectedHosts
+  return false
+}
+
+// get checked compute node boxes. 
+function getCheckedCompute(){
+  var selectedCompute = [];
+  for (i in reduxStore.getState().compute) {
+    if (reduxStore.getState().compute[i].selected) {
+      selectedCompute.push(reduxStore.getState().compute[i])
+    }
+  }
+  return selectedCompute
+}
+
+// when target compute nodes are changed. 
+function saveComputeSelection(e) {
+  ds = e.target.dataset
+  infraManager = ds.infra
+  checkedCompute = getCheckedCompute() 
+  var blades = Array() 
+  var racks = Array() 
+  for (k in checkedCompute){
+    i = checkedCompute[k]
+    if (i.type === "blade") {
+      blades.push(i.chassis_id + "/" + i.slot)
+    }else {
+      racks.push(i.rack_id)
+    }
+  } 
+  reduxStore.dispatch({
+    type: 'UPDATE_COMPUTE',
+    infra: infraManager ,
+    compute: {"blades" : blades, "rack" : racks }
+  })
 }
 
 
@@ -1220,7 +1291,27 @@ function actionSelect(e) {
       console.log("function not implemented.")
   }
   // when done should we uncheck all hosts? 
-  
 }
 
 
+// update compute selection
+function* updateInfraCompute(action) {
+  compute = action.compute || []
+  post_body = {'servers' : compute}
+  console.log(post_body, action.infra)
+  ax.post('v2/servers/'+action.infra+'/servers', post_body)
+    .then(function(response) {
+          var tag = document.createElement("alert");
+          tag.setAttribute("type", "success");
+          tag.innerHTML = 'Success: Updated Compute Selection'
+          document.getElementById('pop-box').append(tag)
+          riot.mount(tag, 'alert', reduxStore); 
+    })
+   .catch(function(error){
+      reduxStore.dispatch({
+          type: "OP_FAILED",
+          message: 'Could not save compute selection',
+          err: error
+      });
+  });
+}

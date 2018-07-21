@@ -42,7 +42,7 @@ riot.tag2('feedback', '<div class="container>"> <form> Thank you for your feedba
             }
         }.bind(this)
 });
-riot.tag2('hosts', '<div class="svrGrpServers"> <div class="top-actions"> <div class="dropdown"> <button class="btn btn-secondary dropdown-toggle" type="button" id="hostActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Actions </button> <div class="dropdown-menu" aria-labelledby="hostActions"> <a class="dropdown-item dropdown-disabled" data-action="buildBootImages" onclick="{actionSelect}">Build Boot Images</a> <a class="dropdown-item dropdown-disabled" data-action="deleteHosts" onclick="{actionSelect}">Delete</a> <a class="dropdown-item dropdown-disabled" onclick="{actionSelect}">Deploy Service Profile</a> <a class="dropdown-item dropdown-disabled" onclick="{actionSelect}">Deploy VMedia Policy</a> </div> </div> </div> <div class="table"> <div class="tr"> <div class="th checkbox_width"> <input type="checkbox" id="select_all" onclick="{changeSelection}"> </div> <div class="th hostname_width">Hostname</div> <div class="th ip_width">Server IP</div> <div class="th dropdown_width">Operating System</div> <div class="th dropdown_width">Role</div> <div class="th dropdown_width">Network</div> <div class="th dropdown_width">Server Group</div> <div class="th actionwidth">Actions</div> </div> <div class="tr" each="{host, iindex in this.opts.store.getState().hosts}"> <div class="td-host checkbox_width"> <input type="checkbox" class="hostcheckboxes" data-hostname="{host.name}" onclick="{toggleCheck}" checked="{host.selected}"> </div> <div class="td-host hostname_width"> <input type="text" riot-value="{host.name}" data-op="host" data-old="{host.name}" data-index="{iindex}" onblur="{changeHost}"> </div> <div class="td-host ip_width"> <input type="text" riot-value="{host.ip}" data-op="ip" data-old="{host.ip}" data-index="{iindex}" onblur="{changeHost}"> </div> <div id="os_drop" class="td-host dropdown_width"> <table-dropdown default="{host.os}" top="{host.os}" os="{host.os}" add="" index="{iindex}" changefunc="{changeHost}"> <li each="{key, value in passStore.getState().catalog}"> <a data-os="{value}" riot-value="{value}" data-index="{this.opts.index}" data-op="os" data-old="{this.opts.top}" onclick="{this.opts.changefunc}">{translateOS(value)}</a> </li> </table-dropdown> </div> <div id="role_drop" class="td-host dropdown_width"> <table-dropdown default="{host.role}" defrole="{host.role}" top="{translateRole(host.role)}" os="{host.os}" index="{iindex}" changefunc="{changeHost}"> <li each="{value in passStore.getState().catalog != null ? passStore.getState().catalog[this.opts.os] : []}"> <a data-role="{value}" riot-value="{value}" data-index="{this.opts.index}" data-op="role" data-old="{this.opts.defrole}" onclick="{this.opts.changefunc}">{translateRole(value)}</a> </li> </table-dropdown> </div> <div id="nw_drop" class="td-host dropdown_width"> <table-dropdown default="{host.network_group}" top="{host.network_group}" index="{iindex}" changefunc="{changeHost}"> <li each="{nw in passStore.getState().networks}"> <a data-network_group="{nw.name}" riot-value="{nw.name}" data-index="{this.opts.index}" data-op="network_group" data-old="{this.opts.top}" onclick="{this.opts.changefunc}">{nw.name}</a> </li> </table-dropdown> </div> <div id="sg_drop" class="td-host dropdown_width"> <table-dropdown default="none" top="{host.server_group}" index="{iindex}" changefunc="{changeHost}" serverarray="{passStore.getState().servers != null ? passStore.getState().servers.concat({⁗name⁗ : ⁗None⁗}) : [{⁗name⁗ : ⁗None⁗}]}"> <li each="{server in this.opts.serverarray}"> <a data-server_group="{server.name}" riot-value="{server.name}" data-index="{this.opts.index}" data-op="server_group" data-old="{this.opts.top}" onclick="{this.opts.changefunc}">{server.name}</a> </li> </table-dropdown> </div> <div class="td actionwidth"> <img src="./icons/delete.svg" data-hostname="{host.name}" onclick="{deleteHost}" class="table-icon"> </div> </div> </div> </div> <add-button onclick="{addHost}">Add Host</add-button>', 'hosts .td-host,[data-is="hosts"] .td-host{ padding: 0; font-size: 0.8em; display: table-cell; border: 1px solid #ecedf1; background-color: #FFF; } hosts .checkbox_width,[data-is="hosts"] .checkbox_width{ width: 20px; } hosts .td-host input[type=checkbox],[data-is="hosts"] .td-host input[type=checkbox]{ position: relative; left: 12px; } hosts .server,[data-is="hosts"] .server{ padding: 0; padding-left: 8px; vertical-align: middle; } hosts .hostname_width,[data-is="hosts"] .hostname_width{ width: 140px; } hosts .ip_width,[data-is="hosts"] .ip_width{ width: 120px; } hosts .dropdown_width,[data-is="hosts"] .dropdown_width{ width: 136px; line-height: 1px; } hosts .hostname_width input:hover,[data-is="hosts"] .hostname_width input:hover,hosts .ip_width input:hover,[data-is="hosts"] .ip_width input:hover{ background-image: url(\'icons/edit.svg\'); background-repeat: no-repeat; background-position: right; } hosts .hostname_width input:focus,[data-is="hosts"] .hostname_width input:focus,hosts ip_width input:focus,[data-is="hosts"] ip_width input:focus{ background-image: none; } hosts .svrGrpSettings,[data-is="hosts"] .svrGrpSettings{ background-color: white; padding: 25px; margin-bottom: 20px; clear: both; overflow:auto; } hosts .svrGrpServers,[data-is="hosts"] .svrGrpServers{ background-color: white; padding: 20px; overflow: hidden; min-height: 800px; } hosts .table input[type=text],[data-is="hosts"] .table input[type=text]{ border: none; outline:0; width: 90%; padding: 0; padding-left: 8px; padding-top: 2px; padding-bottom: 2px; margin: 0; font-size: 1em; cursor: pointer; }', '', function(opts) {
+riot.tag2('hosts', '<div class="svrGrpServers"> <div class="top-actions"> <div class="dropdown"> <button class="btn btn-secondary dropdown-toggle" type="button" id="hostActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Actions </button> <div class="dropdown-menu" aria-labelledby="hostActions"> <a class="dropdown-item dropdown-disabled" data-action="buildBootImages" onclick="{actionSelect}">Build Boot Images</a> <a class="dropdown-item dropdown-disabled" data-action="deleteHosts" onclick="{actionSelect}">Delete</a> <a class="dropdown-item dropdown-disabled" onclick="{actionSelect}">Deploy Service Profile</a> <a class="dropdown-item dropdown-disabled" onclick="{actionSelect}">Deploy VMedia Policy</a> </div> </div> </div> <div class="table"> <div class="tr"> <div class="th checkbox_width"> <input type="checkbox" id="select_all" onclick="{changeHostsSelection}"> </div> <div class="th hostname_width">Hostname</div> <div class="th ip_width">Server IP</div> <div class="th dropdown_width">Operating System</div> <div class="th dropdown_width">Role</div> <div class="th dropdown_width">Network</div> <div class="th dropdown_width">Server Group</div> <div class="th actionwidth">Actions</div> </div> <div class="tr" each="{host, iindex in this.opts.store.getState().hosts}"> <div class="td-host checkbox_width"> <input type="checkbox" class="hostCheckBoxes" data-hostname="{host.name}" onclick="{toggleCheck}" checked="{host.selected}"> </div> <div class="td-host hostname_width"> <input type="text" riot-value="{host.name}" data-op="host" data-old="{host.name}" data-index="{iindex}" onblur="{changeHost}"> </div> <div class="td-host ip_width"> <input type="text" riot-value="{host.ip}" data-op="ip" data-old="{host.ip}" data-index="{iindex}" onblur="{changeHost}"> </div> <div id="os_drop" class="td-host dropdown_width"> <table-dropdown default="{host.os}" top="{host.os}" os="{host.os}" add="" index="{iindex}" changefunc="{changeHost}"> <li each="{key, value in passStore.getState().catalog}"> <a data-os="{value}" riot-value="{value}" data-index="{this.opts.index}" data-op="os" data-old="{this.opts.top}" onclick="{this.opts.changefunc}">{translateOS(value)}</a> </li> </table-dropdown> </div> <div id="role_drop" class="td-host dropdown_width"> <table-dropdown default="{host.role}" defrole="{host.role}" top="{translateRole(host.role)}" os="{host.os}" index="{iindex}" changefunc="{changeHost}"> <li each="{value in passStore.getState().catalog != null ? passStore.getState().catalog[this.opts.os] : []}"> <a data-role="{value}" riot-value="{value}" data-index="{this.opts.index}" data-op="role" data-old="{this.opts.defrole}" onclick="{this.opts.changefunc}">{translateRole(value)}</a> </li> </table-dropdown> </div> <div id="nw_drop" class="td-host dropdown_width"> <table-dropdown default="{host.network_group}" top="{host.network_group}" index="{iindex}" changefunc="{changeHost}"> <li each="{nw in passStore.getState().networks}"> <a data-network_group="{nw.name}" riot-value="{nw.name}" data-index="{this.opts.index}" data-op="network_group" data-old="{this.opts.top}" onclick="{this.opts.changefunc}">{nw.name}</a> </li> </table-dropdown> </div> <div id="sg_drop" class="td-host dropdown_width"> <table-dropdown default="none" top="{host.server_group}" index="{iindex}" changefunc="{changeHost}" serverarray="{passStore.getState().servers != null ? passStore.getState().servers.concat({⁗name⁗ : ⁗None⁗}) : [{⁗name⁗ : ⁗None⁗}]}"> <li each="{server in this.opts.serverarray}"> <a data-server_group="{server.name}" riot-value="{server.name}" data-index="{this.opts.index}" data-op="server_group" data-old="{this.opts.top}" onclick="{this.opts.changefunc}">{server.name}</a> </li> </table-dropdown> </div> <div class="td actionwidth"> <img src="./icons/delete.svg" data-hostname="{host.name}" onclick="{deleteHost}" class="table-icon"> </div> </div> </div> </div> <add-button onclick="{addHost}">Add Host</add-button>', 'hosts .td-host,[data-is="hosts"] .td-host{ padding: 0; font-size: 0.8em; display: table-cell; border: 1px solid #ecedf1; background-color: #FFF; } hosts .checkbox_width,[data-is="hosts"] .checkbox_width{ width: 20px; } hosts .td-host input[type=checkbox],[data-is="hosts"] .td-host input[type=checkbox]{ position: relative; left: 12px; } hosts .server,[data-is="hosts"] .server{ padding: 0; padding-left: 8px; vertical-align: middle; } hosts .hostname_width,[data-is="hosts"] .hostname_width{ width: 140px; } hosts .ip_width,[data-is="hosts"] .ip_width{ width: 120px; } hosts .dropdown_width,[data-is="hosts"] .dropdown_width{ width: 136px; line-height: 1px; } hosts .hostname_width input:hover,[data-is="hosts"] .hostname_width input:hover,hosts .ip_width input:hover,[data-is="hosts"] .ip_width input:hover{ background-image: url(\'icons/edit.svg\'); background-repeat: no-repeat; background-position: right; } hosts .hostname_width input:focus,[data-is="hosts"] .hostname_width input:focus,hosts ip_width input:focus,[data-is="hosts"] ip_width input:focus{ background-image: none; } hosts .svrGrpSettings,[data-is="hosts"] .svrGrpSettings{ background-color: white; padding: 25px; margin-bottom: 20px; clear: both; overflow:auto; } hosts .svrGrpServers,[data-is="hosts"] .svrGrpServers{ background-color: white; padding: 20px; overflow: hidden; min-height: 800px; } hosts .table input[type=text],[data-is="hosts"] .table input[type=text]{ border: none; outline:0; width: 90%; padding: 0; padding-left: 8px; padding-top: 2px; padding-bottom: 2px; margin: 0; font-size: 1em; cursor: pointer; }', '', function(opts) {
         let currentValue
         let store = this.opts.store
 
@@ -147,84 +147,32 @@ riot.tag2('new-host', '<form> <fancy-dropdown name="Server Group" tag="Server Se
 riot.tag2('table-dropdown', '<ul> <li> <a> {this.opts.top != null ? this.opts.top : ⁗None⁗} </a> <ul class="test"> <yield></yield> </ul> </li> </ul>', 'table-dropdown ul,[data-is="table-dropdown"] ul{ list-style: none; padding: 0; margin: 0; background: #FFF; color: #000; width: 160px; z-index: 9999; } table-dropdown ul li,[data-is="table-dropdown"] ul li{ display: block; position: relative; float: left; background: #FFF; color: #000; text-align: center; width: 160px; } table-dropdown ul li a,[data-is="table-dropdown"] ul li a{ display: block; text-decoration: none; white-space: nowrap; color: #000; cursor: pointer; } table-dropdown li ul,[data-is="table-dropdown"] li ul{ display: none; } table-dropdown li:hover > ul,[data-is="table-dropdown"] li:hover > ul{ display: block; position: absolute; } table-dropdown li:hover li,[data-is="table-dropdown"] li:hover li{ float: none; } table-dropdown li:hover a,[data-is="table-dropdown"] li:hover a{ background: #363c52; color: white; } table-dropdown li:hover li a:hover,[data-is="table-dropdown"] li:hover li a:hover{ background: rgba(74, 80, 100, 1); } table-dropdown ul.test,[data-is="table-dropdown"] ul.test{ top: -27px; } table-dropdown .test li,[data-is="table-dropdown"] .test li{ height: 32px; line-height: 32px; font-size: 12px } table-dropdown .test li a,[data-is="table-dropdown"] .test li a{ height: 32px; line-height: 32px; font-size: 11px; font-size: 1em; }', '', function(opts) {
 });
 
-riot.tag2('infra-detail', '<h2 class="categoryHeader">{name}</h2>', '', '', function(opts) {
+riot.tag2('infra-detail', '<h2 class="categoryHeader">{name}</h2> <p>Select Servers to be used by KUBAM then save the changes</p> <div class="top-actions"> <button type="button" class="btn btn-secondary" data-infra="{name}" onclick="{saveComputeSelection}">Save Selections</button> </div> <table class="table table-bordered table-striped"> <thead class="thead-dark"> <tr> <th scope="col"><input type="checkbox" id="selectAllCompute" onclick="{changeComputeSelection}"></th> <th scope="col">Server</th> <th scope="col">Server Type</th> <th scope="col">Model</th> <th scope="col">Service Profile</th> <th scope="col">Power</th> <th scope="col">CPU (count/cores)</th> <th scope="col">Memory (count/speed)</th> </tr> </thead> <tbody> <tr class="{\'table-primary\' : comp.selected === true}" each="{comp in this.opts.store.getState().compute}"> <td><input type="checkbox" data-dn="{comp.dn}" class="computeCheckBoxes" checked="{comp.selected}" onclick="{toggleCheckCompute}"></td> <td if="{comp.type === \'blade\'}"> {comp.chassis_id} / {comp.slot}</td> <td if="{comp.type === \'rack\'}"> {comp.rack_id} </td> <td>{comp.type}</td> <td>{comp.model}</td> <td if="{comp.association === \'none\'}"> Unassociated</td> <td if="{comp.association !== \'none\'}"> {comp.service_profile} </td> <td>{comp.oper_power} </td> <td>{comp.num_cpus} / {comp.num_cores}</td> <td>{comp.ram} / {comp.ram_speed}</td> </tr> </tbody> </table>', '', '', function(opts) {
 
-      this.on('route', name => this.name = name)
-        let currentValue
-        let store = this.opts.store
+      let currentValue
+      let store = this.opts.store
 
+      this.on('route', name => {
+        this.name = name
         store.dispatch({
-            type: 'FETCH_INFRA'
+            type: 'FETCH_COMPUTE',
+            server: this.name
         })
+      })
 
-        this.opts.store.subscribe(function(){
-            let previousValue = currentValue;
-            currentValue = store.getState()
-            currentTab = window.location.hash.substr(1);
-            if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
-                if(currentTab == 'infrastructure') {
-                    riot.update();
-                }
+      this.opts.store.subscribe(function(){
+        let previousValue = currentValue;
+        currentValue = store.getState()
+        currentTab = window.location.hash.substr(1);
+        if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
+            if(currentTab.startsWith('infrastructure')) {
+                riot.update();
             }
-        })
-
-        this.addController = function() {
-            var modal_title = document.getElementById('modal-title');
-            var modal_content = document.getElementById('modal-content');
-
-            modal_title.innerHTML = 'Add a new Controller';
-
-            modal_content.innerHTML = '';
-            var tag = document.createElement("new-controller");
-            modal_content.append(tag)
-            passStore = this.opts.store
-            riot.mount(tag, 'new-controller', passStore);
-
-            var modal_shadow = document.getElementById('modal-shadow')
-            modal_shadow.style.display = 'table'
-        }.bind(this)
-
-        this.deleteController = function(e) {
-            ds = e.target.dataset;
-            store.dispatch({
-                type: 'DELETE_CONTROLLER',
-                data: {
-                    type: ds.type,
-                    name: ds.name
-                }
-            })
-        }.bind(this)
-
-        this.editUCS = function(e) {
-            ds = e.target.dataset;
-            id = ds.id
-            rows = document.getElementById('ucs-rows')
-            for(i=1;i<rows.children.length;i++) {
-                row = rows.children[i]
-                if(row.dataset.id == id) {
-                    c = row.children
-                    updated = {
-                        "id": row.dataset.id,
-                        "name": c[0].children[0].value.trim(),
-                        "description": c[1].children[0].value,
-                        "type": c[2].innerHTML.trim(),
-                        "credentials": {
-                            "ip" : c[3].children[0].value,
-                            "user" : c[4].innerHTML.trim(),
-                            "password" : c[4].dataset.pw
-                        }
-                    }
-
-                    store.dispatch({
-                        type: 'UPDATE_UCS',
-                        data: updated
-                    })
-                }
-            }
-        }.bind(this)
+        }
+      })
 });
 
-riot.tag2('infra-overview', '<div class="infra-group"> <div class="infra-container-big"> <h2 class="categoryHeader">UCS Servers</h2> <div id="ucs-rows" class="table bottomspace"> <div class="tr"> <div class="th">Name</div> <div class="th">Description</div> <div class="th">Type</div> <div class="th">Mgmt IP</div> <div class="th">User</div> <div class="th actionwidth">Actions</div> </div> <div data-id="{comp.id}" class="tr" each="{comp in this.opts.store.getState().servers}"> <div class="td"> <a href="#infrastructure/{comp.name}">{comp.name}</a> </div> <div class="td"> {comp.description} </div> <div class="td">{comp.type}</div> <div class="td"> {comp.credentials.ip} </div> <div class="td"> {comp.credentials.user} </div> <div class="td actionwidth"> <img src="./icons/delete.svg" data-type="{comp.type}" data-name="{comp.name}" onclick="{deleteController}" class="table-icon"> </div> </div> </div> </div> </div> <add-button onclick="{addController}">Add Controller</add-button>', 'infra-overview .tablewidth,[data-is="infra-overview"] .tablewidth{ width: 720px; } infra-overview .bottomspace,[data-is="infra-overview"] .bottomspace{ margin-bottom: 25px; } infra-overview .infra-group,[data-is="infra-overview"] .infra-group{ padding-bottom: 15px; } infra-overview .infra-container,[data-is="infra-overview"] .infra-container{ background-color: white; padding: 20px; } infra-overview .infra-container-big,[data-is="infra-overview"] .infra-container-big{ background-color: white; padding: 34px 20px; } infra-overview .td input[type="text"],[data-is="infra-overview"] .td input[type="text"]{ border: none; outline:0; width: 95%; padding: 0; padding-left: 8px; padding-top: 2px; padding-bottom: 2px; margin: 0; font-size: 1em; cursor: pointer; } infra-overview .td input[type="text"]:hover,[data-is="infra-overview"] .td input[type="text"]:hover{ background-image: url(\'icons/edit.svg\'); background-repeat: no-repeat; background-position: right; }', '', function(opts) {
+riot.tag2('infra-overview', '<div class="infra-group"> <div class="infra-container-big"> <h2 class="categoryHeader">UCS Servers</h2> <div id="ucs-rows" class="table bottomspace"> <div class="tr"> <div class="th">Name</div> <div class="th">Description</div> <div class="th">Type</div> <div class="th">Mgmt IP</div> <div class="th">User</div> <div class="th actionwidth">Actions</div> </div> <div data-id="{comp.id}" class="tr" each="{comp in this.opts.store.getState().servers}"> <div class="td"> <a if="{comp.type === ⁗imc⁗}">{comp.name}</a> <a if="{comp.type !== ⁗imc⁗}" href="#infrastructure/{comp.name}">{comp.name}</a> </div> <div class="td"> {comp.description} </div> <div class="td">{comp.type}</div> <div class="td"> {comp.credentials.ip} </div> <div class="td"> {comp.credentials.user} </div> <div class="td actionwidth"> <img src="./icons/delete.svg" data-type="{comp.type}" data-name="{comp.name}" onclick="{deleteController}" class="table-icon"> </div> </div> </div> </div> </div> <add-button onclick="{addController}">Add Controller</add-button>', 'infra-overview .tablewidth,[data-is="infra-overview"] .tablewidth{ width: 720px; } infra-overview .bottomspace,[data-is="infra-overview"] .bottomspace{ margin-bottom: 25px; } infra-overview .infra-group,[data-is="infra-overview"] .infra-group{ padding-bottom: 15px; } infra-overview .infra-container,[data-is="infra-overview"] .infra-container{ background-color: white; padding: 20px; } infra-overview .infra-container-big,[data-is="infra-overview"] .infra-container-big{ background-color: white; padding: 34px 20px; } infra-overview .td input[type="text"],[data-is="infra-overview"] .td input[type="text"]{ border: none; outline:0; width: 95%; padding: 0; padding-left: 8px; padding-top: 2px; padding-bottom: 2px; margin: 0; font-size: 1em; cursor: pointer; } infra-overview .td input[type="text"]:hover,[data-is="infra-overview"] .td input[type="text"]:hover{ background-image: url(\'icons/edit.svg\'); background-repeat: no-repeat; background-position: right; }', '', function(opts) {
 
         let currentValue
         let store = this.opts.store

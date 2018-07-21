@@ -23,7 +23,7 @@
         <div class="table">
             <div class="tr">
                 <div class="th checkbox_width">
-                    <input type="checkbox" id="select_all" onclick={changeSelection}>     
+                    <input type="checkbox" id="select_all" onclick={changeHostsSelection}>     
                 </div>
                 <div class="th hostname_width">Hostname</div>
                 <div class="th ip_width">Server IP</div>
@@ -35,7 +35,7 @@
             </div>
             <div class="tr" each={host, iindex in this.opts.store.getState().hosts}>
                 <div class="td-host checkbox_width">
-                    <input type="checkbox" class="hostcheckboxes" data-hostname={host.name} onclick={toggleCheck} checked="{host.selected}">
+                    <input type="checkbox" class="hostCheckBoxes" data-hostname={host.name} onclick={toggleCheck} checked="{host.selected}">
                 </div>
                 <div class="td-host hostname_width">
                     <input type="text" value="{host.name}" data-op="host" data-old="{host.name}" data-index="{iindex}" onblur="{changeHost}" />
