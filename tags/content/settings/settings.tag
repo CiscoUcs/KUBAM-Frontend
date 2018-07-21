@@ -1,34 +1,33 @@
 <settings>    
-    <div class="settings-group">
-            <fancy-input tag="KUBAM IP Address"
-                inputid="settings-view-ip"
-                placeholder={this.opts.store.getState().kubam_ip}
-                tip="This is the IP from which the servers will load the Vmedia, not the IP used by the KUBAM frontend">
-            </fancy-input>
-            <fancy-button  onclick={updateIP}>Update</fancy-button>    
-<!--
-            <fancy-dropdown inputid="actions" class="table-input">
-                <option value="none">Actions</option>
-                <option value="Edit selected hosts">Edit selected hosts</option>
-                <option value="Delete select hosts">Delete select hosts</option>    
-            </fancy-dropdown>
--->
-        
-            <div class="settings-container-big">
-                <div class="table keywidthtablelimit">
-                    <div class="tr">
-                        <div class="th">Public Keys</div>
-                        <div class="th actionwidth">Actions</div>
-                    </div>
-                    <div class="tr" each={k in this.opts.store.getState().keys}>
-                        <div class="td">{k}</div>
-                        <div class="td actionwidth">
-                            <img src="./icons/edit.svg" class="table-icon" data-id={k} onclick={editSetting}>
-                            <img src="./icons/delete.svg" data-id={k} onclick={deleteKey} class="table-icon">
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="container table-responsive">
+      <h2 class="categoryHeader">Settings</h2>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">KUBAM IP</span>
+        </div>
+        <input type="text" class="form-control" 
+                    inputid="settings-view-ip"
+                    value={this.opts.store.getState().kubam_ip}
+                    tip="This is the IP from which the servers will load the Vmedia. Usually it is the same IP as the web interface"> 
+        <button class="btn btn-outline-secondary" onclick={updateIP} type="button">Update</button>
+      </div>
+      <table class="table table-bordered table-striped keywidthtablelimit small">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col" width="90%">Public Keys</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr each={k in this.opts.store.getState().keys}>
+            <td><span class="small">{k}</span></td>
+            <td>
+              <img src="./icons/edit.svg" class="table-icon" data-id={k} onclick={editSetting}>
+              <img src="./icons/delete.svg" data-id={k} onclick={deleteKey} class="table-icon">
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     
     <add-button onclick={addSetting}>
@@ -37,27 +36,10 @@
 
     
     <style>
-        .settings-group {
-            padding: 15px;
-            margin-bottom: 10px;
-            background-color: white;
-        }
-        
-        fancy-input {
-            position: relative;
-            float: left;
-            top: -10px;
-        }
-        
-        fancy-button{
-            position: relative;
-            top: 10px;
-         }
-        
         .keywidthtablelimit {
             width: 100%;
-            table-layout: fixed;
             word-wrap: break-word;
+            table-layout: fixed; 
         }
     </style>
     

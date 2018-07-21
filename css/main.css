@@ -286,3 +286,8 @@ ul.test li a {
 .table .thead-dark th {
   background-color: #363c51;
 }
+
+.container {
+  padding: 15px;
+  background-color: #fff;
+}

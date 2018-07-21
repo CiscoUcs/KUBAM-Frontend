@@ -1,7 +1,7 @@
 riot.tag2('app', '<top-bar store="{this.opts.store}"></top-bar> <side-bar store="{this.opts.store}"></side-bar> <content store="{this.opts.store}"></content>', '', '', function(opts) {
 });
 
-riot.tag2('feedback', '<div class="container>"> <form> Thank you for your feedback. Your opinion is very important for us.<br> <hr> <fancy-input tag="Contact Information" inputid="feedback-contact"> </fancy-input> <fancy-textarea tag="Message" inputid="feedback-message"> </fancy-textarea> <fancy-button onclick="{send_feedback}">Send</fancy-button> </form> </div>', 'feedback form,[data-is="feedback"] form{ font-size: 14px; color:black; font-weight: 400; padding-top: 25px; padding-left: 45px; padding-right: 45px; padding-bottom: 25px; background-color: white; } feedback textarea,[data-is="feedback"] textarea{ vertical-align: top; min-width: 650px; } feedback select,[data-is="feedback"] select,feedback textarea,[data-is="feedback"] textarea{ width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; margin-top: 6px; margin-bottom: 16px; resize: vertical; } feedback fancy-button,[data-is="feedback"] fancy-button{ margin-left: -15px; }', '', function(opts) {
+riot.tag2('feedback', '<div class="container"> <h2 class="categoryHeader">Feedback</h2> <form> Feedback sent here goes to a WebEx teams room that KUBAM developers will see. If you wish to be contacted please enter your contact details and we will try to provide support. <br> <br> Alternatively, feel free to <a href="https://github.com/CiscoUcs/KUBaM/issues/new">open an issue on Github</a> <hr> <div class="form-group"> <label for="feedback-contact">Contact Information (optional)</label> <input class="form-control" id="feedback-contact" aria-describedby="emailHelp" placeholder="Enter email" type="email"> <small id="emailHelp" class="form-text text-muted">We\'ll never share your email with anyone else.</small> </div> <div class="form-group"> <label for="feedback-message">Feedback</label> <textarea class="form-control" id="feedback-message" rows="6"></textarea> </div> <button type="submit" class="btn btn-primary mb-2" onclick="{send_feedback}">Send</button> </form> </div>', '', '', function(opts) {
         this.send_feedback = function() {
             var instance = axios.create({
                 baseURL: 'https://feedback.kubam.io/',
@@ -42,6 +42,7 @@ riot.tag2('feedback', '<div class="container>"> <form> Thank you for your feedba
             }
         }.bind(this)
 });
+
 riot.tag2('hosts', '<div class="svrGrpServers"> <div class="top-actions"> <div class="dropdown"> <button class="btn btn-secondary dropdown-toggle" type="button" id="hostActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Actions </button> <div class="dropdown-menu" aria-labelledby="hostActions"> <a class="dropdown-item dropdown-disabled" data-action="buildBootImages" onclick="{actionSelect}">Build Boot Images</a> <a class="dropdown-item dropdown-disabled" data-action="deleteHosts" onclick="{actionSelect}">Delete</a> <a class="dropdown-item dropdown-disabled" onclick="{actionSelect}">Deploy Service Profile</a> <a class="dropdown-item dropdown-disabled" onclick="{actionSelect}">Deploy VMedia Policy</a> </div> </div> </div> <div class="table"> <div class="tr"> <div class="th checkbox_width"> <input type="checkbox" id="select_all" onclick="{changeHostsSelection}"> </div> <div class="th hostname_width">Hostname</div> <div class="th ip_width">Server IP</div> <div class="th dropdown_width">Operating System</div> <div class="th dropdown_width">Role</div> <div class="th dropdown_width">Network</div> <div class="th dropdown_width">Server Group</div> <div class="th actionwidth">Actions</div> </div> <div class="tr" each="{host, iindex in this.opts.store.getState().hosts}"> <div class="td-host checkbox_width"> <input type="checkbox" class="hostCheckBoxes" data-hostname="{host.name}" onclick="{toggleCheck}" checked="{host.selected}"> </div> <div class="td-host hostname_width"> <input type="text" riot-value="{host.name}" data-op="host" data-old="{host.name}" data-index="{iindex}" onblur="{changeHost}"> </div> <div class="td-host ip_width"> <input type="text" riot-value="{host.ip}" data-op="ip" data-old="{host.ip}" data-index="{iindex}" onblur="{changeHost}"> </div> <div id="os_drop" class="td-host dropdown_width"> <table-dropdown default="{host.os}" top="{host.os}" os="{host.os}" add="" index="{iindex}" changefunc="{changeHost}"> <li each="{key, value in passStore.getState().catalog}"> <a data-os="{value}" riot-value="{value}" data-index="{this.opts.index}" data-op="os" data-old="{this.opts.top}" onclick="{this.opts.changefunc}">{translateOS(value)}</a> </li> </table-dropdown> </div> <div id="role_drop" class="td-host dropdown_width"> <table-dropdown default="{host.role}" defrole="{host.role}" top="{translateRole(host.role)}" os="{host.os}" index="{iindex}" changefunc="{changeHost}"> <li each="{value in passStore.getState().catalog != null ? passStore.getState().catalog[this.opts.os] : []}"> <a data-role="{value}" riot-value="{value}" data-index="{this.opts.index}" data-op="role" data-old="{this.opts.defrole}" onclick="{this.opts.changefunc}">{translateRole(value)}</a> </li> </table-dropdown> </div> <div id="nw_drop" class="td-host dropdown_width"> <table-dropdown default="{host.network_group}" top="{host.network_group}" index="{iindex}" changefunc="{changeHost}"> <li each="{nw in passStore.getState().networks}"> <a data-network_group="{nw.name}" riot-value="{nw.name}" data-index="{this.opts.index}" data-op="network_group" data-old="{this.opts.top}" onclick="{this.opts.changefunc}">{nw.name}</a> </li> </table-dropdown> </div> <div id="sg_drop" class="td-host dropdown_width"> <table-dropdown default="none" top="{host.server_group}" index="{iindex}" changefunc="{changeHost}" serverarray="{passStore.getState().servers != null ? passStore.getState().servers.concat({⁗name⁗ : ⁗None⁗}) : [{⁗name⁗ : ⁗None⁗}]}"> <li each="{server in this.opts.serverarray}"> <a data-server_group="{server.name}" riot-value="{server.name}" data-index="{this.opts.index}" data-op="server_group" data-old="{this.opts.top}" onclick="{this.opts.changefunc}">{server.name}</a> </li> </table-dropdown> </div> <div class="td actionwidth"> <img src="./icons/delete.svg" data-hostname="{host.name}" onclick="{deleteHost}" class="table-icon"> </div> </div> </div> </div> <add-button onclick="{addHost}">Add Host</add-button>', 'hosts .td-host,[data-is="hosts"] .td-host{ padding: 0; font-size: 0.8em; display: table-cell; border: 1px solid #ecedf1; background-color: #FFF; } hosts .checkbox_width,[data-is="hosts"] .checkbox_width{ width: 20px; } hosts .td-host input[type=checkbox],[data-is="hosts"] .td-host input[type=checkbox]{ position: relative; left: 12px; } hosts .server,[data-is="hosts"] .server{ padding: 0; padding-left: 8px; vertical-align: middle; } hosts .hostname_width,[data-is="hosts"] .hostname_width{ width: 140px; } hosts .ip_width,[data-is="hosts"] .ip_width{ width: 120px; } hosts .dropdown_width,[data-is="hosts"] .dropdown_width{ width: 136px; line-height: 1px; } hosts .hostname_width input:hover,[data-is="hosts"] .hostname_width input:hover,hosts .ip_width input:hover,[data-is="hosts"] .ip_width input:hover{ background-image: url(\'icons/edit.svg\'); background-repeat: no-repeat; background-position: right; } hosts .hostname_width input:focus,[data-is="hosts"] .hostname_width input:focus,hosts ip_width input:focus,[data-is="hosts"] ip_width input:focus{ background-image: none; } hosts .svrGrpSettings,[data-is="hosts"] .svrGrpSettings{ background-color: white; padding: 25px; margin-bottom: 20px; clear: both; overflow:auto; } hosts .svrGrpServers,[data-is="hosts"] .svrGrpServers{ background-color: white; padding: 20px; overflow: hidden; min-height: 800px; } hosts .table input[type=text],[data-is="hosts"] .table input[type=text]{ border: none; outline:0; width: 90%; padding: 0; padding-left: 8px; padding-top: 2px; padding-bottom: 2px; margin: 0; font-size: 1em; cursor: pointer; }', '', function(opts) {
         let currentValue
         let store = this.opts.store
@@ -147,7 +148,118 @@ riot.tag2('new-host', '<form> <fancy-dropdown name="Server Group" tag="Server Se
 riot.tag2('table-dropdown', '<ul> <li> <a> {this.opts.top != null ? this.opts.top : ⁗None⁗} </a> <ul class="test"> <yield></yield> </ul> </li> </ul>', 'table-dropdown ul,[data-is="table-dropdown"] ul{ list-style: none; padding: 0; margin: 0; background: #FFF; color: #000; width: 160px; z-index: 9999; } table-dropdown ul li,[data-is="table-dropdown"] ul li{ display: block; position: relative; float: left; background: #FFF; color: #000; text-align: center; width: 160px; } table-dropdown ul li a,[data-is="table-dropdown"] ul li a{ display: block; text-decoration: none; white-space: nowrap; color: #000; cursor: pointer; } table-dropdown li ul,[data-is="table-dropdown"] li ul{ display: none; } table-dropdown li:hover > ul,[data-is="table-dropdown"] li:hover > ul{ display: block; position: absolute; } table-dropdown li:hover li,[data-is="table-dropdown"] li:hover li{ float: none; } table-dropdown li:hover a,[data-is="table-dropdown"] li:hover a{ background: #363c52; color: white; } table-dropdown li:hover li a:hover,[data-is="table-dropdown"] li:hover li a:hover{ background: rgba(74, 80, 100, 1); } table-dropdown ul.test,[data-is="table-dropdown"] ul.test{ top: -27px; } table-dropdown .test li,[data-is="table-dropdown"] .test li{ height: 32px; line-height: 32px; font-size: 12px } table-dropdown .test li a,[data-is="table-dropdown"] .test li a{ height: 32px; line-height: 32px; font-size: 11px; font-size: 1em; }', '', function(opts) {
 });
 
-riot.tag2('infra-detail', '<h2 class="categoryHeader">{name}</h2> <p>Select Servers to be used by KUBAM then save the changes</p> <div class="top-actions"> <button type="button" class="btn btn-secondary" data-infra="{name}" onclick="{saveComputeSelection}">Save Selections</button> </div> <table class="table table-bordered table-striped"> <thead class="thead-dark"> <tr> <th scope="col"><input type="checkbox" id="selectAllCompute" onclick="{changeComputeSelection}"></th> <th scope="col">Server</th> <th scope="col">Server Type</th> <th scope="col">Model</th> <th scope="col">Service Profile</th> <th scope="col">Power</th> <th scope="col">CPU (count/cores)</th> <th scope="col">Memory (count/speed)</th> </tr> </thead> <tbody> <tr class="{\'table-primary\' : comp.selected === true}" each="{comp in this.opts.store.getState().compute}"> <td><input type="checkbox" data-dn="{comp.dn}" class="computeCheckBoxes" checked="{comp.selected}" onclick="{toggleCheckCompute}"></td> <td if="{comp.type === \'blade\'}"> {comp.chassis_id} / {comp.slot}</td> <td if="{comp.type === \'rack\'}"> {comp.rack_id} </td> <td>{comp.type}</td> <td>{comp.model}</td> <td if="{comp.association === \'none\'}"> Unassociated</td> <td if="{comp.association !== \'none\'}"> {comp.service_profile} </td> <td>{comp.oper_power} </td> <td>{comp.num_cpus} / {comp.num_cores}</td> <td>{comp.ram} / {comp.ram_speed}</td> </tr> </tbody> </table>', '', '', function(opts) {
+riot.tag2('edit-serverimage', '<form> <div class="editmapping">Edit Mapping for: {translateOS(current_os)}</div> <fancy-dropdown name="ISO" tag="ISO" inputid="mapping-iso"> <option each="{img in passStore.getState().isos}" riot-value="{img}">{img.substring(0,60)}{img.length > 60 && ⁗...⁗}</option> </fancy-dropdown><br> </form> <fancy-button onclick="{createImageMapping}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button>', 'edit-serverimage form,[data-is="edit-serverimage"] form{ text-align: left; } edit-serverimage fancy-dropdown select,[data-is="edit-serverimage"] fancy-dropdown select{ width: 490px; } edit-serverimage .editmapping,[data-is="edit-serverimage"] .editmapping{ text-align: center; margin-top: 4px; }', '', function(opts) {
+        passStore.dispatch({
+            type: 'FETCH_IMAGES'
+        })
+
+        this.closeModal = function() {
+            document.getElementById('modal-shadow').style.display = 'None';
+        }.bind(this)
+
+        this.createImageMapping = function() {
+            passStore.dispatch({
+                type: 'CREATE_IMGMAPPING',
+                data: {
+                    'name': current_os,
+                    'iso': document.getElementById('mapping-iso').value
+                }
+            })
+            this.closeModal()
+        }.bind(this)
+});
+riot.tag2('new-serverimage', '<form> <fancy-dropdown tag="Operating System" inputid="mapping-name"> <option each="{key, value in passStore.getState().catalog}" riot-value="{value}">{translateOS(value)} </option> </fancy-dropdown> <fancy-dropdown name="ISO" tag="ISO" inputid="mapping-iso"> <option each="{img in passStore.getState().isos}" riot-value="{img}">{img.substring(0,60)}{img.length > 60 && ⁗...⁗}</option> </fancy-dropdown><br> </form> <fancy-button onclick="{createImageMapping}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button>', 'new-serverimage form,[data-is="new-serverimage"] form{ text-align: left; } new-serverimage fancy-dropdown select,[data-is="new-serverimage"] fancy-dropdown select{ width: 490px; }', '', function(opts) {
+        passStore.dispatch({
+            type: 'FETCH_IMAGES'
+        })
+
+        passStore.dispatch({
+            type: 'FETCH_CATALOG'
+        })
+
+        this.closeModal = function() {
+            document.getElementById('modal-shadow').style.display = 'None';
+        }.bind(this)
+
+        this.createImageMapping = function() {
+            passStore.dispatch({
+                type: 'CREATE_IMGMAPPING',
+                data: {
+                    'name': document.getElementById('mapping-name').value,
+                    'iso': document.getElementById('mapping-iso').value
+                }
+            })
+            this.closeModal()
+        }.bind(this)
+});
+riot.tag2('serverimages-overview', '<div class="container"> <h2 class="categoryHeader">OS Images</h2> <table class="table table-bordered table-striped small"> <thead class="thead-dark"> <tr> <th scope="col">Operating System</th> <th scope="col">File</th> <th scope="col">Actions</th> </tr> </thead> <tbody> <tr each="{img in this.opts.store.getState().iso_map}"> <td>{translateOS(img.os)}</td> <td class="td">{img.file}</td> <td class="td actionwidth"> <img src="./icons/edit.svg" class="table-icon" data-os="{img.os}" onclick="{editServerimage}"> <img src="./icons/delete.svg" data-os="{img.os}" onclick="{deleteMapping}" class="table-icon"> </td> </tr> </tbody> </table> </div> <add-button onclick="{addServerimage}">Add new Image</add-button>', 'serverimages-overview .os-container,[data-is="serverimages-overview"] .os-container{ background-color: white; padding: 34px 20px; } serverimages-overview .osgroup,[data-is="serverimages-overview"] .osgroup{ margin-bottom: 25px; margin-right: 25px; float: left; width: 100%; } serverimages-overview .osselect,[data-is="serverimages-overview"] .osselect{ background-color: #363c51; font-size: 0.95em; color: white; border: 1px solid #ecedf1; padding: 10px; width: 580px; } serverimages-overview .centeralign,[data-is="serverimages-overview"] .centeralign{ text-align: center; } serverimages-overview .tablewidth,[data-is="serverimages-overview"] .tablewidth{ width: 600px; }', '', function(opts) {
+        let store = this.opts.store
+        console.log(this.opts.store.getState().iso_map)
+        store.dispatch({
+            type: 'FETCH_MAPPINGS'
+        })
+
+        this.addServerimage = function() {
+            var modal_title = document.getElementById('modal-title');
+            var modal_content = document.getElementById('modal-content');
+
+            modal_title.innerHTML = 'Add a new Image'
+
+            modal_content.innerHTML = '';
+            var tag = document.createElement("new-serverimage");
+            modal_content.append(tag)
+            passStore = this.opts.store
+            riot.mount(tag, 'new-serverimage', passStore);
+
+            var modal_shadow = document.getElementById('modal-shadow')
+            modal_shadow.style.display = 'table'
+        }.bind(this)
+
+        this.editServerimage = function(e) {
+            var modal_title = document.getElementById('modal-title');
+            var modal_content = document.getElementById('modal-content');
+
+            modal_title.innerHTML = 'Edit an Image'
+
+            modal_content.innerHTML = '';
+            var tag = document.createElement("edit-serverimage");
+            modal_content.append(tag)
+            passStore = this.opts.store
+            current_os = e.target.dataset.os
+            riot.mount(tag, 'edit-serverimage', passStore, current_os);
+
+            var modal_shadow = document.getElementById('modal-shadow')
+            modal_shadow.style.display = 'table'
+        }.bind(this)
+
+        let currentValue
+        this.opts.store.subscribe(function(){
+            let previousValue = currentValue;
+            currentValue = store.getState()
+            currentTab = window.location.hash.substr(1);
+            if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
+                if(currentTab == 'images') {
+                    riot.update();
+                }
+            }
+        })
+
+        this.deleteMapping = function(e) {
+            ds = e.target.dataset;
+            store.dispatch({
+                type: 'DELETE_MAPPING',
+                data: {
+                    os: ds.os
+                }
+            })
+        }.bind(this)
+
+});
+
+
+
+
+riot.tag2('infra-detail', '<div class="container"> <h2 class="categoryHeader">{name}</h2> <p>Select Servers to be used by KUBAM then save the changes</p> <div class="top-actions"> <button type="button" class="btn btn-secondary" data-infra="{name}" onclick="{saveComputeSelection}">Save Selections</button> </div> <table class="table table-bordered table-striped small"> <thead class="thead-dark"> <tr> <th scope="col"><input type="checkbox" id="selectAllCompute" onclick="{changeComputeSelection}"></th> <th scope="col">Server</th> <th scope="col">Server Type</th> <th scope="col">Model</th> <th scope="col">Service Profile</th> <th scope="col">Power</th> <th scope="col">CPU (count/cores)</th> <th scope="col">Memory (count/speed)</th> </tr> </thead> <tbody> <tr class="{\'table-primary\' : comp.selected === true}" each="{comp in this.opts.store.getState().compute}"> <td><input type="checkbox" data-dn="{comp.dn}" class="computeCheckBoxes" checked="{comp.selected}" onclick="{toggleCheckCompute}"></td> <td if="{comp.type === \'blade\'}"> {comp.chassis_id} / {comp.slot}</td> <td if="{comp.type === \'rack\'}"> {comp.rack_id} </td> <td>{comp.type}</td> <td>{comp.model}</td> <td if="{comp.association === \'none\'}"> Unassociated</td> <td if="{comp.association !== \'none\'}"> {comp.service_profile} </td> <td>{comp.oper_power} </td> <td>{comp.num_cpus} / {comp.num_cores}</td> <td>{comp.ram} / {comp.ram_speed}</td> </tr> </tbody> </table> </div>', '', '', function(opts) {
 
       let currentValue
       let store = this.opts.store
@@ -172,7 +284,7 @@ riot.tag2('infra-detail', '<h2 class="categoryHeader">{name}</h2> <p>Select Serv
       })
 });
 
-riot.tag2('infra-overview', '<div class="infra-group"> <div class="infra-container-big"> <h2 class="categoryHeader">UCS Servers</h2> <div id="ucs-rows" class="table bottomspace"> <div class="tr"> <div class="th">Name</div> <div class="th">Description</div> <div class="th">Type</div> <div class="th">Mgmt IP</div> <div class="th">User</div> <div class="th actionwidth">Actions</div> </div> <div data-id="{comp.id}" class="tr" each="{comp in this.opts.store.getState().servers}"> <div class="td"> <a if="{comp.type === ⁗imc⁗}">{comp.name}</a> <a if="{comp.type !== ⁗imc⁗}" href="#infrastructure/{comp.name}">{comp.name}</a> </div> <div class="td"> {comp.description} </div> <div class="td">{comp.type}</div> <div class="td"> {comp.credentials.ip} </div> <div class="td"> {comp.credentials.user} </div> <div class="td actionwidth"> <img src="./icons/delete.svg" data-type="{comp.type}" data-name="{comp.name}" onclick="{deleteController}" class="table-icon"> </div> </div> </div> </div> </div> <add-button onclick="{addController}">Add Controller</add-button>', 'infra-overview .tablewidth,[data-is="infra-overview"] .tablewidth{ width: 720px; } infra-overview .bottomspace,[data-is="infra-overview"] .bottomspace{ margin-bottom: 25px; } infra-overview .infra-group,[data-is="infra-overview"] .infra-group{ padding-bottom: 15px; } infra-overview .infra-container,[data-is="infra-overview"] .infra-container{ background-color: white; padding: 20px; } infra-overview .infra-container-big,[data-is="infra-overview"] .infra-container-big{ background-color: white; padding: 34px 20px; } infra-overview .td input[type="text"],[data-is="infra-overview"] .td input[type="text"]{ border: none; outline:0; width: 95%; padding: 0; padding-left: 8px; padding-top: 2px; padding-bottom: 2px; margin: 0; font-size: 1em; cursor: pointer; } infra-overview .td input[type="text"]:hover,[data-is="infra-overview"] .td input[type="text"]:hover{ background-image: url(\'icons/edit.svg\'); background-repeat: no-repeat; background-position: right; }', '', function(opts) {
+riot.tag2('infra-overview', '<div class="container"> <h2 class="categoryHeader">UCS Servers</h2> <table class="table table-bordered table-striped small"> <thead class="thead-dark"> <th scope="col">Name</th> <th scope="col">Description</th> <th scope="col">Type</th> <th scope="col">Mgmt IP</th> <th scope="col">User</th> <th scope="col">Actions</th> <thead> <tbody> <tr data-id="{comp.id}" each="{comp in this.opts.store.getState().servers}"> <td> <a if="{comp.type === ⁗imc⁗}">{comp.name}</a> <a if="{comp.type !== ⁗imc⁗}" href="#infrastructure/{comp.name}">{comp.name}</a> </td> <td> {comp.description} </td> <td>{comp.type}</td> <td> {comp.credentials.ip} </td> <td> {comp.credentials.user} </td> <td> <img src="./icons/delete.svg" data-type="{comp.type}" data-name="{comp.name}" onclick="{deleteController}" class="table-icon"> </td> </tr> </tbody> </table> </div> <add-button onclick="{addController}">Add Controller</add-button>', '', '', function(opts) {
 
         let currentValue
         let store = this.opts.store
@@ -272,7 +384,7 @@ riot.tag2('new-controller', '<div> <div class="form-container"> <fancy-dropdown 
         }.bind(this)
 });
 
-riot.tag2('network', '<add-button onclick="{addNetworkGroup}"> Add Network Group </add-button> <div class="network-group"> <div class="network-container-big"> <div id="networkgroup-rows" class="table networkwidthtablelimit"> <div class="tr"> <div class="th">Network Name</div> <div class="th">Netmask</div> <div class="th">Router</div> <div class="th">Name Server</div> <div class="th">NTP Server</div> <div class="th">Proxy Server</div> <div class="th">VLAN</div> <div class="th actionwidth">Actions</div> </div> <div class="tr" data-id="{nw.id}" each="{nw in this.opts.store.getState().networks}"> <div class="td"> <input type="text" riot-value="{nw.name}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}"> </div> <div class="td"> <input type="text" riot-value="{nw.netmask}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}"> </div> <div class="td"> <input type="text" riot-value="{nw.gateway}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}"> </div> <div class="td"> <input type="text" riot-value="{nw.nameserver}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}"> </div> <div class="td"> <input type="text" riot-value="{nw.ntpserver}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}"> </div> <div class="td"> <input type="text" riot-value="{nw.proxy}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}"> </div> <div class="td"> <input type="text" riot-value="{nw.vlan}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}"> </div> <div class="td actionwidth"> <img src="./icons/delete.svg" data-name="{nw.name}" onclick="{deleteNetwork}" class="table-icon"> </div> </div> </div> </div> </div>', 'network .network-group,[data-is="network"] .network-group{ padding-bottom: 15px; background-color: white; padding: 20px; } network .network-container,[data-is="network"] .network-container{ background-color: white; padding: 20px; } network .networkwidthtablelimit,[data-is="network"] .networkwidthtablelimit{ width: 100%; table-layout: fixed; word-wrap: break-word; } network .td input[type="text"],[data-is="network"] .td input[type="text"]{ border: none; outline:0; width: 95%; padding: 0; padding-left: 8px; padding-top: 2px; padding-bottom: 2px; margin: 0; font-size: 1em; cursor: pointer; } network .td input[type="text"]:hover,[data-is="network"] .td input[type="text"]:hover{ background-image: url(\'icons/edit.svg\'); background-repeat: no-repeat; background-position: right; }', '', function(opts) {
+riot.tag2('network', '<div class="container table-responsive"> <h2 class="categoryHeader">Network Groups</h2> <table class="table table-bordered table-striped small"> <thead class="thead-dark"> <th scope="col">Network Name</div> <th scope="col">Netmask</div> <th scope="col">Router</div> <th scope="col">Name Server</div> <th scope="col">NTP Server</div> <th scope="col">Proxy Server</div> <th scope="col">VLAN</div> <th scope="col">Actions</div> </thead> <tbody> <tr data-id="{nw.id}" id="{nw.id}" each="{nw in this.opts.store.getState().networks}"> <td> <input type="text" riot-value="{nw.name}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}"> </td> <td> <input type="text" riot-value="{nw.netmask}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}"> </td> <td> <input type="text" riot-value="{nw.gateway}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}"> </td> <td> <input type="text" riot-value="{nw.nameserver}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}"> </td> <td> <input type="text" riot-value="{nw.ntpserver}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}"> </td> <td> <input type="text" riot-value="{nw.proxy}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}"> </td> <td> <input type="text" riot-value="{nw.vlan}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}"> </td> <td> <img src="./icons/delete.svg" data-name="{nw.name}" onclick="{deleteNetwork}" class="table-icon"> </td> </tr> </tbody> </table> <add-button onclick="{addNetworkGroup}">Add Network Group</add-button> </div>', '', '', function(opts) {
         let currentValue
         let store = this.opts.store
 
@@ -319,27 +431,23 @@ riot.tag2('network', '<add-button onclick="{addNetworkGroup}"> Add Network Group
         this.editNetwork = function(e) {
             ds = e.target.dataset;
             id = ds.id
-            rows = document.getElementById('networkgroup-rows')
-            for(i=1;i<rows.children.length;i++) {
-                row = rows.children[i]
-                if(row.dataset.id == id) {
-                    c = row.children
-                    updated = {
-                        "id": row.dataset.id,
-                        "name": c[0].children[0].value.trim(),
-                        "netmask": c[1].children[0].value,
-                        "gateway": c[2].children[0].value,
-                        "nameserver": c[3].children[0].value,
-                        "ntpserver": c[4].children[0].value,
-                        "proxy": c[5].children[0].value,
-                        "vlan": c[6].children[0].value
-                    }
-                    store.dispatch({
-                        type: 'UPDATE_NETWORKGROUP',
-                        data: updated
-                    })
-                }
+            row = document.getElementById(id)
+            c = row.children
+            console.log(c)
+            updated = {
+              "id": row.dataset.id,
+              "name": c[0].children[0].value.trim(),
+              "netmask": c[1].children[0].value,
+              "gateway": c[2].children[0].value,
+              "nameserver": c[3].children[0].value,
+              "ntpserver": c[4].children[0].value,
+              "proxy": c[5].children[0].value,
+              "vlan": c[6].children[0].value
             }
+            store.dispatch({
+                type: 'UPDATE_NETWORKGROUP',
+                data: updated
+            })
         }.bind(this)
 });
 
@@ -365,117 +473,6 @@ riot.tag2('new-networkgroup', '<form> <div class="network-container"> <fancy-inp
             this.closeModal()
         }.bind(this)
 });
-riot.tag2('edit-serverimage', '<form> <div class="editmapping">Edit Mapping for: {translateOS(current_os)}</div> <fancy-dropdown name="ISO" tag="ISO" inputid="mapping-iso"> <option each="{img in passStore.getState().isos}" riot-value="{img}">{img.substring(0,60)}{img.length > 60 && ⁗...⁗}</option> </fancy-dropdown><br> </form> <fancy-button onclick="{createImageMapping}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button>', 'edit-serverimage form,[data-is="edit-serverimage"] form{ text-align: left; } edit-serverimage fancy-dropdown select,[data-is="edit-serverimage"] fancy-dropdown select{ width: 490px; } edit-serverimage .editmapping,[data-is="edit-serverimage"] .editmapping{ text-align: center; margin-top: 4px; }', '', function(opts) {
-        passStore.dispatch({
-            type: 'FETCH_IMAGES'
-        })
-
-        this.closeModal = function() {
-            document.getElementById('modal-shadow').style.display = 'None';
-        }.bind(this)
-
-        this.createImageMapping = function() {
-            passStore.dispatch({
-                type: 'CREATE_IMGMAPPING',
-                data: {
-                    'name': current_os,
-                    'iso': document.getElementById('mapping-iso').value
-                }
-            })
-            this.closeModal()
-        }.bind(this)
-});
-riot.tag2('new-serverimage', '<form> <fancy-dropdown tag="Operating System" inputid="mapping-name"> <option each="{key, value in passStore.getState().catalog}" riot-value="{value}">{translateOS(value)} </option> </fancy-dropdown> <fancy-dropdown name="ISO" tag="ISO" inputid="mapping-iso"> <option each="{img in passStore.getState().isos}" riot-value="{img}">{img.substring(0,60)}{img.length > 60 && ⁗...⁗}</option> </fancy-dropdown><br> </form> <fancy-button onclick="{createImageMapping}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button>', 'new-serverimage form,[data-is="new-serverimage"] form{ text-align: left; } new-serverimage fancy-dropdown select,[data-is="new-serverimage"] fancy-dropdown select{ width: 490px; }', '', function(opts) {
-        passStore.dispatch({
-            type: 'FETCH_IMAGES'
-        })
-
-        passStore.dispatch({
-            type: 'FETCH_CATALOG'
-        })
-
-        this.closeModal = function() {
-            document.getElementById('modal-shadow').style.display = 'None';
-        }.bind(this)
-
-        this.createImageMapping = function() {
-            passStore.dispatch({
-                type: 'CREATE_IMGMAPPING',
-                data: {
-                    'name': document.getElementById('mapping-name').value,
-                    'iso': document.getElementById('mapping-iso').value
-                }
-            })
-            this.closeModal()
-        }.bind(this)
-});
-riot.tag2('serverimages-overview', '<div class="osgroup" hide="{this.opts.store.getState().isLoading}"> <div class="os-container"> <div class="table"> <div class="tr"> <div class="th">Operating System</div> <div class="th">File</div> <div class="th actionwidth">Actions</div> </div> <div class="tr" each="{img in this.opts.store.getState().iso_map}"> <div class="td">{translateOS(img.os)}</div> <div class="td">{img.file}</div> <div class="td actionwidth"> <img src="./icons/edit.svg" class="table-icon" data-os="{img.os}" onclick="{editServerimage}"> <img src="./icons/delete.svg" data-os="{img.os}" onclick="{deleteMapping}" class="table-icon"> </div> </div> </div> </div> </div> <add-button onclick="{addServerimage}">Add new Image</add-button>', 'serverimages-overview .os-container,[data-is="serverimages-overview"] .os-container{ background-color: white; padding: 34px 20px; } serverimages-overview .osgroup,[data-is="serverimages-overview"] .osgroup{ margin-bottom: 25px; margin-right: 25px; float: left; width: 100%; } serverimages-overview .osselect,[data-is="serverimages-overview"] .osselect{ background-color: #363c51; font-size: 0.95em; color: white; border: 1px solid #ecedf1; padding: 10px; width: 580px; } serverimages-overview .centeralign,[data-is="serverimages-overview"] .centeralign{ text-align: center; } serverimages-overview .tablewidth,[data-is="serverimages-overview"] .tablewidth{ width: 600px; }', '', function(opts) {
-        let store = this.opts.store
-
-        store.dispatch({
-            type: 'FETCH_MAPPINGS'
-        })
-
-        this.addServerimage = function() {
-            var modal_title = document.getElementById('modal-title');
-            var modal_content = document.getElementById('modal-content');
-
-            modal_title.innerHTML = 'Add a new Image'
-
-            modal_content.innerHTML = '';
-            var tag = document.createElement("new-serverimage");
-            modal_content.append(tag)
-            passStore = this.opts.store
-            riot.mount(tag, 'new-serverimage', passStore);
-
-            var modal_shadow = document.getElementById('modal-shadow')
-            modal_shadow.style.display = 'table'
-        }.bind(this)
-
-        this.editServerimage = function(e) {
-            var modal_title = document.getElementById('modal-title');
-            var modal_content = document.getElementById('modal-content');
-
-            modal_title.innerHTML = 'Edit an Image'
-
-            modal_content.innerHTML = '';
-            var tag = document.createElement("edit-serverimage");
-            modal_content.append(tag)
-            passStore = this.opts.store
-            current_os = e.target.dataset.os
-            riot.mount(tag, 'edit-serverimage', passStore, current_os);
-
-            var modal_shadow = document.getElementById('modal-shadow')
-            modal_shadow.style.display = 'table'
-        }.bind(this)
-
-        let currentValue
-        this.opts.store.subscribe(function(){
-            let previousValue = currentValue;
-            currentValue = store.getState()
-            currentTab = window.location.hash.substr(1);
-            if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
-                if(currentTab == 'images') {
-                    riot.update();
-                }
-            }
-        })
-
-        this.deleteMapping = function(e) {
-            ds = e.target.dataset;
-            store.dispatch({
-                type: 'DELETE_MAPPING',
-                data: {
-                    os: ds.os
-                }
-            })
-        }.bind(this)
-
-});
-
-
-
-
 riot.tag2('new-servergroup', '<div class="newSvrGrpInputs"> <fancy-dropdown tag="Type" input-id="servergroup-new-type"> <option value="kubernetes">Kubernetes</option> <option value="hypervisor">Bare-metal Hypervisor</option> <option value="pureos">Bare-metal OS</option> </fancy-dropdown> <fancy-input tag="Name" input-id="servergroup-new-name"> </fancy-input> </div> <fancy-button onclick="{createServerGroup}">Create</fancy-button> <fancy-button color="gray" onclick="{closeModal}">Cancel</fancy-button>', 'new-servergroup { text-align: left; } new-servergroup .newSvrGrpInputs,[data-is="new-servergroup"] .newSvrGrpInputs{ margin-bottom: 4px; }', '', function(opts) {
         this.closeModal = function() {
             document.getElementById('modal-shadow').style.display = 'None';
@@ -624,7 +621,7 @@ riot.tag2('new-setting', '<div class="settings-container"> <fancy-textarea tag="
             this.closeModal()
         }.bind(this)
 });
-riot.tag2('settings', '<div class="settings-group"> <fancy-input tag="KUBAM IP Address" inputid="settings-view-ip" placeholder="{this.opts.store.getState().kubam_ip}" tip="This is the IP from which the servers will load the Vmedia, not the IP used by the KUBAM frontend"> </fancy-input> <fancy-button onclick="{updateIP}">Update</fancy-button> <div class="settings-container-big"> <div class="table keywidthtablelimit"> <div class="tr"> <div class="th">Public Keys</div> <div class="th actionwidth">Actions</div> </div> <div class="tr" each="{k in this.opts.store.getState().keys}"> <div class="td">{k}</div> <div class="td actionwidth"> <img src="./icons/edit.svg" class="table-icon" data-id="{k}" onclick="{editSetting}"> <img src="./icons/delete.svg" data-id="{k}" onclick="{deleteKey}" class="table-icon"> </div> </div> </div> </div> </div> <add-button onclick="{addSetting}"> Add Setting </add-button>', 'settings .settings-group,[data-is="settings"] .settings-group{ padding: 15px; margin-bottom: 10px; background-color: white; } settings fancy-input,[data-is="settings"] fancy-input{ position: relative; float: left; top: -10px; } settings fancy-button,[data-is="settings"] fancy-button{ position: relative; top: 10px; } settings .keywidthtablelimit,[data-is="settings"] .keywidthtablelimit{ width: 100%; table-layout: fixed; word-wrap: break-word; }', '', function(opts) {
+riot.tag2('settings', '<div class="container table-responsive"> <h2 class="categoryHeader">Settings</h2> <div class="input-group mb-3"> <div class="input-group-prepend"> <span class="input-group-text">KUBAM IP</span> </div> <input type="text" class="form-control" inputid="settings-view-ip" riot-value="{this.opts.store.getState().kubam_ip}" tip="This is the IP from which the servers will load the Vmedia. Usually it is the same IP as the web interface"> <button class="btn btn-outline-secondary" onclick="{updateIP}" type="button">Update</button> </div> <table class="table table-bordered table-striped keywidthtablelimit small"> <thead class="thead-dark"> <tr> <th scope="col" width="90%">Public Keys</th> <th scope="col">Actions</th> </tr> </thead> <tbody> <tr each="{k in this.opts.store.getState().keys}"> <td><span class="small">{k}</span></td> <td> <img src="./icons/edit.svg" class="table-icon" data-id="{k}" onclick="{editSetting}"> <img src="./icons/delete.svg" data-id="{k}" onclick="{deleteKey}" class="table-icon"> </td> </tr> </tbody> </table> </div> <add-button onclick="{addSetting}"> Add Setting </add-button>', 'settings .keywidthtablelimit,[data-is="settings"] .keywidthtablelimit{ width: 100%; word-wrap: break-word; table-layout: fixed; }', '', function(opts) {
         let store = this.opts.store
 
         store.dispatch({
@@ -702,7 +699,7 @@ riot.tag2('settings', '<div class="settings-group"> <fancy-input tag="KUBAM IP A
 
 riot.tag2('tutorial', '<form> <h5>Welcome to KUBAM. In the following links you will find all the necessary information to get started using our project.</h5> <hr> <div> <b>Youtube Demo:</b> <fancy-button class="btn btn-success" onclick=" window.open(\'http://www.youtube.com/watch?v=7QCrml8C-QI\',\'_blank\')"> Go </fancy-button> <hr> <b>dCloud Tutorial. Lab Steps:</b> <fancy-button class="btn btn-success" onclick=" window.open(\'https://github.com/vallard/KUBAM-Tutorial/blob/master/README.md\',\'_blank\')"> Go </fancy-button> <hr> <b>dCloud: Cisco Unified Computing System 3.2 v1 - DEV:</b> <fancy-button class="btn btn-success" onclick=" window.open(\'https://dcloud2-lon.cisco.com/dashboard/sessions\',\'_blank\')"> Go </fancy-button> <hr> <h5> Please, make sure to schedule the lab properly and once it is scheduled, click on View to start it. We hope you enjoy your KUBaM experience! </h5> </div> </form>', 'tutorial-content{ padding: 10px; position: fixed; } tutorial h5,[data-is="tutorial"] h5{ font-size: 12px; color:gray; font-weight: 400; padding-top: 5px; background-color: white; padding-left: 7px; padding-right: 7px; } tutorial form,[data-is="tutorial"] form{ margin-top: 8px; text-align: left; vertical-align: left; background-color: white; padding-top: 30px; padding-left: 45px; padding-right: 45px; padding-bottom: 30px; font-size: 14px; } tutorial fancy-button,[data-is="tutorial"] fancy-button{ margin-left: 10px; }', '', function(opts) {
 });
-riot.tag2('content', '<loading-spinner if="{this.opts.store.getState().isLoading}"></loading-spinner> <router> <route path="/images"> <serverimages-overview store="{passStore}"></serverimages-overview> </route> <route path="/infrastructure"> <infra-overview store="{passStore}"></infra-overview> </route> <route path="/infrastructure/*"> <infra-detail store="{passStore}"></infra-detail> </route> <route path="/hosts"> <hosts store="{passStore}"></hosts> </route> <route path="/network"> <network store="{passStore}"></network> </route> <route path="/settings"> <settings store="{passStore}"></settings> </route> <route path="/feedback"> <feedback store="{passStore}"></feedback> </route> <route path="/tutorial"> <tutorial store="{passStore}"></tutorial> </route> </router> <div id="modal-shadow" style="display:none;"> <div id="modal-container"> <div id="modal-box"> <modal></modal> </div> </div> </div> <div id="pop-box"> </div>', 'content { position: absolute; left: 200px; top: 50px; padding: 20px; width: calc(100% - 240px); } content #modal-shadow,[data-is="content"] #modal-shadow{ position: fixed; display: table; top: 0; left: 0; height: 100%; width: 100%; z-index: 9999; background-color: rgba(0,0,0,0.6); } content #modal-container,[data-is="content"] #modal-container{ display:table-cell; text-align:center; padding-top: 5%; } content #modal-box,[data-is="content"] #modal-box{ position: relative; display: inline-block; background-color: white; border-radius: 4px; padding: 34px; } content #pop-box,[data-is="content"] #pop-box{ position: fixed; top: 70px; right: 25px; width: 340px; }', '', function(opts) {
+riot.tag2('content', '<loading-spinner if="{this.opts.store.getState().isLoading}"></loading-spinner> <router> <route path="/images"> <serverimages-overview store="{passStore}"></serverimages-overview> </route> <route path="/infrastructure"> <infra-overview store="{passStore}"></infra-overview> </route> <route path="/infrastructure/*"> <infra-detail store="{passStore}"></infra-detail> </route> <route path="/hosts"> <hosts store="{passStore}"></hosts> </route> <route path="/network"> <network store="{passStore}"></network> </route> <route path="/settings"> <settings store="{passStore}"></settings> </route> <route path="/feedback"> <feedback store="{passStore}"></feedback> </route> <route path="/tutorial"> <tutorial store="{passStore}"></tutorial> </route> </router> <div id="modal-shadow" style="display:none;"> <div id="modal-container"> <div id="modal-box"> <modal></modal> </div> </div> </div> <div id="pop-box"> </div>', 'content { position: absolute; left: 200px; top: 50px; padding: 10px; width: calc(100% - 200px); } content #modal-shadow,[data-is="content"] #modal-shadow{ position: fixed; display: table; top: 0; left: 0; height: 100%; width: 100%; z-index: 9999; background-color: rgba(0,0,0,0.6); } content #modal-container,[data-is="content"] #modal-container{ display:table-cell; text-align:center; padding-top: 5%; } content #modal-box,[data-is="content"] #modal-box{ position: relative; display: inline-block; background-color: white; border-radius: 4px; padding: 34px; } content #pop-box,[data-is="content"] #pop-box{ position: fixed; top: 70px; right: 25px; width: 340px; }', '', function(opts) {
         passStore = this.opts.store
 });
 

@@ -58,8 +58,8 @@
             position: absolute;
             left: 200px;
             top: 50px;
-            padding: 20px;
-            width: calc(100% - 240px);
+            padding: 10px;
+            width: calc(100% - 200px);
         }
         
         #modal-shadow {

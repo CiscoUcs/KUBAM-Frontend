@@ -1,15 +1,23 @@
 <feedback> 
-    <div class="container>">
+    <div class="container">
+      <h2 class="categoryHeader">Feedback</h2>
         <form>
-            Thank you for your feedback. Your opinion is very important for us.<br>
+            Feedback sent here goes to a WebEx teams room that KUBAM developers will see.  If you wish to be contacted please enter your contact details and we will try to provide support.  
+            <br/>
+            <br/>
+            Alternatively, feel free to <a href="https://github.com/CiscoUcs/KUBaM/issues/new">open an issue on Github</a>
             <hr>
-            <fancy-input tag="Contact Information"
-                         inputid="feedback-contact">
-            </fancy-input>
-            <fancy-textarea tag="Message"
-                            inputid="feedback-message">
-            </fancy-textarea>
-            <fancy-button onclick={send_feedback}>Send</fancy-button>
+          <div class="form-group">
+            <label for="feedback-contact">Contact Information (optional)</label>
+            <input type="email" class="form-control" id="feedback-contact"
+              aria-describedby="emailHelp" placeholder="Enter email" />
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+          <div class="form-group">
+            <label for="feedback-message">Feedback</label>
+            <textarea class="form-control" id="feedback-message" rows="6"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary mb-2" onclick={send_feedback}>Send</button>
         </form>
     </div>
     
@@ -54,37 +62,4 @@
             }
         }
     </script>
-    
-    <style> 
-        form{
-            font-size: 14px;
-            color:black;
-            font-weight: 400;
-            padding-top: 25px;
-            padding-left: 45px;
-            padding-right: 45px;
-            padding-bottom: 25px;
-            background-color: white;
-        }
-        textarea{
-            vertical-align: top;
-            min-width: 650px;
-        }  
-        select, textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            margin-top: 6px;
-            margin-bottom: 16px;
-            resize: vertical;
-        }
-        
-        fancy-button{
-            margin-left: -15px;
-        } 
-        
- 
-    </style>
 </feedback>

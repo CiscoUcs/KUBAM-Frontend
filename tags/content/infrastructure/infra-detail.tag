@@ -1,10 +1,11 @@
 <infra-detail>
+  <div class="container">
     <h2 class="categoryHeader">{ name }</h2>
     <p>Select Servers to be used by KUBAM then save the changes</p>
     <div class="top-actions">
       <button type="button" class="btn btn-secondary" data-infra={name} onclick={saveComputeSelection}>Save Selections</button>
     </div>
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped small">
       <thead class="thead-dark">
         <tr>
           <th scope="col"><input type="checkbox" 
@@ -39,6 +40,7 @@
         </tr>
       </tbody>
     </table>
+  </div>
     <script>        
       let currentValue
       let store = this.opts.store

@@ -1,22 +1,25 @@
 <serverimages-overview> 
-    <div class="osgroup" hide={this.opts.store.getState().isLoading}>
-            <div class="os-container">
-                <div class="table">
-                    <div class="tr">
-                        <div class="th">Operating System</div>
-                        <div class="th">File</div>
-                        <div class="th actionwidth">Actions</div>
-                    </div>
-                    <div class="tr" each={img in this.opts.store.getState().iso_map}> 
-                        <div class="td">{translateOS(img.os)}</div>
-                        <div class="td">{img.file}</div>
-                        <div class="td actionwidth">
-                            <img src="./icons/edit.svg" class="table-icon" data-os={img.os} onclick={editServerimage}>
-                            <img src="./icons/delete.svg" data-os={img.os} onclick={deleteMapping} class="table-icon">
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="container">
+      <h2 class="categoryHeader">OS Images</h2>
+      <table class="table table-bordered table-striped small">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Operating System</th>
+            <th scope="col">File</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr each={img in this.opts.store.getState().iso_map}> 
+            <td>{translateOS(img.os)}</td>
+            <td class="td">{img.file}</td>
+            <td class="td actionwidth">
+                <img src="./icons/edit.svg" class="table-icon" data-os={img.os} onclick={editServerimage}>
+                <img src="./icons/delete.svg" data-os={img.os} onclick={deleteMapping} class="table-icon">
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <add-button onclick={addServerimage}>Add new Image</add-button>
@@ -54,7 +57,7 @@
     
     <script>
         let store = this.opts.store
-        
+        console.log(this.opts.store.getState().iso_map) 
         store.dispatch({
             type: 'FETCH_MAPPINGS'
         })

@@ -1,118 +1,41 @@
 <infra-overview>
-    <div class="infra-group"> 
-        <div class="infra-container-big">
-            <!--<div class="containing-actions">
-                <div class="top-actions">
-                    <fancy-dropdown inputid="actions" class="table-input">
-                        <option value="none">Actions</option>
-                        <option value="Edit selected hosts">Edit selected hosts</option>
-                        <option value="Delete select hosts">Delete select hosts</option>    
-                    </fancy-dropdown>
-                </div>
-            </div>-->
-            
-            <h2 class="categoryHeader">UCS Servers</h2>
-            <div id="ucs-rows" class="table bottomspace">
-                <div class="tr">
-                    <!--<div class="th"><input type="checkbox"></div>-->
-                    <div class="th">Name</div>
-                    <div class="th">Description</div>
-                    <div class="th">Type</div>
-                    <div class="th">Mgmt IP</div>
-                    <div class="th">User</div>
-                    <div class="th actionwidth">Actions</div>
-                </div>
-                <div data-id={comp.id} class="tr" each={comp in this.opts.store.getState().servers}>
-                    <div class="td">
-                        <a if={comp.type === "imc"}>{comp.name}</a>
-                        <a if={comp.type !== "imc"} href="#infrastructure/{comp.name}">{comp.name}</a>
-                    </div>
-                    <div class="td">
-                        {comp.description}
-                    </div>
-                    <div class="td">{comp.type}</div>
-                    <div class="td">
-                      {comp.credentials.ip}
-                    </div>
-                    <div class="td">
-                        {comp.credentials.user}
-                    </div>
-                    <div class="td  actionwidth">
-                        <img src="./icons/delete.svg" data-type={comp.type} data-name={comp.name} onclick={deleteController} class="table-icon">
-                    </div>
-                </div>
-            </div>
-            <!--
-            <h2 class="categoryHeader">ACI Fabrics</h2>
-            <div class="table">
-                <div class="tr">
-                    <div class="th">Name</div>
-                    <div class="th">Description</div>
-                    <div class="th">Mgmt IP</div>
-                    <div class="th">Tenant</div>
-                    <div class="th actionwidth">Actions</div>
-                </div>
-                <div class="tr" each={comp in this.opts.store.getState().aci}>
-                    <div class="td">{comp.name}</div>
-                    <div class="td">{comp.description}</div>
-                    <div class="td">{comp.credentials.ip}</div>
-                    <div class="td">{comp.credentials.user}</div>
-                    <div class="td actionwidth">
-                        <img src="./icons/edit.svg" class="table-icon">
-                        <img src="./icons/delete.svg" data-type={comp.type} data-name={comp.name} onclick={deleteController} class="table-icon">
-                    </div>
-                </div>
-            </div>
-            -->
-        </div>
-    </div>   
+    <div class="container">
+        <h2 class="categoryHeader">UCS Servers</h2>
+        <table class="table table-bordered table-striped small">
+          <thead class="thead-dark">
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Type</th>
+            <th scope="col">Mgmt IP</th>
+            <th scope="col">User</th>
+            <th scope="col">Actions</th>
+          <thead>
+          <tbody>
+            <tr data-id={comp.id} each={comp in this.opts.store.getState().servers}>
+                <td>
+                    <a if={comp.type === "imc"}>{comp.name}</a>
+                    <a if={comp.type !== "imc"} href="#infrastructure/{comp.name}">{comp.name}</a>
+                </td>  
+                <td>
+                    {comp.description}
+                </td>
+                <td>{comp.type}</td>
+                <td>
+                  {comp.credentials.ip}
+                </td>
+                <td>
+                    {comp.credentials.user}
+                </td>
+                <td>
+                    <img src="./icons/delete.svg" data-type={comp.type} data-name={comp.name} onclick={deleteController} class="table-icon">
+                </td>
+            </tr> 
+          </tbody>
+        </table>
+    </div>
 
     
     <add-button onclick={addController}>Add Controller</add-button>
-    
-    <style>
-        .tablewidth {
-            width: 720px;
-        }
-        
-        .bottomspace {
-            margin-bottom: 25px;
-        }
-        
-        .infra-group {
-            padding-bottom: 15px;
-        }
-        
-        .infra-container {
-            background-color: white;
-            padding: 20px;
-        }
-        
-        
-        .infra-container-big {
-            background-color: white;
-            padding: 34px 20px;
-        }
-        
-        .td input[type="text"] {
-            border: none;
-            outline:0;
-            width: 95%;
-            padding: 0;
-            padding-left: 8px;
-            padding-top: 2px;
-            padding-bottom: 2px;
-            margin: 0;
-            font-size: 1em;
-            cursor: pointer;
-        }
-        
-        .td input[type="text"]:hover {
-            background-image: url('icons/edit.svg');
-            background-repeat: no-repeat;
-            background-position: right;
-        }
-    </style>
     
     <script>        
         let currentValue

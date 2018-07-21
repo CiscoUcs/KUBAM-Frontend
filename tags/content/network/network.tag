@@ -1,89 +1,50 @@
 <network>      
-        <add-button onclick={addNetworkGroup}>
-            Add Network Group
-        </add-button>
-
-        <div class="network-group"> 
-            <div class="network-container-big">
-                <div id="networkgroup-rows" class="table networkwidthtablelimit">
-                    <div class="tr">
-                        <div class="th">Network Name</div>
-                        <div class="th">Netmask</div>
-                        <div class="th">Router</div>
-                        <div class="th">Name Server</div>
-                        <div class="th">NTP Server</div>
-                        <div class="th">Proxy Server</div>
-                        <div class="th">VLAN</div>
-                        <div class="th actionwidth">Actions</div>
-                    </div>
-                    <div class="tr" data-id="{nw.id}" each={nw in this.opts.store.getState().networks}>
-                        <div class="td">
-                            <input type="text" value="{nw.name}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
-                        </div>
-                        <div class="td">
-                            <input type="text" value="{nw.netmask}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
-                        </div>
-                        <div class="td">
-                            <input type="text" value="{nw.gateway}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
-                        </div>
-                        <div class="td">
-                            <input type="text" value="{nw.nameserver}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
-                        </div>
-                        <div class="td">
-                            <input type="text" value="{nw.ntpserver}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
-                        </div>
-                        <div class="td">                            
-                            <input type="text" value="{nw.proxy}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
-                        </div>
-                        <div class="td">
-                            <input type="text" value="{nw.vlan}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
-                        </div>
-                        <div class="td actionwidth">
-                            <img src="./icons/delete.svg" data-name={nw.name} onclick={deleteNetwork} class="table-icon">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-    <style>
-        .network-group {
-            padding-bottom: 15px;
-            background-color: white;
-            padding: 20px;
-        }
-        
-        .network-container {
-            background-color: white;
-            padding: 20px;
-        }
-        
-        .networkwidthtablelimit {
-            width: 100%;
-            table-layout: fixed;
-            word-wrap: break-word;
-        }
-        
-        .td input[type="text"] {
-            border: none;
-            outline:0;
-            width: 95%;
-            padding: 0;
-            padding-left: 8px;
-            padding-top: 2px;
-            padding-bottom: 2px;
-            margin: 0;
-            font-size: 1em;
-            cursor: pointer;
-        }
-        
-        .td input[type="text"]:hover {
-            background-image: url('icons/edit.svg');
-            background-repeat: no-repeat;
-            background-position: right;
-        }
-    </style>
-    
+  <div class="container table-responsive">
+    <h2 class="categoryHeader">Network Groups</h2>
+      <table class="table table-bordered table-striped small">
+        <thead class="thead-dark">
+          <th scope="col">Network Name</div>
+          <th scope="col">Netmask</div>
+          <th scope="col">Router</div>
+          <th scope="col">Name Server</div>
+          <th scope="col">NTP Server</div>
+          <th scope="col">Proxy Server</div>
+          <th scope="col">VLAN</div>
+          <th scope="col">Actions</div>
+        </thead>
+        <tbody>
+          <tr data-id="{nw.id}" 
+              id="{nw.id}"
+              each={nw in this.opts.store.getState().networks}>
+            <td>
+             <input type="text" value="{nw.name}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
+            </td>
+            <td>
+              <input type="text" value="{nw.netmask}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
+            </td>
+            <td>
+              <input type="text" value="{nw.gateway}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
+            </td>
+            <td>
+              <input type="text" value="{nw.nameserver}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
+            </td>
+            <td>
+              <input type="text" value="{nw.ntpserver}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
+            </td>
+            <td>
+              <input type="text" value="{nw.proxy}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
+            </td>
+            <td>
+              <input type="text" value="{nw.vlan}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
+            </td>
+            <td>
+              <img src="./icons/delete.svg" data-name={nw.name} onclick={deleteNetwork} class="table-icon">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <add-button onclick={addNetworkGroup}>Add Network Group</add-button>
+  </div>  
     <script>
         let currentValue
         let store = this.opts.store
@@ -131,27 +92,23 @@
         editNetwork(e) {
             ds = e.target.dataset;
             id = ds.id
-            rows = document.getElementById('networkgroup-rows')
-            for(i=1;i<rows.children.length;i++) {
-                row = rows.children[i]
-                if(row.dataset.id == id) {
-                    c = row.children
-                    updated = {
-                        "id": row.dataset.id,
-                        "name": c[0].children[0].value.trim(),
-                        "netmask": c[1].children[0].value,
-                        "gateway": c[2].children[0].value,
-                        "nameserver": c[3].children[0].value,
-                        "ntpserver": c[4].children[0].value,
-                        "proxy": c[5].children[0].value,
-                        "vlan": c[6].children[0].value
-                    }
-                    store.dispatch({
-                        type: 'UPDATE_NETWORKGROUP',
-                        data: updated
-                    })
-                }
+            row = document.getElementById(id)
+            c = row.children
+            console.log(c)
+            updated = {
+              "id": row.dataset.id,
+              "name": c[0].children[0].value.trim(),
+              "netmask": c[1].children[0].value,
+              "gateway": c[2].children[0].value,
+              "nameserver": c[3].children[0].value,
+              "ntpserver": c[4].children[0].value,
+              "proxy": c[5].children[0].value,
+              "vlan": c[6].children[0].value
             }
+            store.dispatch({
+                type: 'UPDATE_NETWORKGROUP',
+                data: updated
+            })
         }
     </script>
 </network>
