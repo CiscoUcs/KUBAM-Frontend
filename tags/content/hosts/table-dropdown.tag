@@ -17,7 +17,6 @@
           margin: 0;
           background: #FFF;
           color: #000;
-          width: 160px;
           z-index: 9999;
         }
 
@@ -28,7 +27,6 @@
           background: #FFF;
           color: #000;
           text-align: center;
-          width: 160px;
         }
 
         ul li a {

@@ -1,6 +1,7 @@
-<content>
-    <loading-spinner if="{this.opts.store.getState().isLoading}"></loading-spinner>
-    
+<content class="main">
+  <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+      <loading-spinner if="{this.opts.store.getState().isLoading}"></loading-spinner>
     <router>
         <!-- **** Server Images **** -->
         <route path="/images">
@@ -52,16 +53,10 @@
     
     <div id="pop-box">
     </div>
+    </div>
+  </main>
         
     <style>
-        content {
-            position: absolute;
-            left: 200px;
-            top: 50px;
-            padding: 10px;
-            width: calc(100% - 200px);
-        }
-        
         #modal-shadow {
             position: fixed;
             display: table;

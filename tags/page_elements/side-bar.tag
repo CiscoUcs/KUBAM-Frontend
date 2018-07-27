@@ -1,9 +1,16 @@
 <side-bar>    
-    <div each={menu} onclick="route('{route}')" class='sidebar-item' id='{route}-selector'>
-        <div class="colorbar" style="background-color: #363c52;"></div>
-        <img class="sidebar-image" src='{img}'>
-        <div class="sidebar-title">{title}</div>
+  <nav class="col-md-2 d-none d-md-block bg-dark sidebar">
+    <div class="sidebar-sticky">
+      <ul class="nav flex-column">
+        <li each={menu} onclick="route('{route}')" class='sidebar-item' id='{route}-selector'>
+          <div class="colorbar" style="background-color: #363c52;"></div>
+          <img class="sidebar-image" src='{img}'>
+          <div class="sidebar-title">{title}</div>
+        </li>
+      </ul>
     </div>
+  </nav>
+
  
     <script>
         menu=[
@@ -46,6 +53,7 @@
     </script>
     
     <style>
+        /*
         side-bar{
             background-color: #363c52;
             color: white;
@@ -58,6 +66,32 @@
             padding-top: 50px;
         }
         
+        
+                
+        */
+
+        side-bar{
+            color: white;
+            left: 0;
+        }
+
+        .sidebar-item:hover {
+            background-color: rgba(255,255,255,0.06);
+        }
+
+        .sidebar-title {
+            padding-top: 5px;
+        }
+
+        .colorbar {
+            width: 4px;
+            height: 42px;
+            float: left;
+            top: 0;
+        }
+
+        
+
         .sidebar-item {
             float: none;
             font-size:0.95em;
@@ -66,30 +100,21 @@
             cursor: pointer;
         }
         
-        .sidebar-item:hover {
-            background-color: rgba(255,255,255,0.06);
-        }
-        
-        .colorbar {
-            width: 4px;
-            height: 42px;
-            float: left;
-            top: 0;
-        }
-                
         .sidebar-image {
-            float: left;
-            padding-right: 5px;
-            width: 18px;
-            height: 18px;
-            padding-top: 12px;
-            padding-left: 14px;
-            padding-right: 14px;
+          float: left;
+          width: 1.5em;
+          padding-right: 4px;
+          box-sizing: none;
+          padding-top: .7em;
+          margin-left: 5px;
+          margin-right: 5px;
+        }
+
+        .sidebar {
+          padding-right: 0px;
+          padding-left: 0px;
         }
         
-        .sidebar-title {
-            padding-top: 5px;
-        }
     </style>
 </side-bar>
 
