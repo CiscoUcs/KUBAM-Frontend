@@ -145,7 +145,7 @@ function* createImgMapping(action) {
     
     ax.get('v1/isos/map', {})
     .then(function (response) {
-        map = response['data']['iso_map']
+        map = response['data']['iso_map'] || []
         new_map = []
         for(var i=0;i<map.length;i++) {
             //console.log(map[i].os)
@@ -173,7 +173,6 @@ function* createImgMapping(action) {
             })
         })
         .catch(function (error) {
-            
             reduxStore.dispatch({
                 type: "OP_FAILED",
                 message: 'Could not create image mapping',
@@ -182,6 +181,7 @@ function* createImgMapping(action) {
         });
     })
     .catch(function (error) {
+        console.log(error) 
         reduxStore.dispatch({
             type: "OP_FAILED",
             message: 'Could not create image mapping',

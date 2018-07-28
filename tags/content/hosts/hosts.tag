@@ -40,14 +40,14 @@
         <tr each={host, iindex in this.opts.store.getState().hosts}>
           <td>
             <input type="checkbox" 
-                  class="hostCheckBoxes" 
+                  class="hostCheckBoxes form-control" 
                   data-hostname={host.name} 
                   onclick={toggleCheck} 
                   checked="{host.selected}" />
           </td>
           <td>
             <!-- Host name --> 
-            <input type="text" value="{host.name}" 
+            <input type="text" class="form-control" value="{host.name}" 
                 data-op="host" data-old="{host.name}" 
                 data-index="{iindex}" onblur="{changeHost}" />
           </td>
@@ -55,6 +55,7 @@
             <!-- IP Address --> 
             <input type="text" value="{host.ip}" 
               data-op="ip" data-old="{host.ip}" 
+              class="form-control"
               data-index="{iindex}" onblur="{changeHost}"/>
           </td>
           <td>

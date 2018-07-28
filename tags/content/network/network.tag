@@ -17,25 +17,25 @@
               id="{nw.id}"
               each={nw in this.opts.store.getState().networks}>
             <td>
-             <input type="text" value="{nw.name}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
+             <input class="form-control small" type="text" value="{nw.name}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
             </td>
             <td>
-              <input type="text" value="{nw.netmask}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
+              <input class="form-control small" type="text" value="{nw.netmask}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
             </td>
             <td>
-              <input type="text" value="{nw.gateway}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
+              <input class="form-control small" type="text" value="{nw.gateway}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
             </td>
             <td>
-              <input type="text" value="{nw.nameserver}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
+              <input class="form-control small" type="text" value="{nw.nameserver}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
             </td>
             <td>
-              <input type="text" value="{nw.ntpserver}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
+              <input class="form-control small" type="text" value="{nw.ntpserver}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
             </td>
             <td>
-              <input type="text" value="{nw.proxy}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
+              <input class="form-control small" type="text" value="{nw.proxy}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
             </td>
             <td>
-              <input type="text" value="{nw.vlan}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
+              <input class="form-control small" type="text" value="{nw.vlan}" data-name="{nw.name}" data-id="{nw.id}" onblur="{editNetwork}" />
             </td>
             <td>
               <img src="./icons/delete.svg" data-name={nw.name} onclick={deleteNetwork} class="table-icon">
