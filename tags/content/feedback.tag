@@ -1,6 +1,6 @@
 <feedback> 
     <div class="container">
-      <h2 class="categoryHeader">Feedback</h2>
+      <!-- <h2 class="categoryHeader">Feedback</h2> --> 
         <form>
             Feedback sent here goes to a WebEx teams room that KUBAM developers will see.  If you wish to be contacted please enter your contact details and we will try to provide support.  
             <br/>

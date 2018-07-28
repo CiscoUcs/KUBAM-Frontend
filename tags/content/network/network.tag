@@ -1,6 +1,6 @@
 <network>      
   <div class="container table-responsive">
-    <h2 class="categoryHeader">Network Groups</h2>
+    <!-- <h2 class="categoryHeader">Network Groups</h2> --> 
       <table class="table table-bordered table-striped small">
         <thead class="thead-dark">
           <th scope="col">Network Name</div>

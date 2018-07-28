@@ -1,7 +1,7 @@
 <server-overview>
     <div id="server-list">
         <div class="servergroup clearfloat" each={categories}>
-            <h1 class="categoryHeader serverCat">{type}</h1>
+            <!-- <h1 class="categoryHeader serverCat">{type}</h1> --> 
             <servergroup-box onclick="route('hosts/{group.id}')"
                              each="{group in groups}"
                              id={group.id}

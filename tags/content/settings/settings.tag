@@ -1,12 +1,12 @@
 <settings>    
     <div class="container table-responsive">
-      <h2 class="categoryHeader">Settings</h2>
+      <!-- <h2 class="categoryHeader">Settings</h2> --> 
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text">KUBAM IP</span>
         </div>
         <input type="text" class="form-control" 
-                    inputid="settings-view-ip"
+                    id="settings-view-ip"
                     value={this.opts.store.getState().kubam_ip}
                     tip="This is the IP from which the servers will load the Vmedia. Usually it is the same IP as the web interface"> 
         <button class="btn btn-outline-secondary" onclick={updateIP} type="button">Update</button>

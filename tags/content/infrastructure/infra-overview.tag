@@ -1,6 +1,6 @@
 <infra-overview>
     <div class="container">
-        <h2 class="categoryHeader">UCS Servers</h2>
+        <!-- <h2 class="categoryHeader">UCS Servers</h2> --> 
         <table class="table table-bordered table-striped small">
           <thead class="thead-dark">
             <th scope="col">Name</th>

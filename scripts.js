@@ -181,7 +181,6 @@ function* createImgMapping(action) {
         });
     })
     .catch(function (error) {
-        console.log(error) 
         reduxStore.dispatch({
             type: "OP_FAILED",
             message: 'Could not create image mapping',
@@ -1298,7 +1297,7 @@ function actionSelect(e) {
 function* updateInfraCompute(action) {
   compute = action.compute || []
   post_body = {'servers' : compute}
-  console.log(post_body, action.infra)
+  //console.log(post_body, action.infra)
   ax.post('v2/servers/'+action.infra+'/servers', post_body)
     .then(function(response) {
           var tag = document.createElement("alert");

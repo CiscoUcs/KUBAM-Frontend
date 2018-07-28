@@ -1,6 +1,6 @@
 <serverimages-overview> 
     <div class="container">
-      <h2 class="categoryHeader">OS Images</h2>
+      <!-- <h2 class="categoryHeader">OS Images</h2> --> 
       <table class="table table-bordered table-striped small">
         <thead class="thead-dark">
           <tr>
@@ -57,7 +57,7 @@
     
     <script>
         let store = this.opts.store
-        console.log(this.opts.store.getState().iso_map) 
+        //console.log(this.opts.store.getState().iso_map) 
         store.dispatch({
             type: 'FETCH_MAPPINGS'
         })

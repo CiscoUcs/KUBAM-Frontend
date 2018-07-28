@@ -1,6 +1,6 @@
 <hosts>
   <div class="container table-responsive">
-    <h2 class="categoryHeader">Hosts</h2>
+    <!-- <h2 class="categoryHeader">Hosts</h2> --> 
     <div class="top-actions">
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="hostActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

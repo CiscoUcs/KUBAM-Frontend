@@ -1,6 +1,6 @@
 <infra-detail>
   <div class="container">
-    <h2 class="categoryHeader">{ name }</h2>
+    <!-- <h2 class="categoryHeader">{ name }</h2> --> 
     <p>Select Servers to be used by KUBAM then save the changes</p>
     <div class="top-actions">
       <button type="button" class="btn btn-secondary" data-infra={name} onclick={saveComputeSelection}>Save Selections</button>

@@ -12,7 +12,7 @@
         &nbsp;
         <router>
               <route path="network..">Network Groups</route>
-              <route path="images..">Server Images</route>
+              <route path="images..">Images</route>
               <route path="infrastructure">Infrastructure</route>
               <route path="infrastructure/*"><inner-tag /></route>
               <route path="hosts..">Hosts</route>
