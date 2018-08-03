@@ -11,8 +11,8 @@ pipeline:
   # bring up our test machine so it has the latest API. 
   ssh:
     image: appleboy/drone-ssh
-    host: 10.93.234.96
-    username: vallard
+    host: 10.93.234.95
+    username: root
     port: 22
     secrets: [ ssh_password ]
     script: 

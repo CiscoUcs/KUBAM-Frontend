@@ -37,7 +37,7 @@
 </top-bar>
 
 <inner-tag>
-  <p class="topb"><a href="#infrastructure" onclick="route('infrastructure')">Infrastructure</a> | { name }</p>
+  <span class="topb"><a href="#infrastructure" onclick="route('infrastructure')">Infrastructure</a> | { name }</span>
   <script>
     this.on('route', name => this.name = name)
   </script>
