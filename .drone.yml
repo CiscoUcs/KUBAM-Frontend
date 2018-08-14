@@ -14,7 +14,8 @@ pipeline:
     host: 10.93.140.118
     username: root
     port: 22
-    secrets: [ ssh_password ]
+    password: Cisco.123
+    #secrets: [ ssh_password ]
     script: 
       - docker rm -f kubam-web || true
       - docker pull kubam/web:v2
