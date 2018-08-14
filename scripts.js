@@ -293,6 +293,36 @@ function* getInfraCompute(action) {
 }
 
 
+/* get the infrastructure and all the servers in the 
+ * infrastructure.  
+ * This could take a long time on big systems. 
+ */
+
+function* getDeepInfraComponents(action) {
+    ax.get('v2/servers', {})
+    .then(function (response) {
+        reduxStore.dispatch({
+            type: "FETCH_SUCCEEDED",
+            data: {'servers': response['data']['servers']}
+        })
+        console.log(response['data']['servers'])
+        response['data']['servers'].forEach(el => {
+          reduxStore.dispatch({
+            type: 'FETCH_COMPUTE',
+            server: el['name']
+          })
+        })
+    })
+    .catch(function (error) {
+        reduxStore.dispatch({
+            type: "OP_FAILED",
+            message: 'Could not get infrastructure from server',
+            err: error
+        });
+    });
+}
+
+
 function* getInfraComponents(action) {
     ax.get('v2/servers', {})
     .then(function (response) {
@@ -1078,6 +1108,7 @@ function* watchUserRequests() {
   yield ReduxSaga.takeEvery('UPDATE_IP', updateIP)
     
   yield ReduxSaga.takeEvery('FETCH_INFRA', getInfraComponents)
+  yield ReduxSaga.takeEvery('FETCH_DEEP_INFRA', getDeepInfraComponents)
   yield ReduxSaga.takeEvery('CREATE_CONTROLLER', createInfraComponent)
   yield ReduxSaga.takeEvery('DELETE_CONTROLLER', deleteInfraComponent)
   yield ReduxSaga.takeEvery('UPDATE_UCS', updateUCS)
