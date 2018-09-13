@@ -578,7 +578,7 @@ function* addPublicKey(action) {
     .then(function (response) {
         post_data = response['data']
         post_data['keys'].push(action['data']['key'])
-
+        console.log(post_data)
         ax.post('v1/keys', post_data )
         .then(function (response) {
             var tag = document.createElement("alert");
