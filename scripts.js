@@ -305,7 +305,7 @@ function* getDeepInfraComponents(action) {
             type: "FETCH_SUCCEEDED",
             data: {'servers': response['data']['servers']}
         })
-        console.log(response['data']['servers'])
+        //console.log(response['data']['servers'])
         response['data']['servers'].forEach(el => {
           reduxStore.dispatch({
             type: 'FETCH_COMPUTE',
@@ -578,7 +578,7 @@ function* addPublicKey(action) {
     .then(function (response) {
         post_data = response['data']
         post_data['keys'].push(action['data']['key'])
-        console.log("Pushing key: "+ post_data)
+        //console.log("Pushing key: "+ post_data)
         ax.post('v1/keys', post_data )
         .then(function (response) {
             var tag = document.createElement("alert");
@@ -1078,8 +1078,8 @@ function* showError(action) {
     var tag = document.createElement("alert");
     tag.setAttribute("type", "error");
     let errorObject=JSON.parse(JSON.stringify(action.err));
-    console.log(action.message);
-    console.log(errorObject.response.data.error);
+    //console.log(action.message);
+    //console.log(errorObject.response.data.error);
     if(Object.keys(errorObject).length === 0 && errorObject.constructor === Object) {
       tag.innerHTML = action.message
     } else if (errorObject.response.status === 400) {
