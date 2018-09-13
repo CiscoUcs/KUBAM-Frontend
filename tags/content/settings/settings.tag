@@ -31,7 +31,7 @@
     </div>
     
     <add-button onclick={addSetting}>
-        Add Setting
+        Add Keys
     </add-button>
 
     

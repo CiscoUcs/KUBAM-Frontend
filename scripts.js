@@ -578,7 +578,7 @@ function* addPublicKey(action) {
     .then(function (response) {
         post_data = response['data']
         post_data['keys'].push(action['data']['key'])
-        console.log(post_data)
+        console.log("Pushing key: "+ post_data)
         ax.post('v1/keys', post_data )
         .then(function (response) {
             var tag = document.createElement("alert");
@@ -594,7 +594,7 @@ function* addPublicKey(action) {
         .catch(function (error) {
             reduxStore.dispatch({
                 type: "OP_FAILED",
-                message: 'Could not add public key',
+                message: 'Could not add public key' + error,
                 err: error
             });
         });
@@ -602,7 +602,7 @@ function* addPublicKey(action) {
     .catch(function (error) {
         reduxStore.dispatch({
             type: "OP_FAILED",
-            message: 'Could not add public key',
+            message: 'Could not get public key',
             err: error
         });
     });
@@ -721,7 +721,6 @@ function* fetchIP(action) {
 
 function* updateIP(action) {
     new_ip = {kubam_ip: action['data']['kubam_ip']}
-        
     ax.post('v1/ip', new_ip)
     .then(function (response) {
         var tag = document.createElement("alert");
@@ -1079,6 +1078,8 @@ function* showError(action) {
     var tag = document.createElement("alert");
     tag.setAttribute("type", "error");
     let errorObject=JSON.parse(JSON.stringify(action.err));
+    console.log(action.message);
+    console.log(errorObject.response.data.error);
     if(Object.keys(errorObject).length === 0 && errorObject.constructor === Object) {
       tag.innerHTML = action.message
     } else if (errorObject.response.status === 400) {
