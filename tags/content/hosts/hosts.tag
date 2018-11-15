@@ -33,6 +33,8 @@
           <th scope="col">Role</th>
           <th scope="col">Network</th>
           <th scope="col">Server Group</th>
+          <th scope="col">Server</th>
+          <th scope="col">Service Profile Template</th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
@@ -95,7 +97,7 @@
                 data-op="network_group">
                   {nw.name}
               </option>
-            </selected>
+            </select>
           </td>
           <td>
             <!-- server group --> 
@@ -109,8 +111,36 @@
                 data-op="server_group">
                   {server.name}
               </option>
-            </selected>
+            </select>
           </td>
+          <!-- server --> 
+          <!-- get the servers from getInfraCompute from this server.
+          -->
+          <td>
+            <select class="custom-select" data-attrib="server" onChange={selectChange}>
+              <option
+                each={s in (passStore.getState().compute ? passStore.getState().compute[host.server_group] : [])}
+                selected={s.server === host.server}
+                data-old={host.server}
+                data-index={iindex}
+                data-op="server">
+                  {s.type === 'blade' ? "blade "+s.chassis_id + "/"+s.slot : "Rack "+s.rack_id}
+              </option>
+            </select>
+          </td> 
+          <!-- service profile --> 
+          <td>
+            <select class="custom-select" data-attrib="sp_template" onChange={selectChange}>
+              <option
+                each={s in (passStore.getState().templates ? passStore.getState().templates[host.server_group] : [{ "name" : host.service_profile_template}])}
+                selected={host.service_profile_template === s.name}
+                data-old={host.service_profile_template} 
+                data-index={iindex}
+                data-op="template">
+                {s.name}
+              </option>
+            </select>
+          </td> 
           <td>
             <!-- actions --> 
             <img src="./icons/delete.svg" data-hostname={host.name} onclick={deleteHost} class="table-icon">
@@ -125,6 +155,7 @@
   <script>
         let currentValue
         let store = this.opts.store
+
                 
         passStore.dispatch({
             type: 'FETCH_HOSTS'
@@ -135,12 +166,18 @@
         })
 
         passStore.dispatch({
-            type: 'FETCH_INFRA'
+            type: 'FETCH_DEEP_INFRA'
         })
-        
+
+
         store.dispatch({
             type: 'FETCH_NETWORKGROUPS'
         })
+
+        onlyUnique(value, index, self) {
+          console.log(value)
+          return self.indexOf(value) === index;
+        }
 
         this.opts.store.subscribe(function(){
             let previousValue = currentValue;

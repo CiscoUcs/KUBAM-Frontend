@@ -20,24 +20,24 @@
           <th scope="col">Memory (count/speed)</th>
         </tr>
       </thead>
-      <tbody>
-        <tr class="{ 'table-primary' : comp.selected === true }" 
-            each={comp in this.opts.store.getState().compute}>
-          <td><input  type="checkbox" 
-                      data-dn={comp.dn}
-                      class="computeCheckBoxes"
-                      checked={comp.selected}
-                      onclick={toggleCheckCompute}/></td>
-          <td if={ comp.type === 'blade'}> {comp.chassis_id} / {comp.slot}</td>
-          <td if={ comp.type === 'rack'}> {comp.rack_id } </td>
-          <td>{comp.type}</td>
-          <td>{comp.model}</td>
-          <td if={ comp.association === 'none'}> Unassociated</td>
-          <td if={ comp.association !== 'none'}> {comp.service_profile} </td>
-          <td>{comp.oper_power} </td>
-          <td>{comp.num_cpus}  / {comp.num_cores}</td>
-          <td>{comp.ram}  / {comp.ram_speed}</td>
-        </tr>
+      <tbody id="tbod">
+          <tr class="{ 'table-primary' : comp.selected === true }" 
+              each={comp in (this.opts.store.getState().compute ? this.opts.store.getState().compute[name] : comp in  [])}>
+            <td><input  type="checkbox" 
+                        data-dn={comp.dn}
+                        class="computeCheckBoxes"
+                        checked={comp.selected}
+                        onclick={toggleCheckCompute}/></td>
+            <td if={ comp.type === 'blade'}> {comp.chassis_id} / {comp.slot}</td>
+            <td if={ comp.type === 'rack'}> {comp.rack_id } </td>
+            <td>{comp.type}</td>
+            <td>{comp.model}</td>
+            <td if={ comp.association === 'none'}> Unassociated</td>
+            <td if={ comp.association !== 'none'}> {comp.service_profile} </td>
+            <td>{comp.oper_power} </td>
+            <td>{comp.num_cpus}  / {comp.num_cores}</td>
+            <td>{comp.ram}  / {comp.ram_speed}</td>
+          </tr>
       </tbody>
     </table>
   </div>

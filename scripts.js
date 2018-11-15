@@ -278,12 +278,15 @@ function* deleteImgMapping(action) {
 function* getInfraCompute(action) {
   ax.get('v2/servers/'+action.server+'/servers', {})
   .then(function (response) {
+    let foo = reduxStore.getState().compute || {};
+    foo[action.server] = response['data']['servers']  
     reduxStore.dispatch({
       type: "FETCH_SUCCEEDED",
-      data: {'compute': response['data']['servers'] }
+      data: {'compute': foo}
     })
   })
   .catch(function (error) {
+    console.log(error)
     reduxStore.dispatch({
       type: "OP_FAILED",
       message: 'Could not get infrastructure from server',
@@ -292,11 +295,34 @@ function* getInfraCompute(action) {
   });
 }
 
+function* getSPTemplates(action){
+  ax.get('v2/servers/'+action.server+'/templates', {})
+  .then(function (response) {
+    let foo = reduxStore.getState().templates || {};
+    foo[action.server] = response['data']['templates']  
+    reduxStore.dispatch({
+      type: "FETCH_SUCCEEDED",
+      data: {'templates': foo}
+    })
+  })
+  .catch(function (error) {
+    console.log(error)
+    reduxStore.dispatch({
+      type: "OP_FAILED",
+      message: 'Error getting templates for ' + action.server,
+      err: error
+    });
+  });
+}
 
 /* get the infrastructure and all the servers in the 
  * infrastructure.  
  * This could take a long time on big systems. 
  */
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 function* getDeepInfraComponents(action) {
     ax.get('v2/servers', {})
@@ -305,15 +331,25 @@ function* getDeepInfraComponents(action) {
             type: "FETCH_SUCCEEDED",
             data: {'servers': response['data']['servers']}
         })
-        //console.log(response['data']['servers'])
+        console.log(response['data']['servers'])
+        let promises = []
+        /*
         response['data']['servers'].forEach(el => {
-          reduxStore.dispatch({
-            type: 'FETCH_COMPUTE',
-            server: el['name']
-          })
-        })
+          promises.push(ax.get('v2/servers/'+el['name']+'/templates', {}));
+          promises.push(ax.get('v2/servers/'+el['name']+'/servers', {}));
+        }) */
+        /*Promise.all(promises).then(response => {
+          console.log(response)
+        })*/
+        /*axios.all(promises).then(axios.spread((...args) => {
+          for (let i = 0; i < args.length; i++) {
+            console.log(i,args[i])
+          }
+        }))*/
+        
     })
     .catch(function (error) {
+        console.log(error)
         reduxStore.dispatch({
             type: "OP_FAILED",
             message: 'Could not get infrastructure from server',
@@ -1116,6 +1152,7 @@ function* watchUserRequests() {
 
   yield ReduxSaga.takeEvery('FETCH_COMPUTE', getInfraCompute)
   yield ReduxSaga.takeEvery('UPDATE_COMPUTE', updateInfraCompute)
+  yield ReduxSaga.takeEvery('FETCH_TEMPLATES', getSPTemplates)
 
   yield ReduxSaga.takeEvery('FETCH_NETWORKGROUPS', fetchNetworkGroups)
   yield ReduxSaga.takeEvery('CREATE_NETWORKGROUP', createNetworkGroup)
@@ -1146,9 +1183,12 @@ function translateOS(x) {
     switch(x) {
         case 'esxi6.0': return 'ESXi 6.0'
         case 'esxi6.5': return 'ESXi 6.5'
+        case 'esxi6.7': return 'ESXi 6.7'
+        case 'esxi7.0': return 'ESXi 7.0'
         case 'centos7.3': return 'CentOS 7.3'
         case 'centos7.4': return 'CentOS 7.4'
         case 'centos7.5': return 'CentOS 7.5'
+        case 'centos7.6': return 'CentOS 7.6'
         case 'win2012r2': return 'Windows 2012 R2'
         case 'win2016': return 'Windows 2016'
         case 'redhat7.2': return 'Red Hat 7.2'
